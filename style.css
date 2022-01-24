@@ -1,0 +1,127 @@
+@charset "UTF-8";
+/* CSS Document */
+
+:root {
+  --nav-padding: 1em;
+}
+
+* {
+  box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+body {
+  margin: 0;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #2a2322;
+  color: #e9e9e9;
+}
+
+.sticky {
+  position: sticky;
+  /* top: 0; */
+}
+
+/* Utility Classes */
+.split {
+  display: flex;
+}
+.split > * + * {
+  margin-left: var(--flex-spacer, 1em);
+}
+
+.flow-content > * + * {
+  margin-top: var(--flow-spacer, 1em);
+}
+
+/* General Styling */
+section {
+  padding: 2rem 1rem;
+}
+
+/* Components */
+.primary-nav {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: var(--nav-padding);
+}
+
+.primary-nav ul {
+  --flow-spacer: 1.5em;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  justify-content: center;
+}
+
+@media (min-width: 50rem) {
+  .primary-nav ul {
+    margin-left: 50%;
+  }
+}
+
+.primary-nav a {
+  /* display: inline-block; */
+  color: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  position: relative;
+  /* transition: padding 0.4s ease-in-out; */
+}
+/* .active{
+  border-bottom: 2px solid #66774b;
+  padding-bottom: 14px;
+}
+.primary-nav a:hover{
+  border-bottom: 2px solid #738A53;
+  padding-bottom: 14px;
+;
+} */
+
+/* Components */
+
+.intro {
+  padding: 3rem;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  /* background: linear-gradient(to right, #1a2a6c, #b21f1f, #a38036); */
+  /* background: linear-gradient(to right, #eb5757, #000000); */
+  background: linear-gradient(
+    to right,
+    #c33764,
+    #1d2671
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  /* background: linear-gradient(to right, #a35151, #000000); */
+  background-attachment: fixed;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.primary-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: #66774b;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+  opacity: 0;
+}
+
+.active {
+  padding-bottom: 14px;
+  border-bottom: 2px solid #9cae7e;
+}
+
+.primary-nav a:not(.active):hover::after {
+  opacity: 1;
+  transform: translateY(var(--nav-padding));
+}
