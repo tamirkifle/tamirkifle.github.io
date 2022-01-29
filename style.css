@@ -365,7 +365,7 @@ section {
 }
 .contact {
   /* background-color: teal; */
-  --flow-spacer: 2em;
+  --flow-spacer: 1.5rem;
 }
 
 .contact--title {
@@ -391,6 +391,7 @@ section {
   width: 100%;
   font-size: var(--fs-l-1);
   padding: 0.5rem;
+  font: inherit;
 }
 
 .contact--form textarea {
