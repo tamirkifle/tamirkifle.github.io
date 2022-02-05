@@ -10,10 +10,9 @@ export default function About() {
             I'm <span>Tamir.</span>
           </h2>
           <p className="about--intro--subtitle">
-            I am a<span className="highlight">front-end</span>
-            <span className="highlight">developer</span>
-            based in
-            <span className="highlight no-wrap">Addis Ababa,</span>
+            I am a <span className="highlight">front-end</span>{" "}
+            <span className="highlight">developer</span> based in{" "}
+            <span className="highlight no-wrap">Addis Ababa</span>,{" "}
             <span className="highlight">Ethiopia</span>
           </p>
         </div>
