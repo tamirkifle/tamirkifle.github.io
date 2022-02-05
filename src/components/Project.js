@@ -1,12 +1,16 @@
 export default function Project(props) {
-  console.log(props);
+  const coverImg = props.coverImg || "default.jpeg";
+  const projectImg = require(`../images/projects/${coverImg}`);
+  const styles = {
+    backgroundImage: `url("${projectImg}")`,
+  };
   return (
-    <div className="card">
+    <div className="card" style={styles}>
       <div className="card--info flow-content">
         <p className="card--info--desc">{props.desc}</p>
         <div className="card--info--tech-used">
           {props.tech.map((tech) => (
-            <span>{tech}</span>
+            <span key={tech}>{tech}</span>
           ))}
         </div>
         <div className="card--info--links">
