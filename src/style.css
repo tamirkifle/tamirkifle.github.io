@@ -147,6 +147,48 @@ html {
   transform: translateY(4px);
 }
 
+.btn:active {
+  -webkit-box-shadow: inset 1px 1px 10px #333;
+  -moz-box-shadow: inset 1px 1px 10px #333;
+  box-shadow: inset 1px 1px 10px #333;
+}
+
+#modal {
+  position: relative;
+  z-index: 1000;
+}
+#modal .modal--overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(1, 16, 27, 0.8);
+  z-index: 0;
+}
+#modal .modal--box {
+  position: fixed;
+  top: 10%;
+  bottom: 10%;
+  left: 10%;
+  right: 10%;
+  /* opacity: 0.9; */
+  border-radius: 1rem;
+  background-color: rgb(1, 16, 27);
+  border: 1px solid rgba(159, 124, 9, 0.76);
+  box-shadow: 0px 1px 6px 4px rgba(159, 124, 9, 0.76);
+  padding: 2em;
+  overflow-y: scroll;
+  z-index: 1;
+}
+
+#modal .modal-close-btn {
+  border: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
 /* General Styling */
 section {
   padding: 2rem;
@@ -288,7 +330,7 @@ section:nth-of-type(2n + 1) {
 }
 
 .card {
-  /* min-height: 600px; */
+  min-height: 650px;
   background: url("./images/projects/default.jpeg") no-repeat;
   background-size: cover;
   background-position: center;
@@ -301,7 +343,7 @@ section:nth-of-type(2n + 1) {
   opacity: 0;
   visibility: hidden;
   /* background-color: hsl(182, 78%, 18%); */
-  background-color: rgba(1, 16, 27, 0.9);
+  background-color: rgba(1, 16, 27, 0.95);
   padding: 2rem 1rem;
   transition: opacity 0.7s ease, visibility 0.7s ease;
   min-height: inherit;

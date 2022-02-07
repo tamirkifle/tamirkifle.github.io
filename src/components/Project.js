@@ -1,9 +1,16 @@
+import { useState } from "react";
+import Modal from "./utility/Modal";
+
 export default function Project(props) {
   const coverImg = props.coverImg || "default.jpeg";
   const projectImg = require(`../images/projects/${coverImg}`);
   const styles = {
     backgroundImage: `url("${projectImg}")`,
   };
+
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => setShowModal((prevShowModal) => !prevShowModal);
+
   return (
     <div className="card" style={styles}>
       <div className="card--info flow-content">
@@ -14,7 +21,7 @@ export default function Project(props) {
           ))}
         </div>
         <div className="card--info--links">
-          <a href="#" className="btn">
+          <a className="btn" onClick={toggleModal}>
             👁‍🗨 Preview
           </a>
           {props.github && (
@@ -29,6 +36,14 @@ export default function Project(props) {
           )}
         </div>
       </div>
+      {showModal && (
+        <Modal toggleModal={toggleModal}>
+          <h1>{props.name}</h1>
+          <button className="btn modal-close-btn" onClick={toggleModal}>
+            Close Project
+          </button>
+        </Modal>
+      )}
     </div>
   );
 }
