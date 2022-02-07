@@ -14,12 +14,13 @@ export default function Project(props) {
   return (
     <div className="card" style={styles}>
       <div className="card--info flow-content">
+        <h3 className="card--info--title">{props.name}</h3>
         <p className="card--info--desc">{props.desc}</p>
-        <div className="card--info--tech-used">
+        {/* <div className="card--info--tech-used">
           {props.tech.map((tech) => (
             <span key={tech}>{tech}</span>
           ))}
-        </div>
+        </div> */}
         <div className="card--info--actions">
           <button className="btn" onClick={toggleModal}>
             👁‍🗨 Preview
@@ -30,6 +31,7 @@ export default function Project(props) {
               className="btn"
               target="_blank"
               rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
             >
               Source Code
             </a>
@@ -40,6 +42,7 @@ export default function Project(props) {
               className="btn"
               target="_blank"
               rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
             >
               Hosted Link
             </a>
