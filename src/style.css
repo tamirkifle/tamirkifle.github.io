@@ -373,36 +373,17 @@ section:nth-of-type(2n + 1) {
   margin: 0 1rem 1rem 0;
   border-radius: 12px;
 }
-.card--info--links {
+.card--info--actions {
   --flex-spacer: 0.8rem;
   justify-content: center;
 }
-/* .card--info--links a {
-  display: block;
-  background-color: #c36060;
-  color: #fff;
-  padding: 0.8rem 2rem;
-  border-radius: 5px;
-  line-height: 1;
-  text-decoration: none;
-  font-family: "Rubik", sans-serif;
-  margin-bottom: 10px;
-} */
 
-.card--info--links .btn {
+.card--info--actions .btn {
   display: block;
   width: 70%;
   max-width: 230px;
   margin: 0 auto;
   margin-bottom: 1rem;
-  /* font-family: "Roboto", sans-serif; */
-}
-
-.card--info--links .btn:hover {
-  background-color: #2ee59d;
-  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-  color: #fff;
-  transform: translateY(-2px);
 }
 
 @media (min-width: 800px) {

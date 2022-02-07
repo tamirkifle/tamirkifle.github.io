@@ -20,17 +20,27 @@ export default function Project(props) {
             <span key={tech}>{tech}</span>
           ))}
         </div>
-        <div className="card--info--links">
-          <a className="btn" onClick={toggleModal}>
+        <div className="card--info--actions">
+          <button className="btn" onClick={toggleModal}>
             👁‍🗨 Preview
-          </a>
+          </button>
           {props.github && (
-            <a href={props.github} className="btn">
+            <a
+              href={props.github}
+              className="btn"
+              target="_blank"
+              rel="noreferrer"
+            >
               Source Code
             </a>
           )}
           {props.hostedAt && (
-            <a href={props.hostedAt} className="btn">
+            <a
+              href={props.hostedAt}
+              className="btn"
+              target="_blank"
+              rel="noreferrer"
+            >
               Hosted Link
             </a>
           )}
