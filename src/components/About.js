@@ -1,6 +1,27 @@
 import fancyDownArrow from "../images/fancy-down-arrow.png";
+import TagCloud from "TagCloud";
+import { useEffect } from "react";
 
 export default function About() {
+  useEffect(() => {
+    const container = ".tagcloud";
+    const texts = [
+      "Angular",
+      "React",
+      "Javascript",
+      "Azure",
+      "AI",
+      "Google Cloud",
+      "Firebase",
+      "Firestore",
+      "HTML",
+      "CSS",
+    ];
+
+    const options = { radius: 200, maxSpeed: "fast", initSpeed: "fast" };
+    TagCloud(container, texts, options);
+  }, []);
+
   return (
     <section className="about" id="about">
       <div className="container flow-content">
@@ -26,6 +47,7 @@ export default function About() {
         src={fancyDownArrow}
         alt="Scroll down"
       />
+      <div className="tagcloud"></div>
     </section>
   );
 }
