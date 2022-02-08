@@ -51,10 +51,47 @@ export default function Project(props) {
       </div>
       {showModal && (
         <Modal toggleModal={toggleModal}>
-          <h1>{props.name}</h1>
-          <button className="btn modal-close-btn" onClick={toggleModal}>
-            Close Project
-          </button>
+          <div className="flow-content">
+            <h3 className="modal--title">{props.name}</h3>
+            <div className="modal--images">
+              {props.images.map((image) => (
+                <div className={image.includes("phone") ? "phone" : ""}>
+                  <img
+                    className="screenshot"
+                    src={require(`../images/projects/${image}`)}
+                    alt={`${props.name}`}
+                  />
+                </div>
+              ))}
+            </div>
+            <h4 className="modal--section-title">Summary: </h4>
+            <p className="modal--text">{props.desc}</p>
+            <h4 className="modal--section-title">Responsibilities</h4>
+            <p className="modal--text">{props.responsibilities}</p>
+            <h4 className="modal--section-title">Technologies Used</h4>
+            <p className="modal--text">
+              <ul>
+                {props.tech.map((tech) => (
+                  <li key={tech}>{tech}</li>
+                ))}
+              </ul>
+            </p>
+            {(props.hostedAt || props.github) && (
+              <h4 className="modal--section-title">Links</h4>
+            )}
+            {props.hostedAt && (
+              <p className="modal--text">Hosted: {props.hostedAt}</p>
+            )}
+            {props.github && (
+              <p className="modal--text">
+                Github: {<a href={props.github}>{props.github}</a>}
+              </p>
+            )}
+            {/* <h4 className="modal--section-title">Images</h4> */}
+            <button className="btn modal--close-btn" onClick={toggleModal}>
+              Close Preview
+            </button>
+          </div>
         </Modal>
       )}
     </div>
