@@ -242,17 +242,17 @@ section {
   right: 0;
   bottom: 0;
   height: 2px;
-  background-color: #66774b;
+  background-color: var(--highlight-color);
   transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
   opacity: 0;
 }
 
-.active {
+/* .active {
   padding-bottom: 14px;
   border-bottom: 2px solid #9cae7e;
-}
+} */
 
-.primary-nav a:not(.active):hover::after {
+.primary-nav a:hover::after {
   opacity: 1;
   transform: translateY(var(--nav-padding));
 }
