@@ -3,7 +3,7 @@
 
 :root {
   --nav-padding: 1rem;
-  --highlight-color: #1ac17e; /*rgb(160, 85, 66)*/
+  --highlight-color: #7ca76f; /*rgb(160, 85, 66)*/
 
   --scale: 1.2;
   --fs-l-1: calc(1rem * var(--scale));
