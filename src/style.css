@@ -574,6 +574,13 @@ section:nth-of-type(2n + 1) {
   .about {
     display: block;
   }
+  section > .tagcloud {
+    padding-left: 0;
+    margin: 1rem auto;
+  }
+  section > .tagcloud .tagcloud {
+    margin: 0 auto;
+  }
 }
 
 /* Small devices (landscape phones, less than 768px) */
