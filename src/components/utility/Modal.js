@@ -11,7 +11,6 @@ const Modal = ({ children, toggleModal }) => {
 
   useEffect(() => {
     modalRoot.appendChild(elRef.current);
-    console.log(modalRoot);
     return () => modalRoot.removeChild(elRef.current);
   }, []);
 
