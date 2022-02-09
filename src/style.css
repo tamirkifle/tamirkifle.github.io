@@ -127,6 +127,7 @@ html {
   border: none;
   cursor: pointer;
   text-decoration: none;
+  font-family: inherit;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 2.5px;
@@ -190,25 +191,25 @@ html {
   right: 1rem;
 }
 
-.tagcloud {
+/* General Styling */
+section {
+  padding: 4rem;
+}
+section > .tagcloud {
   /* color: #c6f0b9; */
   color: var(--highlight-color);
   align-self: center;
   flex-basis: 30%;
   font-size: var(--fs-l-3);
   font-family: "Bangers", cursive;
+  padding-left: 2rem;
 }
 
-/* General Styling */
-section {
-  padding: 2rem;
-}
-
-@media (min-width: 50rem) {
+/* @media (min-width: 50rem) {
   section {
     padding: 4rem;
   }
-}
+} */
 /* 
 * Components 
 */
@@ -223,18 +224,20 @@ section {
 }
 
 .primary-nav ul {
+  --flex-spacer: 3rem;
   padding: 0;
   margin: 0;
+  margin-left: 40%;
   list-style-type: none;
   justify-content: center;
 }
 
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   .primary-nav ul {
     --flex-spacer: 3rem;
     margin-left: 40%;
   }
-}
+} */
 
 .primary-nav a {
   color: inherit;
@@ -331,8 +334,12 @@ section:nth-of-type(2n + 1) {
 
 /* Portfolio Section */
 .portfolio--projects {
-  --flow-spacer: 3rem;
+  /* --flow-spacer: 3rem; */
+  --flow-spacer: 0;
   margin-top: 3em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3rem;
 }
 
 .portfolio--title {
@@ -373,6 +380,10 @@ section:nth-of-type(2n + 1) {
   visibility: visible;
   opacity: 1;
 }
+
+.card--info > * + * {
+  margin-top: 2rem;
+}
 .card--info--title {
   font-size: var(--fs-l-2);
 }
@@ -397,13 +408,13 @@ section:nth-of-type(2n + 1) {
 
 .card--info--actions .btn {
   display: block;
-  width: 70%;
+  width: 100%;
   max-width: 230px;
   margin: 0 auto;
   margin-bottom: 1rem;
 }
 
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   .portfolio--projects {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -413,14 +424,18 @@ section:nth-of-type(2n + 1) {
   .card--info > * + * {
     margin-top: 2rem;
   }
-}
+} */
 .contact {
   /* background-color: teal; */
   --flow-spacer: 1.5rem;
+  display: flex;
+  gap: 3rem;
 }
 
 .contact--title {
-  font-size: var(--fs-l-5);
+  /* font-size: var(--fs-l-5); //for mobile */
+  font-size: var(--fs-l-4);
+  flex-basis: 30rem;
   /* line-height: 1; */
 }
 
@@ -429,6 +444,7 @@ section:nth-of-type(2n + 1) {
   text-align: center;
   max-width: 800px;
   flex-basis: 100%;
+  margin-top: 0;
 }
 .contact--form label {
   display: block;
@@ -453,7 +469,7 @@ section:nth-of-type(2n + 1) {
   margin-top: 2em;
 }
 
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   .contact {
     display: flex;
     gap: 3rem;
@@ -466,7 +482,7 @@ section:nth-of-type(2n + 1) {
   .contact--form {
     margin-top: 0;
   }
-}
+} */
 
 .primary-footer {
   background-color: rgb(1, 16, 27);
@@ -530,4 +546,98 @@ section:nth-of-type(2n + 1) {
   width: auto;
   max-width: 100%;
   margin: 1rem auto;
+}
+
+/* ORDER: Base + Typography > General Layout + Grid > Page Layout > Components */
+
+/* Big Desktops (Less than 1800px) */
+@media (max-width: 1799.98px) {
+}
+
+/* // Large devices (desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+  /* Make the projects grid 1fr 1fr */
+  .portfolio--projects {
+    /* --flow-spacer: 3rem; */
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+/* // Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+  /* Get rid of the rotating text, the TagCloud or put it underneath the intro */
+  .about {
+    display: block;
+  }
+  section > .tagcloud {
+    margin: 1rem auto;
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .primary-nav ul {
+    margin-left: 0;
+    --flex-spacer: 2em;
+  }
+
+  .portfolio--projects {
+    --flow-spacer: 3rem;
+    display: block;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Change paddings */
+
+  section {
+    padding: 2rem;
+  }
+
+  /* stack the contact form */
+
+  .contact {
+    --flow-spacer: 1.5rem;
+    display: block;
+  }
+
+  .contact--form {
+    margin-top: var(--flow-spacer);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .primary-nav ul {
+    flex-direction: column;
+    --flex-spacer: 1em;
+  }
+
+  .primary-nav ul.split > * + * {
+    margin-left: 0;
+    margin-top: var(--flex-spacer);
+  }
+
+  header.sticky {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  /* Remove TagCloud */
+  section > .tagcloud {
+    display: none;
+  }
+  .card--info--actions .btn {
+    padding: 0.4rem;
+  }
+  .card {
+    min-height: 300px;
+  }
+  /* Remove the project desc on cards */
+  .card--info--desc {
+    display: none;
+  }
 }
