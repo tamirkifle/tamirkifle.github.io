@@ -215,10 +215,15 @@ section > .tagcloud {
 */
 
 /* Navigation */
-
-.primary-nav {
+.primary-header {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
+}
+.hamburger {
+  padding: 1rem 2rem;
+  display: none;
+}
+.primary-nav {
   padding: var(--nav-padding);
   font-family: "Montserrat", sans-serif;
 }
@@ -282,7 +287,6 @@ section:nth-of-type(2n + 1) {
   background: linear-gradient(to left, #2a2322, rgb(1, 16, 27));
   min-height: calc(100vh - 60px);
   position: relative;
-  padding-top: 4rem;
   padding-bottom: 120px;
   display: flex;
 }
@@ -570,9 +574,6 @@ section:nth-of-type(2n + 1) {
   .about {
     display: block;
   }
-  section > .tagcloud {
-    margin: 1rem auto;
-  }
 }
 
 /* Small devices (landscape phones, less than 768px) */
@@ -609,7 +610,10 @@ section:nth-of-type(2n + 1) {
 }
 
 @media (max-width: 575.98px) {
-  .primary-nav ul {
+  section {
+    padding-top: 4rem;
+  }
+  /* .primary-nav ul {
     flex-direction: column;
     --flex-spacer: 1em;
   }
@@ -619,12 +623,19 @@ section:nth-of-type(2n + 1) {
     margin-top: var(--flex-spacer);
   }
 
-  header.sticky {
+  .sticky {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+  } */
+
+  .primary-nav {
+    display: none;
+  }
+  .hamburger {
+    display: block;
   }
   /* Remove TagCloud */
   section > .tagcloud {
