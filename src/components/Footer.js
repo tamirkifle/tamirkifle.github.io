@@ -8,17 +8,17 @@ export default function Footer() {
       <div className="primary--footer--socials">
         <ul>
           <li>
-            <a href="#">
+            <a href="https://github.com/tamirkifle">
               <img src={githubIcon} alt="Tamir's Github" />
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://twitter.com/CallusedHuman">
               <img src={twitterIcon} alt="Tamir's Twitter" />
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="https://et.linkedin.com/in/tamir-kifle-yirga-4734b8173">
               <img src={linkedinIcon} alt="Tamir's Linkedin" />
             </a>
           </li>
