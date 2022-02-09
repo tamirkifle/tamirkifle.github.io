@@ -86,6 +86,10 @@ html {
 }
 /* Utility Classes */
 .container {
+  max-width: 90rem;
+  margin: 0 auto;
+}
+.text-container {
   max-width: 60rem;
   margin-right: auto;
 }
@@ -195,14 +199,13 @@ html {
 section {
   padding: 4rem;
 }
-section > .tagcloud {
+.tagcloud {
   /* color: #c6f0b9; */
   color: var(--highlight-color);
   align-self: center;
   flex-basis: 30%;
   font-size: var(--fs-l-3);
   font-family: "Bangers", cursive;
-  padding-left: 2rem;
 }
 
 /* @media (min-width: 50rem) {
@@ -288,7 +291,6 @@ section:nth-of-type(2n + 1) {
   min-height: calc(100vh - 60px);
   position: relative;
   padding-bottom: 120px;
-  display: flex;
 }
 
 .about--scroll-down {
@@ -432,8 +434,7 @@ section:nth-of-type(2n + 1) {
 .contact {
   /* background-color: teal; */
   --flow-spacer: 1.5rem;
-  display: flex;
-  gap: 3rem;
+  --flex-spacer: 3em;
 }
 
 .contact--title {
@@ -571,14 +572,13 @@ section:nth-of-type(2n + 1) {
 /* // Medium devices (tablets, less than 992px) */
 @media (max-width: 991.98px) {
   /* Get rid of the rotating text, the TagCloud or put it underneath the intro */
-  .about {
+  .about .container {
     display: block;
   }
-  section > .tagcloud {
-    padding-left: 0;
+  .tagcloud {
     margin: 1rem auto;
   }
-  section > .tagcloud .tagcloud {
+  .tagcloud .tagcloud {
     margin: 0 auto;
   }
 }
@@ -608,6 +608,10 @@ section:nth-of-type(2n + 1) {
 
   .contact {
     --flow-spacer: 1.5rem;
+  }
+
+  .contact .container {
+    --flex-spacer: 0;
     display: block;
   }
 
@@ -645,7 +649,7 @@ section:nth-of-type(2n + 1) {
     display: block;
   }
   /* Remove TagCloud */
-  section > .tagcloud {
+  .tagcloud {
     display: none;
   }
   .card--info--actions .btn {
