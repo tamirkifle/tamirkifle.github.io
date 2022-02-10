@@ -16,11 +16,6 @@ export default function Project(props) {
       <div className="card--info flow-content">
         <h3 className="card--info--title">{props.name}</h3>
         <p className="card--info--desc">{props.desc}</p>
-        {/* <div className="card--info--tech-used">
-          {props.tech.map((tech) => (
-            <span key={tech}>{tech}</span>
-          ))}
-        </div> */}
         <div className="card--info--actions">
           <button className="btn" onClick={toggleModal}>
             👁‍🗨 Preview
@@ -90,7 +85,6 @@ export default function Project(props) {
                 Github: {<a href={props.github}>{props.github}</a>}
               </p>
             )}
-            {/* <h4 className="modal--section-title">Images</h4> */}
             <button className="btn modal--close-btn" onClick={toggleModal}>
               Close Preview
             </button>

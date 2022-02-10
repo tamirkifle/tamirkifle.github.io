@@ -32,7 +32,7 @@ export default function Header() {
         <nav className="primary-nav">
           <ul className="split">
             <li>
-              <a href="#" className="active">
+              <a href="/#" className="active">
                 Home
               </a>
             </li>
