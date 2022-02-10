@@ -17,7 +17,7 @@ export default function Header() {
             </a>
             <a href="#portfolio" onClick={() => setOpen(!open)}>
               <span role="img" aria-label="portfolio">
-                💸
+                🖼
               </span>
               Portfolio
             </a>
