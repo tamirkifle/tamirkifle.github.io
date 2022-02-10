@@ -205,7 +205,8 @@ section {
   align-self: center;
   flex-basis: 30%;
   font-size: var(--fs-l-3);
-  font-family: "Bangers", cursive;
+  font-family: "Bangers", monospace;
+  font-weight: bolder;
 }
 
 /* @media (min-width: 50rem) {
