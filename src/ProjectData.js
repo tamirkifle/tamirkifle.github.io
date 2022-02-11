@@ -48,7 +48,7 @@ const projects = [
     desc: "A javascript package that tranforms normal (arabic) numbers into their amharic text counterparts.",
     github: "https://github.com/tamirkifle/number-to-amharic-text",
     hostedAt: "https://www.npmjs.com/package/number-to-amharic-text",
-    coverImg: "number-to-amharic/number-to-amharic-cover.png",
+    coverImg: "number-to-amharic/number-to-amharic-cover.jpg",
     images: ["number-to-amharic/number-to-amharic-ss-1.png"],
   },
   {
@@ -57,7 +57,7 @@ const projects = [
     desc: "This portfolio page showcasing me and my projects and is home for my blog.",
     github: "https://github.com/tamirkifle/my-portfolio",
     hostedAt: "",
-    coverImg: "portfolio/portfolio-cover.png",
+    coverImg: "portfolio/portfolio-cover.jpg",
     images: [],
   },
   {

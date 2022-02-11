@@ -152,6 +152,10 @@ html {
 }
 
 .btn:active {
+  color: #000;
+  background-color: white;
+}
+.btn:active {
   -webkit-box-shadow: inset 1px 1px 10px #333;
   -moz-box-shadow: inset 1px 1px 10px #333;
   box-shadow: inset 1px 1px 10px #333;
@@ -499,18 +503,27 @@ section:nth-of-type(2n + 1) {
 
 /* Media Queries - Desktop first so working down from big to small */
 
+/* Large devices (desktops, less than 1300px) */
+@media (max-width: 1299.98px) {
+  .portfolio--projects {
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+  }
+}
+
 /* Large devices (desktops, less than 1200px) */
 @media (max-width: 1199.98px) {
-  /* Make the projects grid 1fr 1fr */
   .portfolio--projects {
-    /* --flow-spacer: 3rem; */
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 4rem;
   }
 }
 
 /* Medium devices (tablets, less than 992px) */
 @media (max-width: 991.98px) {
+  .portfolio--projects {
+    gap: 2rem;
+  }
+
   /* put the TagCloud underneath the intro */
   .about .container {
     display: block;
@@ -522,20 +535,22 @@ section:nth-of-type(2n + 1) {
     margin: 0 auto;
   }
 }
-
-/* Small devices (landscape phones, less than 768px) */
-@media (max-width: 767.98px) {
-  .primary-nav ul {
-    margin-left: 0;
-    --flex-spacer: 2em;
-  }
-
+/* Medium devices (tablets, less than 869px) */
+@media (max-width: 868.98px) {
   .portfolio--projects {
     --flow-spacer: 3rem;
     display: block;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .primary-nav ul {
+    margin-left: 0;
+    --flex-spacer: 2em;
   }
 
   /* Change paddings */
@@ -612,6 +627,10 @@ section:nth-of-type(2n + 1) {
 @media (min-width: 1700px) {
   .container {
     max-width: 1440px;
+  }
+
+  .portfolio--projects {
+    gap: 6rem;
   }
 }
 @media (min-width: 2000px) {
