@@ -511,7 +511,7 @@ section:nth-of-type(2n + 1) {
 
 /* Medium devices (tablets, less than 992px) */
 @media (max-width: 991.98px) {
-  /* Get rid of the rotating text, the TagCloud or put it underneath the intro */
+  /* put the TagCloud underneath the intro */
   .about .container {
     display: block;
   }
@@ -556,6 +556,29 @@ section:nth-of-type(2n + 1) {
   .contact--form {
     margin-top: var(--flow-spacer);
   }
+
+  /* Stack images on modal */
+  .modal--images {
+    display: block;
+    padding: 0;
+  }
+  .modal--images img {
+    margin: 2rem auto;
+  }
+
+  .modal--images > * + * {
+    margin-left: 0;
+  }
+
+  /* Stack the links */
+  .modal--links {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .modal--links > * + * {
+    margin-left: 0;
+    margin-top: 1em;
+  }
 }
 
 @media (max-width: 575.98px) {
@@ -570,7 +593,7 @@ section:nth-of-type(2n + 1) {
     display: block;
   }
   /* Remove TagCloud */
-  .tagcloud {
+  .tagcloud .tagcloud {
     display: none;
   }
   .card--info--actions .btn {

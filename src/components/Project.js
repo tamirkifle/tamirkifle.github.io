@@ -77,14 +77,18 @@ export default function Project(props) {
             {(props.hostedAt || props.github) && (
               <h4 className="modal--section-title">Links</h4>
             )}
-            {props.hostedAt && (
-              <p className="modal--text">Hosted: {props.hostedAt}</p>
-            )}
-            {props.github && (
-              <p className="modal--text">
-                Github: {<a href={props.github}>{props.github}</a>}
-              </p>
-            )}
+            <div className="modal--links split">
+              {props.hostedAt && (
+                <a className="btn" href={props.hostedAt}>
+                  Hosted
+                </a>
+              )}
+              {props.github && (
+                <a className="btn" href={props.github}>
+                  Github
+                </a>
+              )}
+            </div>
             <button className="btn modal--close-btn" onClick={toggleModal}>
               Close Preview
             </button>
