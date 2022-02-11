@@ -79,12 +79,22 @@ export default function Project(props) {
             )}
             <div className="modal--links split">
               {props.hostedAt && (
-                <a className="btn" href={props.hostedAt}>
+                <a
+                  className="btn"
+                  href={props.hostedAt}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Hosted
                 </a>
               )}
               {props.github && (
-                <a className="btn" href={props.github}>
+                <a
+                  className="btn"
+                  href={props.github}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Github
                 </a>
               )}
