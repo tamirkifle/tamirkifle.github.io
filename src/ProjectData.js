@@ -1,3 +1,5 @@
+import imgUrls from "./imgur-urls.json";
+
 const projects = [
   {
     name: "Property Rental Web App",
@@ -12,10 +14,10 @@ const projects = [
     desc: "Property Rental is a hub for people looking to rent out or to lease out properties. It connects prospective tenants to people with property for rent in their area.",
     github: "https://github.com/tamirkifle/property-rental",
     hostedAt: "https://property-rental-fca0f.web.app/",
-    coverImg: "property-rental/property-rental-cover.jpg",
+    coverImg: imgUrls.property_rental_cover,
     images: [
-      "property-rental/property-rental-with-iphone.png",
-      "property-rental/property-rental-with-macbook.png",
+      imgUrls.property_rental_with_iphone,
+      imgUrls.property_rental_with_macbook,
     ],
     responsibilities:
       "I was the frontend engineer for this project, in a team of 4 people. I also took on the role of backend developer to get a fully-fledged working application.",
@@ -35,11 +37,8 @@ const projects = [
       "Typescript",
     ],
     desc: "Similar Faces: A Game was a project built during a AI bootcamp hosted by Microsoft and Gebeya Inc. A simple game where the goal is to guess the most similar face out of a list of faces comparing your instincts to Microsoft's Artificial Intelligence.",
-    coverImg: "similar-faces/similar-faces-cover.jpg",
-    images: [
-      "similar-faces/similar-faces-ss-1.png",
-      "similar-faces/similar-faces-ss-2.png",
-    ],
+    coverImg: imgUrls.similar_faces_cover,
+    images: [imgUrls.similar_faces_ss_1, imgUrls.similar_faces_ss_2],
     responsibilities: "Frontend engineer and AI Engineer",
   },
   {
@@ -48,8 +47,8 @@ const projects = [
     desc: "A javascript package that tranforms normal (arabic) numbers into their amharic text counterparts.",
     github: "https://github.com/tamirkifle/number-to-amharic-text",
     hostedAt: "https://www.npmjs.com/package/number-to-amharic-text",
-    coverImg: "number-to-amharic/number-to-amharic-cover.jpg",
-    images: ["number-to-amharic/number-to-amharic-ss-1.png"],
+    coverImg: imgUrls.number_to_amharic_cover,
+    images: [imgUrls.number_to_amharic_ss_1],
   },
   {
     name: "Portfolio Page",
@@ -57,7 +56,7 @@ const projects = [
     desc: "This portfolio page showcasing me and my projects and is home for my blog.",
     github: "https://github.com/tamirkifle/my-portfolio",
     hostedAt: "",
-    coverImg: "portfolio/portfolio-cover.jpg",
+    coverImg: imgUrls.portfolio_cover,
     images: [],
   },
   {
@@ -67,11 +66,8 @@ const projects = [
     github:
       "https://github.com/tamirkifle/100-days-of-code/tree/master/r1-projects/11-grid-image-gallery",
     hostedAt: "",
-    coverImg: "grid-gallery/grid-gallery-cover.png",
-    images: [
-      "grid-gallery/grid-gallery-ss-1.png",
-      "grid-gallery/grid-gallery-ss-2.png",
-    ],
+    coverImg: imgUrls.grid_gallery_cover,
+    images: [imgUrls.grid_gallery_ss_1, imgUrls.grid_gallery_ss_2],
   },
   {
     name: "Responsive Image Slider component",
@@ -80,8 +76,8 @@ const projects = [
     github:
       "https://github.com/tamirkifle/100-days-of-code/tree/master/r1-projects/15-photo-slider",
     hostedAt: "",
-    coverImg: "image-slider/image-slider-cover.png",
-    images: ["image-slider/image-slider-comp-ss-1.png"],
+    coverImg: imgUrls.image_slider_cover,
+    images: [imgUrls.image_slider_ss_1],
   },
 ];
 

@@ -2,10 +2,9 @@ import { useState } from "react";
 import Modal from "./utility/Modal";
 
 export default function Project(props) {
-  const coverImg = props.coverImg || "no-cover.jpeg";
-  const projectImg = require(`../images/projects/${coverImg}`);
+  const coverImg = props.coverImg || "https://i.imgur.com/N02vRuT.jpg"; //default image for no cover
   const styles = {
-    backgroundImage: `url("${projectImg}")`,
+    backgroundImage: `url("${coverImg}")`,
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -52,11 +51,11 @@ export default function Project(props) {
               {props.images.map((image) => (
                 <div
                   key={image}
-                  className={image.includes("phone") ? "phone" : ""}
+                  className={image.includes("ipWdyxh.png") ? "phone" : ""} //add class to the only image that renders a phone
                 >
                   <img
                     className="screenshot"
-                    src={require(`../images/projects/${image}`)}
+                    src={image}
                     alt={`${props.name}`}
                   />
                 </div>
