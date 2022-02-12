@@ -2,7 +2,7 @@ import { useState } from "react";
 import Modal from "./utility/Modal";
 
 export default function Project(props) {
-  const coverImg = props.coverImg || "default.jpeg";
+  const coverImg = props.coverImg || "no-cover.jpeg";
   const projectImg = require(`../images/projects/${coverImg}`);
   const styles = {
     backgroundImage: `url("${projectImg}")`,
