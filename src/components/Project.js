@@ -98,10 +98,10 @@ export default function Project(props) {
                 </a>
               )}
             </div>
-            <button className="btn modal--close-btn" onClick={toggleModal}>
-              Close Preview
-            </button>
           </div>
+          <button className="btn modal--close-btn" onClick={toggleModal}>
+            Close Preview
+          </button>
         </Modal>
       )}
     </div>
