@@ -63,8 +63,12 @@ export default function Project(props) {
             </div>
             <h4 className="modal--section-title">Summary: </h4>
             <p className="modal--text">{props.desc}</p>
-            <h4 className="modal--section-title">Responsibilities</h4>
-            <p className="modal--text">{props.responsibilities}</p>
+            {props.responsibilities && (
+              <>
+                <h4 className="modal--section-title">Responsibilities</h4>
+                <p className="modal--text">{props.responsibilities}</p>
+              </>
+            )}
             <h4 className="modal--section-title">Technologies Used</h4>
             <div className="modal--text">
               <ul>
