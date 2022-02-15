@@ -40,8 +40,7 @@ export default function About() {
           </div>
           <p className="about--desc">
             I build web applications focusing on quality and maintainabilty.
-            Feel free to take a look at some of my work in my portfolio section
-            below.
+            Feel free to take a look at some of my work below.
           </p>
         </div>
         <img
