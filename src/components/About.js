@@ -10,12 +10,16 @@ export default function About() {
       "React",
       "Javascript",
       "Azure",
-      "AI",
+      "Blockchain",
+      "Machine Learning",
+      "Java",
+      "Python",
       "Google Cloud",
       "Firebase",
       "Firestore",
       "HTML",
       "CSS",
+      "Adobe Commerce"
     ];
 
     const options = { radius: 200, maxSpeed: "fast", initSpeed: "fast" };
@@ -32,10 +36,10 @@ export default function About() {
               I'm <span>Tamir.</span>
             </h2>
             <p className="about--intro--subtitle">
-              I am a <span className="highlight">front-end</span>{" "}
+              I am a <span className="highlight">full-stack</span>{" "}
               <span className="highlight">developer</span> based in{" "}
-              <span className="highlight no-wrap">Addis Ababa</span>,{" "}
-              <span className="highlight">Ethiopia</span>
+              <span className="highlight no-wrap">Seattle</span>,{" "}
+              <span className="highlight">Washington</span>
             </p>
           </div>
           <p className="about--desc">
