@@ -2,6 +2,32 @@ import imgUrls from "./imgur-urls.json";
 
 const projects = [
   {
+    name: "Endubis Wallet (with Endubis Blockchain Solutions)",
+    tech: [
+      "React",
+      "Telegraf Framework for Telegram Bots",
+      "Node.js",
+      "Cloud Firestore",
+      "Javascript",
+      "Blockchain APIs (Blockfrost, AdaLite)",
+      "A lot of cryptography for blockchain manipulation :)",
+      "AWS for hosting",
+    ],
+    desc: "A Cardano wallet running as a telegram bot",
+    github: "http://github.com/endubis-Solutions/",
+    hostedAt: "https://t.me/EndubisWalletBot",
+    coverImg: imgUrls.endubis_cover,
+    images: [
+      imgUrls.endubis_1,
+      imgUrls.endubis_2
+    ],
+    responsibilities:
+      "v1 of Endubis Wallet was built completely by me through months of iteration and research. We are proud to have amassed more than 7000 users!",
+    otherTeamMembers: [
+      "Founder and Manager - Nebiyu Sultan",
+    ]
+  },
+  {
     name: "Property Rental Web App",
     tech: [
       "Angular",
@@ -28,7 +54,7 @@ const projects = [
     ],
   },
   {
-    name: "Similar Faces: A Game",
+    name: "Similar Faces: An AI Game",
     tech: [
       "Angular",
       "Microsoft Azure AI",
@@ -42,15 +68,6 @@ const projects = [
     responsibilities: "Frontend engineer and AI Engineer",
   },
   {
-    name: "Number to Amharic Text Converter",
-    tech: ["Javascript", "npm"],
-    desc: "A javascript package that tranforms normal (arabic) numbers into their amharic text counterparts.",
-    github: "https://github.com/tamirkifle/number-to-amharic-text",
-    hostedAt: "https://www.npmjs.com/package/number-to-amharic-text",
-    coverImg: imgUrls.number_to_amharic_cover,
-    images: [imgUrls.number_to_amharic_ss_1],
-  },
-  {
     name: "Portfolio Page",
     tech: ["React", "HTML", "CSS", "Javascript"],
     desc: "This portfolio page showcasing me and my projects and is home for my blog.",
@@ -60,25 +77,15 @@ const projects = [
     images: [],
   },
   {
-    name: "Grid Image Gallery",
-    tech: ["HTML", "CSS", "Javascript"],
-    desc: "An image gallery where images are fit in different random sizes to create a beautiful random collage.",
-    github:
-      "https://github.com/tamirkifle/100-days-of-code/tree/master/r1-projects/11-grid-image-gallery",
-    hostedAt: "",
-    coverImg: imgUrls.grid_gallery_cover,
-    images: [imgUrls.grid_gallery_ss_1, imgUrls.grid_gallery_ss_2],
-  },
-  {
-    name: "Responsive Image Slider component",
-    tech: ["HTML", "CSS", "Javascript"],
-    desc: "A responsive infinite images slider with slider buttons",
-    github:
-      "https://github.com/tamirkifle/100-days-of-code/tree/master/r1-projects/15-photo-slider",
-    hostedAt: "",
-    coverImg: imgUrls.image_slider_cover,
-    images: [imgUrls.image_slider_ss_1],
-  },
+    name: "Number to Amharic Text Converter",
+    tech: ["Javascript", "npm"],
+    desc: "A javascript package that tranforms normal (arabic) numbers into their amharic text counterparts.",
+    github: "https://github.com/tamirkifle/number-to-amharic-text",
+    hostedAt: "https://www.npmjs.com/package/number-to-amharic-text",
+    coverImg: imgUrls.number_to_amharic_cover,
+    images: [imgUrls.number_to_amharic_ss_1],
+  }
+
 ];
 
 export default projects;
