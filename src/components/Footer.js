@@ -18,7 +18,7 @@ export default function Footer() {
             </a>
           </li>
           <li>
-            <a href="https://et.linkedin.com/in/tamir-kifle-yirga-4734b8173">
+            <a href="https://www.linkedin.com/in/tamir-yirga">
               <img src={linkedinIcon} alt="Tamir's Linkedin" />
             </a>
           </li>
