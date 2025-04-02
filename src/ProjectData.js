@@ -28,6 +28,26 @@ const projects = [
     ]
   },
   {
+    name: "Shophaven Web Shop",
+    tech: [
+      "React",
+      "TypeScript",
+      "GraphQL",
+      "Apollo Client",
+      "Local Storage API"
+    ],
+    desc: "An e-commerce web shop with product browsing, cart management and currency switching features.",
+    github: "https://github.com/tamirkifle/ecommerce-shop",
+    hostedAt: "https://tamirkifle.github.io/ecommerce-shop",
+    coverImg: imgUrls.shophaven_cover,
+    images: [
+      imgUrls.shophaven_1,
+      imgUrls.shophaven_2,
+    ],
+    responsibilities:
+      "Built the whole frontend of the e-commerce app and connected it with a sample data GraphQL database. Used React with Typescript for the frontend and Apollo Client to write coneection to the backend."
+  },
+  {
     name: "Property Rental Web App",
     tech: [
       "Angular",
