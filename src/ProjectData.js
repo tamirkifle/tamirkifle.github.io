@@ -10,7 +10,7 @@ const projects = [
       "Cloud Firestore",
       "Javascript",
       "Blockchain APIs (Blockfrost, AdaLite)",
-      "A lot of cryptography for blockchain manipulation :)",
+      "A lot of cryptography to find our way around in blockchain land :)",
       "AWS for hosting",
     ],
     desc: "A Cardano wallet running as a telegram bot",
