@@ -6,8 +6,7 @@ export default function ProjectList() {
     <section className="portfolio" id="portfolio">
       <div className="container">
         <h2 className="portfolio--title">
-          <span className="highlight">Featured</span>{" "}
-          <span className="highlight">Work</span>
+          <span className="highlight">Selected Projects</span>
         </h2>
         <div className="portfolio--projects flow-content">
           {projects.map((project) => (

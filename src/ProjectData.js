@@ -5,15 +5,14 @@ const projects = [
     name: "Endubis Wallet (with Endubis Blockchain Solutions)",
     tech: [
       "React",
-      "Telegraf Framework for Telegram Bots",
       "Node.js",
-      "Cloud Firestore",
-      "Javascript",
-      "Blockchain APIs (Blockfrost, AdaLite)",
-      "A lot of cryptography to find our way around in blockchain land :)",
-      "AWS for hosting",
+      "Telegram Bot API",
+      "Blockchain APIs",
+      "Cryptography",
+      "AWS",
+      "Firestore"
     ],
-    desc: "A Cardano wallet running as a telegram bot",
+    desc: "A revolutionary Telegram-based Cardano wallet serving 7,000+ users with seamless blockchain transactions.",
     github: "http://github.com/endubis-Solutions/",
     hostedAt: "https://t.me/EndubisWalletBot",
     coverImg: imgUrls.endubis_cover,
@@ -25,7 +24,8 @@ const projects = [
       "v1 of Endubis Wallet was built completely by me through months of iteration and research. We are proud to have amassed more than 7000 users!",
     otherTeamMembers: [
       "Founder and Manager - Nebiyu Sultan",
-    ]
+    ],
+    color: "#58595b"
   },
   {
     name: "Shophaven Web Shop",
@@ -33,10 +33,10 @@ const projects = [
       "React",
       "TypeScript",
       "GraphQL",
-      "Apollo Client",
-      "Local Storage API"
+      "Apollo",
+      "Local Storage"
     ],
-    desc: "An e-commerce web shop with product browsing, cart management and currency switching features.",
+    desc: "A modern e-commerce platform featuring real-time product browsing, dynamic cart management, and multi-currency support.",
     github: "https://github.com/tamirkifle/ecommerce-shop",
     hostedAt: "https://tamirkifle.github.io/ecommerce-shop",
     coverImg: imgUrls.shophaven_cover,
@@ -45,19 +45,19 @@ const projects = [
       imgUrls.shophaven_2,
     ],
     responsibilities:
-      "Built the whole frontend of the e-commerce app and connected it with a sample data GraphQL database. Used React with Typescript for the frontend and Apollo Client to write coneection to the backend."
+      "Built the whole frontend of the e-commerce app and connected it with a sample data GraphQL database. Used React with Typescript for the frontend and Apollo Client to write coneection to the backend.",
+    color: "#ffffff"
   },
   {
     name: "Property Rental Web App",
     tech: [
       "Angular",
-      "Firebase Authentication",
-      "Firebase Storage",
-      "Firestore Database",
-      "Firebase Hosting",
-      "Typescript",
+      "Firebase",
+      "TypeScript",
+      "Authentication",
+      "Cloud Storage"
     ],
-    desc: "Property Rental is a hub for people looking to rent out or to lease out properties. It connects prospective tenants to people with property for rent in their area.",
+    desc: "A full-featured property marketplace connecting landlords and tenants with real-time listings and secure authentication.",
     github: "https://github.com/tamirkifle/property-rental",
     hostedAt: "https://property-rental-fca0f.web.app/",
     coverImg: imgUrls.property_rental_cover,
@@ -72,40 +72,54 @@ const projects = [
       "UX/UI - Sahlit Girma",
       "Android App Developer - Heran Semre",
     ],
+    color: "#495fa6"
   },
   {
     name: "Similar Faces: An AI Game",
     tech: [
       "Angular",
-      "Microsoft Azure AI",
-      "Face API",
-      "Azure Blob Storage",
-      "Typescript",
+      "Azure AI",
+      "Face Recognition",
+      "Cloud Storage",
+      "TypeScript"
     ],
-    desc: "Similar Faces: A Game was a project built during a AI bootcamp hosted by Microsoft and Gebeya Inc. A simple game where the goal is to guess the most similar face out of a list of faces comparing your instincts to Microsoft's Artificial Intelligence.",
+    desc: "An innovative AI-powered game that challenges players to match faces while competing against Microsoft's facial recognition technology.",
     coverImg: imgUrls.similar_faces_cover,
     images: [imgUrls.similar_faces_ss_1, imgUrls.similar_faces_ss_2],
     responsibilities: "Frontend engineer and AI Engineer",
+    scale: 1.53,
+    color: "#e5e5e5"
   },
   {
     name: "Portfolio Page",
-    tech: ["React", "HTML", "CSS", "Javascript"],
-    desc: "This portfolio page showcasing me and my projects and is home for my blog.",
+    tech: [
+      "React",
+      "CSS",
+      "JavaScript",
+      "Responsive Design"
+    ],
+    desc: "A sleek, responsive portfolio showcasing my projects and technical expertise with a modern, minimalist design.",
     github: "https://github.com/tamirkifle/my-portfolio",
-    hostedAt: "",
+    hostedAt: "https://tamirkifle.github.io",
     coverImg: imgUrls.portfolio_cover,
     images: [],
+    scale: 1.52,
+    color: "#37b845"
   },
   {
     name: "Number to Amharic Text Converter",
-    tech: ["Javascript", "npm"],
-    desc: "A javascript package that tranforms normal (arabic) numbers into their amharic text counterparts.",
+    tech: [
+      "JavaScript",
+      "NPM",
+      "Localization"
+    ],
+    desc: "A utility package converting numeric values to Amharic text, bridging language and technology for Ethiopian users.",
     github: "https://github.com/tamirkifle/number-to-amharic-text",
     hostedAt: "https://www.npmjs.com/package/number-to-amharic-text",
     coverImg: imgUrls.number_to_amharic_cover,
     images: [imgUrls.number_to_amharic_ss_1],
+    color: "#296be1"
   }
-
 ];
 
 export default projects;

@@ -1,10 +1,12 @@
-import fancyDownArrow from "../images/fancy-down-arrow.png";
 import TagCloud from "TagCloud";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function About() {
+  const tagCloudRef = useRef(null);
+
   useEffect(() => {
-    const container = ".tagcloud";
+    if (!tagCloudRef.current) return;
+
     const texts = [
       "AWS",
       "React",
@@ -24,7 +26,13 @@ export default function About() {
     ];
 
     const options = { radius: 200, maxSpeed: "fast", initSpeed: "fast" };
-    TagCloud(container, texts, options);
+    TagCloud(tagCloudRef.current, texts, options);
+
+    return () => {
+      if (tagCloudRef.current) {
+        tagCloudRef.current.innerHTML = '';
+      }
+    };
   }, []);
 
   return (
@@ -33,7 +41,7 @@ export default function About() {
         <div className="text-container flow-content">
           <div className="about--intro flow-content">
             <h2 className="about--intro--name">
-              👋 I'm <span>Tamir!</span>
+              Hi, I'm <span>Tamir</span>
             </h2>
             <p className="about--intro--subtitle">
               A <span className="highlight">full-stack</span>{" "}
@@ -43,16 +51,11 @@ export default function About() {
             </p>
           </div>
           <p className="about--desc">
-            Passionate about building scalable, distributed systems with a focus on quality, maintainability.
-            <br /> Feel free to take a look at some of my work below.
+            Building scalable systems with clean, efficient code. 
+            Check out my work below.
           </p>
         </div>
-        <img
-          className="about--scroll-down floating"
-          src={fancyDownArrow}
-          alt="Scroll down"
-        />
-        <div className="tagcloud"></div>
+        <div className="tagcloud" ref={tagCloudRef}></div>
       </div>
     </section>
   );
