@@ -19,31 +19,17 @@ export default function Header() {
               <span role="img" aria-label="portfolio">
                 🖼
               </span>
-              Portfolio
-            </a>
-            <a href="#contact" onClick={() => setOpen(!open)}>
-              <span role="img" aria-label="contact">
-                📩
-              </span>
-              Contact
+              Projects
             </a>
           </StyledMenu>
         </div>
         <nav className="primary-nav">
           <ul className="split">
             <li>
-              <a href="/#" className="active">
-                Home
-              </a>
-            </li>
-            <li>
               <a href="#about">About</a>
             </li>
             <li>
-              <a href="#portfolio">Portfolio</a>
-            </li>
-            <li>
-              <a href="#contact">Contact</a>
+              <a href="#portfolio">Projects</a>
             </li>
           </ul>
         </nav>
