@@ -4,7 +4,8 @@ import Modal from "./utility/Modal";
 export default function Project(props) {
   const coverImg = props.coverImg || "https://i.imgur.com/N02vRuT.jpg"; //default image for no cover
   const [showModal, setShowModal] = useState(false);
-  const toggleModal = () => setShowModal((prevShowModal) => !prevShowModal);
+  const openModal = () => {setShowModal(true)};
+  const closeModal = () => {setShowModal(false)};
   const scale = props.scale || 1.23;
   const color = props.color || "#ffffff";
 
@@ -17,7 +18,7 @@ export default function Project(props) {
           style={{ '--image-scale': scale }}
         />
       </div>
-      <div className="card--info flow-content">
+      <div className="card--info flow-content" onClick={openModal}>
         <h3 className="card--info--title">{props.name}</h3>
         <p className="card--info--desc">{props.desc}</p>
         <div className="card--info--tech-used">
@@ -26,7 +27,7 @@ export default function Project(props) {
           ))}
         </div>
         <div className="card--info--actions">
-          <button className="btn" onClick={toggleModal}>
+          <button className="btn" onClick={openModal}>
             <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
               <circle cx="12" cy="12" r="3"></circle>
@@ -64,7 +65,7 @@ export default function Project(props) {
         </div>
       </div>
       {showModal && (
-        <Modal toggleModal={toggleModal}>
+        <Modal closeModal={closeModal}>
           <div className="flow-content">
             <h3 className="modal--title">{props.name}</h3>
             <div className="modal--images">
@@ -123,7 +124,7 @@ export default function Project(props) {
               )}
             </div>
           </div>
-          <button className="btn modal--close-btn" onClick={toggleModal}>
+          <button className="btn modal--close-btn" onClick={closeModal}>
             Close Preview
           </button>
         </Modal>
