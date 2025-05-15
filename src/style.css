@@ -719,6 +719,11 @@ section:nth-of-type(2n + 1) {
   margin: 1rem auto;
 }
 
+.modal--images img.screenshot {
+  max-height: 33vw;
+  object-fit: contain;
+}
+
 /* Media Queries - Desktop first so working down from big to small */
 
 /* Large devices (desktops, less than 1300px) */
@@ -760,6 +765,11 @@ section:nth-of-type(2n + 1) {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .modal--images img.screenshot {
+    max-height: unset;
+    object-fit: unset;
   }
 }
 
