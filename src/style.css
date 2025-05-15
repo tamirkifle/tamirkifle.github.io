@@ -546,7 +546,6 @@ section:nth-of-type(2n + 1) {
   position: relative;
   flex: 1;
   gap: 0.5rem;
-  min-width: 120px;
   backdrop-filter: blur(4px);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -824,7 +823,6 @@ section:nth-of-type(2n + 1) {
   }
   .card--info--actions .btn {
     padding: 0.7rem 1.2rem;
-    min-width: 100px;
   }
   
   .card--info--actions .btn span {
