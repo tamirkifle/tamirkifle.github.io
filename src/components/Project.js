@@ -4,13 +4,13 @@ import Modal from "./utility/Modal";
 export default function Project(props) {
   const coverImg = props.coverImg || "https://i.imgur.com/N02vRuT.jpg"; //default image for no cover
   const [showModal, setShowModal] = useState(false);
-  const openModal = () => {setShowModal(true)};
-  const closeModal = () => {setShowModal(false)};
+  const openModal = (e) => {setShowModal(true); e.stopPropagation()};
+  const closeModal = (e) => {setShowModal(false); e.stopPropagation()};
   const scale = props.scale || 1.23;
   const color = props.color || "#ffffff";
 
   return (
-    <div className="card">
+    <div className="card" onClick={openModal}>
       <div className="card--image" style={{ backgroundColor: color }}>
         <img 
           src={coverImg} 
@@ -18,7 +18,7 @@ export default function Project(props) {
           style={{ '--image-scale': scale }}
         />
       </div>
-      <div className="card--info flow-content" onClick={openModal}>
+      <div className="card--info flow-content">
         <h3 className="card--info--title">{props.name}</h3>
         <p className="card--info--desc">{props.desc}</p>
         <div className="card--info--tech-used">
