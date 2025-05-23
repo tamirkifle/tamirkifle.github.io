@@ -72,7 +72,6 @@ export default function Project(props) {
               {props.images.map((image) => (
                 <div
                   key={image}
-                  className={image.includes("ipWdyxh.png") ? "phone" : ""}
                 >
                   <img
                     className="screenshot"

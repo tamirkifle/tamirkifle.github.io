@@ -5,7 +5,7 @@
 
 :root {
   --nav-padding: 1rem;
-  --highlight-color: #7ca76f;
+  --highlight-color: #2ee59d;
   --primary-font: 'Libre Baskerville', serif;
   --display-font: 'Libre Baskerville', serif;
   --body-font: 'Libre Baskerville', serif;
@@ -129,6 +129,7 @@ html {
   bottom: 0;
   background-color: var(--highlight-color);
   z-index: -1;
+  opacity: 50%;
 }
 .no-wrap {
   white-space: nowrap;
@@ -149,7 +150,8 @@ html {
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease 0s;
   padding: 0.8rem 2rem;
-  line-height: 1.6
+  line-height: 0;
+  padding: 1.5rem;
 }
 
 .btn:hover {
@@ -701,10 +703,11 @@ section:nth-of-type(2n + 1) {
   display: flex;
   width: 100%;
   padding: 0 1.5rem;
+  flex-wrap: wrap;
 }
 
 .modal--images .phone {
-  flex-basis: 30%;
+  flex-basis: 56%;
 }
 .modal--images > * {
   flex-basis: 100%;
