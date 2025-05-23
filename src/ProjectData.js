@@ -25,7 +25,7 @@ const projects = [
       "Sub-20ms query performance with optimized DynamoDB schema",
       "Auto-scaling AWS deployment with comprehensive monitoring"
     ],
-    color: "#FF9500"
+    color: "#fafdff"
   },
   {
     name: "Recession Foresight Models + Dashboard",
@@ -52,7 +52,7 @@ const projects = [
       "Interactive dashboard for real-time risk assessment",
       "11 competing models including neural networks and ensemble methods"
     ],
-    color: "#007AFF"
+    color: "#042022"
   },
   {
     name: "Endubis Wallet",
@@ -111,7 +111,7 @@ const projects = [
       "Containerized microservices for seamless deployment",
       "Fault-tolerant design with Redis caching"
     ],
-    color: "#34C759"
+    color: "#d6eaea"
   },
   {
     name: "Distributed System Performance Observatory (In Progress)",
@@ -138,7 +138,7 @@ const projects = [
       "Work in progress - actively developing"
     ],
     isWIP: true,
-    color: "#FF3B30"
+    color: "#fcfcfc"
   },
   {
     name: "Shophaven Web Shop",
