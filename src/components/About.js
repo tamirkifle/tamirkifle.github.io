@@ -44,16 +44,13 @@ export default function About() {
               Hi, I'm <span>Tamir</span>
             </h2>
             <p className="about--intro--subtitle">
-              A <span className="highlight">full-stack</span>{" "}
-              <span className="highlight">developer</span> based in{" "}
-              <span className="highlight no-wrap">Seattle</span>,{" "}
-              <span className="highlight">Washington</span>
+              <span>A full-stack engineer turning complex problems into elegant, scalable solutions.</span>
+              <br/><br/><span className="highlight"><em>High-performance systems.</em></span>{" "}
+              <br/><span className="highlight no-wrap"><em>Clean code.</em></span>{" "}
+              <br/><span className="highlight no-wrap"><em>Real impact.</em></span>{" "}
             </p>
           </div>
-          <p className="about--desc">
-            Building scalable systems with clean, efficient code. 
-            Check out my work below.
-          </p>
+          
         </div>
         <div className="tagcloud" ref={tagCloudRef}></div>
       </div>
