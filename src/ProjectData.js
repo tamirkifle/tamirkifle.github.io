@@ -11,19 +11,19 @@ const projects = [
       "DynamoDB",
       "Microservices"
     ],
-    desc: "A fault-tolerant microservices system processing 8,000+ events/second with 99.99% reliability, featuring zero message loss and sub-20ms query performance.",
+    desc: "A high-throughput distributed system that processes over 8,000 skiing events per second with real-time monitoring dashboards and auto-scaling capabilities.",
     github: "https://github.com/tamirkifle/skier-tracking-system",
     hostedAt: null,
     coverImg: imgUrls.skier_tracking_cover || null,
     images: [
       imgUrls.skier_tracking_1 || null,
     ].filter(Boolean),
-    responsibilities: "Architected the entire distributed system from scratch, implementing message queuing with RabbitMQ, designing optimized DynamoDB schemas, and deploying auto-scaling infrastructure on AWS EC2.",
+    responsibilities: "Used Java and Spring Boot to build microservices architecture with RabbitMQ messaging system. Designed DynamoDB schema with Redis caching integration and deployed full-stack solution on AWS with CloudWatch monitoring for high-availability event processing.",
     highlights: [
-      "Processes 8,000+ events/second with 99.99% reliability",
-      "Zero message loss with dead letter queues and exponential backoff",
-      "Sub-20ms query performance with optimized DynamoDB schema",
-      "Auto-scaling AWS deployment with comprehensive monitoring"
+      "Processes 8,000+ events/second",
+      "Full-stack solution with Java backend and Spring Boot APIs",
+      "DynamoDB schema with Redis caching integration",
+      "AWS deployment with auto-scaling and CloudWatch monitoring"
     ],
     color: "#fafdff"
   },
@@ -32,12 +32,11 @@ const projects = [
     tech: [
       "Python",
       "TensorFlow",
-      "scikit-learn",
-      "pandas",
-      "Machine Learning",
-      "Data Science"
+      "React",
+      "Next.js",
+      "Machine Learning"
     ],
-    desc: "A high-precision economic prediction system with 11 competing models achieving 96% AUC on near-term forecasts, featuring an interactive dashboard for real-time risk assessment.",
+    desc: "A machine learning platform that compares 11 different economic models (LSTM, ARIMAX, ensemble methods) to predict economic recessions with 96% accuracy.",
     github: "https://github.com/tamirkifle/recession-dashboard",
     hostedAt: "https://recession-dashboard.vercel.app/",
     coverImg: imgUrls.recession_model_cover || null,
@@ -45,12 +44,12 @@ const projects = [
       imgUrls.recession_model_1 || null,
       imgUrls.recession_model_2 || null
     ].filter(Boolean),
-    responsibilities: "Built the entire prediction system including model development, feature engineering, and interactive dashboard. Enhanced model performance by 31% through advanced feature selection from 14 macroeconomic indicators.",
+    responsibilities: "Used Python and TensorFlow to develop ML pipeline comparing 11 models achieving 96% AUC. Built interactive dashboard with React and Next.js for real-time predictions, integrated frontend with backend using RESTful APIs, and deployed to Vercel for public access.",
     highlights: [
-      "96% AUC on near-term, 85% on long-term forecasts",
-      "31% performance improvement through feature engineering",
-      "Interactive dashboard for real-time risk assessment",
-      "11 competing models including neural networks and ensemble methods"
+      "96% AUC with ML pipeline comparing 11 models",
+      "Interactive React dashboard",
+      "Real-time ML predictions and data visualization",
+      "End-to-end platform with RESTful API integration"
     ],
     color: "#042022"
   },
@@ -59,13 +58,12 @@ const projects = [
     tech: [
       "React",
       "Node.js",
+      "Firebase/Firestore",
       "Telegram Bot API",
       "Blockchain APIs",
-      "Cryptography",
-      "AWS",
-      "Firestore"
+      "Cryptography"
     ],
-    desc: "A revolutionary Telegram-based Cardano wallet serving 7,000+ users with seamless blockchain transactions.",
+    desc: "A cryptocurrency wallet application that enables users to securely manage Cardano assets through both web interface and Telegram bot integration.",
     github: "http://github.com/endubis-Solutions/",
     hostedAt: "https://t.me/EndubisWalletBot",
     coverImg: imgUrls.endubis_cover,
@@ -74,12 +72,12 @@ const projects = [
       imgUrls.endubis_1,
       imgUrls.endubis_2
     ],
-    responsibilities: "v1 of Endubis Wallet was built completely by me through months of iteration and research. We are proud to have amassed more than 7000 users!",
+    responsibilities: "Used React.js and Node.js to build full-stack cryptocurrency wallet with end-to-end encryption and secure key management. Integrated Firebase/Firestore for real-time data synchronization, implemented Telegram Bot API for mobile access, and deployed to production serving 3,000+ active users.",
     highlights: [
-      "7,000+ active users",
-      "Seamless Cardano blockchain integration",
-      "Secure Telegram-based interface",
-      "Built entirely from scratch as sole developer"
+      "3,000+ users managing Cardano assets",
+      "Full-stack with React.js frontend and Node.js backend",
+      "End-to-end encryption and secure key management",
+      "Real-time features with Firebase/Firestore integration"
     ],
     otherTeamMembers: [
       "Founder and Manager - Nebiyu Sultan",
@@ -96,7 +94,7 @@ const projects = [
       "Scrapy",
       "ETL"
     ],
-    desc: "A scalable ETL pipeline with two-phase deduplication achieving near-perfect accuracy and 65% faster data processing through specialized indexing and containerized microservices.",
+    desc: "An automated ETL pipeline that scrapes job postings from multiple sources, processes the data, and provides clean APIs for job search applications.",
     github: "https://github.com/tamirkifle/job-scraping-pipeline",
     hostedAt: null,
     coverImg: imgUrls.job_scraping_cover || null,
@@ -104,12 +102,12 @@ const projects = [
       imgUrls.job_scraping_1 || null,
       imgUrls.job_scraping_2 || null
     ].filter(Boolean),
-    responsibilities: "Designed and implemented the entire ETL pipeline architecture, including scraping logic, deduplication algorithms, database optimization, and containerization strategy.",
+    responsibilities: "Used Python and Scrapy to build web scraping system with MongoDB for data storage and Redis for caching. Containerized microservices with Docker for scalable deployment and implemented RESTful API endpoints for frontend consumption.",
     highlights: [
-      "65% faster data processing with optimized architecture",
-      "Near-perfect accuracy with two-phase deduplication",
-      "Containerized microservices for seamless deployment",
-      "Fault-tolerant design with Redis caching"
+      "Full-stack ETL pipeline with Scrapy backend",
+      "MongoDB storage with Redis for efficient processing",
+      "Containerized microservices with Docker",
+      "API endpoints for frontend consumption"
     ],
     color: "#d6eaea"
   },
@@ -117,12 +115,12 @@ const projects = [
     name: "Distributed System Performance Observatory (In Progress)",
     tech: [
       "C++",
-      "Linux Kernel APIs",
-      "Prometheus",
+      "React",
       "TensorFlow",
+      "Grafana",
       "System Programming"
     ],
-    desc: "A low-latency metrics collector with <1% CPU overhead monitoring 200+ system metrics, featuring ML-powered automatic optimization reducing system latency by 20%+.",
+    desc: "A real-time monitoring platform that tracks distributed system performance metrics and provides ML-powered optimization recommendations.",
     github: "https://github.com/tamirkifle/perf-observatory",
     hostedAt: null,
     coverImg: imgUrls.perf_observatory_cover || null,
@@ -130,26 +128,25 @@ const projects = [
       imgUrls.perf_observatory_1 || null,
       imgUrls.perf_observatory_2 || null
     ].filter(Boolean),
-    responsibilities: "Developing the entire system including low-level C++ metrics collection, ML optimization engine, and distributed monitoring infrastructure.",
+    responsibilities: "Using C++ to develop high-performance backend collectors for system metrics and React for visualization dashboard. Integrating TensorFlow for ML-powered performance optimization with automated recommendations currently in active development.",
     highlights: [
-      "<1% CPU overhead while monitoring 200+ metrics",
-      "ML-powered automatic parameter tuning",
-      "20%+ latency reduction through optimization",
+      "Full-stack monitoring with C++ backend collectors",
+      "React visualization dashboard",
+      "ML-powered optimization with TensorFlow",
       "Work in progress - actively developing"
     ],
     isWIP: true,
     color: "#fcfcfc"
   },
   {
-    name: "Shophaven Web Shop",
+    name: "ShopHaven E-Commerce Platform",
     tech: [
       "React",
       "TypeScript",
       "GraphQL",
-      "Apollo",
-      "Local Storage"
+      "Apollo Client"
     ],
-    desc: "A modern e-commerce platform featuring real-time product browsing, dynamic cart management, and multi-currency support with 65% API call reduction.",
+    desc: "A modern e-commerce platform with responsive design, shopping cart functionality, and optimized GraphQL queries for seamless user experience.",
     github: "https://github.com/tamirkifle/ecommerce-shop",
     hostedAt: "https://tamirkifle.github.io/ecommerce-shop",
     coverImg: imgUrls.shophaven_cover,
@@ -157,12 +154,12 @@ const projects = [
       imgUrls.shophaven_1,
       imgUrls.shophaven_2,
     ],
-    responsibilities: "Built the whole frontend of the e-commerce app and connected it with a sample data GraphQL database. Used React with Typescript for the frontend and Apollo Client to write connection to the backend.",
+    responsibilities: "Used React 18 and TypeScript to build type-safe e-commerce application with complex state management. Integrated GraphQL and Apollo Client for efficient data fetching with optimized queries and caching, and deployed to GitHub Pages for public demonstration.",
     highlights: [
-      "65% reduction in API calls with GraphQL",
-      "3.2x improvement in page load performance",
-      "Sub-16ms render times for complex configurations",
-      "40% improvement in code maintainability"
+      "Full-stack e-commerce app with React 18",
+      "TypeScript for type-safe development",
+      "GraphQL/Apollo for efficient communication",
+      "Responsive UI with performance optimization"
     ],
     color: "#ffffff"
   }
