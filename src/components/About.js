@@ -39,17 +39,22 @@ export default function About() {
     <section className="about" id="about">
       <div className="container split">
         <div className="text-container flow-content">
-          <div className="about--intro flow-content">
-            <h2 className="about--intro--name">
-              Hi, I'm <span>Tamir</span>
-            </h2>
-            <p className="about--intro--subtitle">
-              <span>A full-stack engineer turning complex problems into elegant, scalable solutions.</span>
-              <br/><br/><span className="highlight"><em>High-performance systems.</em></span>{" "}
-              <br/><span className="highlight no-wrap"><em>Clean code.</em></span>{" "}
-              <br/><span className="highlight no-wrap"><em>Real impact.</em></span>{" "}
-            </p>
-          </div>
+<div className="about--intro flow-content">
+  <h2 className="about--intro--name">
+    Hi, I'm <span>Tamir</span>
+  </h2>
+  <p className="about--intro--subtitle">
+    <span>
+      I design full-stack systems that are reliable, scalable, and thoughtfully engineered.
+    </span>
+<br /><br /><span className="highlight"><em>Systems that scale.</em></span>{" "}
+<br /><span className="highlight no-wrap"><em>Engineering over hype.</em></span>{" "}
+<br /><span className="highlight no-wrap"><em>AI with purpose.</em></span>{" "}
+  </p>
+</div>
+
+
+
           
         </div>
         <div className="tagcloud" ref={tagCloudRef}></div>
