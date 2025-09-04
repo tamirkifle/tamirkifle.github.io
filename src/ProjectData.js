@@ -1,8 +1,45 @@
 import imgUrls from "./imgur-urls.json";
 
+const categories = {
+  DISTRIBUTED: "Distributed Systems",
+  AI_ML: "AI/ML Platforms",
+  BLOCKCHAIN: "Blockchain",
+  DATA_ENG: "Data Engineering",
+  FULLSTACK: "Full-Stack Apps"
+};
+
 const projects = [
+  // DISTRIBUTED SYSTEMS
   {
-    name: "Distributed Skier Tracking System",
+    id: "kv-database",
+    name: "Distributed KV Database",
+    category: categories.DISTRIBUTED,
+    tech: [
+      "Java",
+      "Spring Boot",
+      "Docker",
+      "AWS EC2",
+      "Consensus Algorithms"
+    ],
+    desc: "A distributed key-value store supporting Leader-Follower and Leaderless modes with configurable W/R quorums and 5-node replication.",
+    github: "https://github.com/tamirkifle/distributed-kv-database",
+    hostedAt: null,
+    coverImg: null, // Placeholder
+    images: [],
+    responsibilities: "Implemented distributed consensus algorithms with configurable quorum-based replication. Built Leader-Follower and Leaderless architectures supporting 5-node clusters. Deployed on AWS EC2 with Docker orchestration for high availability and fault tolerance.",
+    highlights: [
+      "Configurable W/R quorums for consistency",
+      "Leader-Follower & Leaderless modes",
+      "5-node replication with fault tolerance",
+      "Docker containerization on AWS EC2"
+    ],
+    featured: true,
+    color: "#1a1f2e"
+  },
+  {
+    id: "skier-tracking",
+    name: "Distributed Ski Tracker",
+    category: categories.DISTRIBUTED,
     tech: [
       "Java",
       "Spring Boot",
@@ -11,24 +48,56 @@ const projects = [
       "DynamoDB",
       "Microservices"
     ],
-    desc: "A high-throughput distributed system that processes over 8,000 skiing events per second with real-time monitoring dashboards and auto-scaling capabilities.",
+    desc: "Cloud-native microservices handling 8,000+ skiing events per second with real-time monitoring and auto-scaling capabilities.",
     github: "https://github.com/tamirkifle/skier-tracking-system",
     hostedAt: null,
     coverImg: imgUrls.skier_tracking_cover || null,
     images: [
       imgUrls.skier_tracking_1 || null,
     ].filter(Boolean),
-    responsibilities: "Used Java and Spring Boot to build microservices architecture with RabbitMQ messaging system. Designed DynamoDB schema with Redis caching integration and deployed full-stack solution on AWS with CloudWatch monitoring for high-availability event processing.",
+    responsibilities: "Built microservices architecture with RabbitMQ for async message processing. Designed DynamoDB schema with Redis caching and implemented AWS auto-scaling for handling peak loads of 8K+ events/second.",
     highlights: [
       "Processes 8,000+ events/second",
-      "Full-stack solution with Java backend and Spring Boot APIs",
-      "DynamoDB schema with Redis caching integration",
-      "AWS deployment with auto-scaling and CloudWatch monitoring"
+      "Async queue processing with RabbitMQ",
+      "Distributed caching with Redis",
+      "AWS auto-scaling for peak loads"
     ],
+    featured: true,
     color: "#fafdff"
   },
+  
+  // AI/ML PLATFORMS
   {
-    name: "Recession Foresight Models + Dashboard",
+    id: "interview-ace",
+    name: "InterviewAce",
+    category: categories.AI_ML,
+    tech: [
+      "React",
+      "GraphQL",
+      "Neo4j",
+      "Docker",
+      "OpenAI Whisper",
+      "LLM Integration"
+    ],
+    desc: "Video interview practice platform with LLM integration and graph-based semantic modeling for personalized feedback.",
+    github: "https://github.com/tamirkifle/interview-ace",
+    hostedAt: null,
+    coverImg: null, // Placeholder
+    images: [],
+    responsibilities: "Integrated OpenAI Whisper for speech-to-text transcription with LLM-powered feedback. Built Neo4j graph database for semantic relationship modeling between interview topics. Containerized with Docker for scalable deployment.",
+    highlights: [
+      "Real-time video transcription with Whisper",
+      "LLM-powered interview feedback",
+      "Neo4j graph-based knowledge modeling",
+      "Distributed storage architecture"
+    ],
+    featured: true,
+    color: "#0e2a47"
+  },
+  {
+    id: "recession-model",
+    name: "Recession Prediction Platform",
+    category: categories.AI_ML,
     tech: [
       "Python",
       "TensorFlow",
@@ -36,7 +105,7 @@ const projects = [
       "Next.js",
       "Machine Learning"
     ],
-    desc: "A machine learning platform that compares 11 different economic models (LSTM, ARIMAX, ensemble methods) to predict economic recessions with 96% accuracy.",
+    desc: "ML platform comparing 11 economic models (LSTM, ARIMAX, ensemble) to predict recessions with 96% accuracy.",
     github: "https://github.com/tamirkifle/recession-dashboard",
     hostedAt: "https://recession-dashboard.vercel.app/",
     coverImg: imgUrls.recession_model_cover || null,
@@ -44,17 +113,22 @@ const projects = [
       imgUrls.recession_model_1 || null,
       imgUrls.recession_model_2 || null
     ].filter(Boolean),
-    responsibilities: "Used Python and TensorFlow to develop ML pipeline comparing 11 models achieving 96% AUC. Built interactive dashboard with React and Next.js for real-time predictions, integrated frontend with backend using RESTful APIs, and deployed to Vercel for public access.",
+    responsibilities: "Developed ML pipeline comparing 11 models achieving 96% AUC. Built interactive dashboard with React/Next.js for real-time predictions and data visualization.",
     highlights: [
-      "96% AUC with ML pipeline comparing 11 models",
-      "Interactive React dashboard",
-      "Real-time ML predictions and data visualization",
-      "End-to-end platform with RESTful API integration"
+      "96% AUC prediction accuracy",
+      "11 model comparison pipeline",
+      "Real-time economic indicators",
+      "Interactive data visualizations"
     ],
+    featured: false,
     color: "#042022"
   },
+  
+  // BLOCKCHAIN
   {
+    id: "endubis-wallet",
     name: "Endubis Wallet",
+    category: categories.BLOCKCHAIN,
     tech: [
       "React",
       "Node.js",
@@ -63,7 +137,7 @@ const projects = [
       "Blockchain APIs",
       "Cryptography"
     ],
-    desc: "A cryptocurrency wallet application that enables users to securely manage Cardano assets through both web interface and Telegram bot integration.",
+    desc: "Cryptocurrency wallet enabling secure Cardano asset management through web and Telegram bot interfaces.",
     github: "http://github.com/endubis-Solutions/",
     hostedAt: "https://t.me/EndubisWalletBot",
     coverImg: imgUrls.endubis_cover,
@@ -72,81 +146,117 @@ const projects = [
       imgUrls.endubis_1,
       imgUrls.endubis_2
     ],
-    responsibilities: "Used React.js and Node.js to build full-stack cryptocurrency wallet with end-to-end encryption and secure key management. Integrated Firebase/Firestore for real-time data synchronization, implemented Telegram Bot API for mobile access, and deployed to production serving 3,000+ active users.",
+    responsibilities: "Built full-stack crypto wallet with end-to-end encryption and secure key management. Integrated Telegram Bot API and Firebase for real-time sync, serving 3,000+ active users.",
     highlights: [
-      "3,000+ users managing Cardano assets",
-      "Full-stack with React.js frontend and Node.js backend",
-      "End-to-end encryption and secure key management",
-      "Real-time features with Firebase/Firestore integration"
+      "3,000+ active users",
+      "End-to-end encryption",
+      "Multi-platform access (Web & Telegram)",
+      "Real-time Firebase sync"
     ],
+    featured: false,
     otherTeamMembers: [
       "Founder and Manager - Nebiyu Sultan",
     ],
     color: "#58595b"
   },
   {
+    id: "defi-yield",
+    name: "DeFi Yield Optimizer",
+    category: categories.BLOCKCHAIN,
+    tech: [
+      "Solidity",
+      "Web3.js",
+      "React",
+      "Hardhat",
+      "TheGraph"
+    ],
+    desc: "Automated yield farming platform optimizing returns across multiple DeFi protocols with smart rebalancing.",
+    github: null, // Placeholder
+    hostedAt: null,
+    coverImg: null,
+    images: [],
+    responsibilities: "Smart contract development for automated yield optimization. Integration with multiple DeFi protocols for optimal APY hunting.",
+    highlights: [
+      "Automated yield rebalancing",
+      "Multi-protocol integration",
+      "Gas-optimized smart contracts",
+      "Real-time APY tracking"
+    ],
+    featured: false,
+    isPlaceholder: true,
+    color: "#2a1f3d"
+  },
+  
+  // DATA ENGINEERING
+  {
+    id: "job-scraping",
     name: "Job Scraping Pipeline",
+    category: categories.DATA_ENG,
     tech: [
       "Python",
-      "MongoDB",
-      "Redis",
       "Docker",
+      "Kubernetes",
+      "MongoDB",
       "Scrapy",
-      "ETL"
+      "Redis"
     ],
-    desc: "An automated ETL pipeline that scrapes job postings from multiple sources, processes the data, and provides clean APIs for job search applications.",
+    desc: "Containerized ETL pipeline for automated large-scale job data collection and processing.",
     github: "https://github.com/tamirkifle/job-scraping-pipeline",
     hostedAt: null,
     coverImg: imgUrls.job_scraping_cover || null,
     images: [
-      imgUrls.job_scraping_1 || null,
-      imgUrls.job_scraping_2 || null
+      imgUrls.job_scraping_1 || null
     ].filter(Boolean),
-    responsibilities: "Used Python and Scrapy to build web scraping system with MongoDB for data storage and Redis for caching. Containerized microservices with Docker for scalable deployment and implemented RESTful API endpoints for frontend consumption.",
+    responsibilities: "Built containerized Python ETL pipeline with Scrapy for web scraping. Implemented MongoDB for data storage with Redis caching, orchestrated with Kubernetes for scalability.",
     highlights: [
-      "Full-stack ETL pipeline with Scrapy backend",
-      "MongoDB storage with Redis for efficient processing",
-      "Containerized microservices with Docker",
-      "API endpoints for frontend consumption"
+      "Automated ETL pipeline",
+      "Kubernetes orchestration",
+      "MongoDB & Redis integration",
+      "Scalable containerized architecture"
     ],
+    featured: false,
     color: "#d6eaea"
   },
   {
-    name: "Distributed System Performance Observatory (In Progress)",
+    id: "streaming-analytics",
+    name: "Real-Time Stream Analytics",
+    category: categories.DATA_ENG,
     tech: [
-      "C++",
-      "React",
-      "TensorFlow",
+      "Apache Kafka",
+      "Apache Flink",
+      "Elasticsearch",
       "Grafana",
-      "System Programming"
+      "Docker"
     ],
-    desc: "A real-time monitoring platform that tracks distributed system performance metrics and provides ML-powered optimization recommendations.",
-    github: "https://github.com/tamirkifle/perf-observatory",
+    desc: "Stream processing platform for real-time analytics with sub-second latency on high-volume data streams.",
+    github: null, // Placeholder
     hostedAt: null,
-    coverImg: imgUrls.perf_observatory_cover || null,
-    images: [
-      imgUrls.perf_observatory_1 || null,
-      imgUrls.perf_observatory_2 || null
-    ].filter(Boolean),
-    responsibilities: "Using C++ to develop high-performance backend collectors for system metrics and React for visualization dashboard. Integrating TensorFlow for ML-powered performance optimization with automated recommendations currently in active development.",
+    coverImg: null,
+    images: [],
+    responsibilities: "Built real-time stream processing pipeline with Kafka and Flink for low-latency analytics on high-volume data streams.",
     highlights: [
-      "Full-stack monitoring with C++ backend collectors",
-      "React visualization dashboard",
-      "ML-powered optimization with TensorFlow",
-      "Work in progress - actively developing"
+      "Sub-second processing latency",
+      "Kafka stream ingestion",
+      "Flink stateful computations",
+      "Real-time Grafana dashboards"
     ],
-    isWIP: true,
-    color: "#fcfcfc"
+    featured: false,
+    isPlaceholder: true,
+    color: "#1e3a5f"
   },
+  
+  // FULL-STACK APPLICATIONS
   {
-    name: "ShopHaven E-Commerce Platform",
+    id: "shophaven",
+    name: "ShopHaven E-Commerce",
+    category: categories.FULLSTACK,
     tech: [
       "React",
       "TypeScript",
       "GraphQL",
       "Apollo Client"
     ],
-    desc: "A modern e-commerce platform with responsive design, shopping cart functionality, and optimized GraphQL queries for seamless user experience.",
+    desc: "Modern e-commerce platform with responsive design and optimized GraphQL queries for seamless UX.",
     github: "https://github.com/tamirkifle/ecommerce-shop",
     hostedAt: "https://tamirkifle.github.io/ecommerce-shop",
     coverImg: imgUrls.shophaven_cover,
@@ -154,15 +264,44 @@ const projects = [
       imgUrls.shophaven_1,
       imgUrls.shophaven_2,
     ],
-    responsibilities: "Used React 18 and TypeScript to build type-safe e-commerce application with complex state management. Integrated GraphQL and Apollo Client for efficient data fetching with optimized queries and caching, and deployed to GitHub Pages for public demonstration.",
+    responsibilities: "Built type-safe e-commerce app with React 18 and TypeScript. Integrated GraphQL/Apollo for efficient data fetching with optimized caching.",
     highlights: [
-      "Full-stack e-commerce app with React 18",
-      "TypeScript for type-safe development",
-      "GraphQL/Apollo for efficient communication",
-      "Responsive UI with performance optimization"
+      "Type-safe with TypeScript",
+      "GraphQL/Apollo integration",
+      "Responsive design",
+      "Performance optimized"
     ],
+    featured: false,
     color: "#ffffff"
+  },
+  {
+    id: "perf-observatory",
+    name: "Performance Observatory",
+    category: categories.FULLSTACK,
+    tech: [
+      "C++",
+      "React",
+      "TensorFlow",
+      "Grafana",
+      "System Programming"
+    ],
+    desc: "Real-time monitoring platform tracking distributed system metrics with ML-powered optimization recommendations.",
+    github: "https://github.com/tamirkifle/perf-observatory",
+    hostedAt: null,
+    coverImg: imgUrls.perf_observatory_cover || null,
+    images: [],
+    responsibilities: "Developing high-performance C++ backend for system metrics collection. Building React dashboard with TensorFlow integration for ML-powered performance insights.",
+    highlights: [
+      "High-performance C++ backend",
+      "Real-time metrics visualization",
+      "ML-powered optimization",
+      "Work in progress"
+    ],
+    featured: false,
+    isWIP: true,
+    color: "#fcfcfc"
   }
 ];
 
+export { projects, categories };
 export default projects;

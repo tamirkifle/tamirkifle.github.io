@@ -1,0 +1,393 @@
+/* Hero Section Styles */
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: radial-gradient(ellipse at center, rgba(0, 217, 255, 0.03) 0%, transparent 70%);
+    overflow: hidden;
+  }
+  
+  /* Subtle Grid Background */
+  .gridBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: 
+      linear-gradient(var(--accent-cyan, #00e1ff) 1px, transparent 1px),
+      linear-gradient(90deg, var(--accent-cyan, #00e1ff) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+  }
+  
+  @keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+  }
+  
+  /* Floating Orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.1;
+    animation: float 20s infinite ease-in-out;
+    transition: transform 0.2s ease-out;
+  }
+  
+  .orb1 {
+    width: 300px;
+    height: 300px;
+    background: var(--accent-cyan, #00e1ff);
+    top: 20%;
+    left: 10%;
+    animation-duration: 25s;
+  }
+  
+  .orb2 {
+    width: 200px;
+    height: 200px;
+    background: var(--accent-amber, #FFB800);
+    bottom: 20%;
+    right: 15%;
+    animation-duration: 30s;
+    animation-delay: -10s;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+  }
+  
+  /* Hero Content */
+  .heroContent {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+  }
+  
+  .heroName {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+    cursor: default;
+    color: white;
+  }
+  
+  .heroName :global(.letter) {
+    display: inline-block;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .heroName:hover :global(.letter) {
+    animation: glitch 0.3s ease-in-out;
+  }
+  
+  .heroName:hover :global(.letter:nth-child(odd)) {
+    animation-delay: 0.05s;
+    color: var(--accent-cyan, #00e1ff);
+  }
+  
+  .heroName:hover :global(.letter:nth-child(even)) {
+    animation-delay: 0.1s;
+    color: var(--accent-amber, #FFB800);
+  }
+  
+  @keyframes glitch {
+    0%, 100% { 
+      transform: translate(0);
+      filter: blur(0);
+    }
+    20% { 
+      transform: translate(2px, -2px);
+      filter: blur(1px);
+    }
+    40% { 
+      transform: translate(-2px, 2px);
+      filter: blur(1px);
+    }
+    60% { 
+      transform: translate(1px, 1px);
+      filter: blur(0);
+    }
+  }
+  
+  /* Tagline */
+  .heroTagline {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--text-secondary, #8B8B8D);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    position: relative;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .taglineText {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInOut 9s infinite;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 30% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    33%, 100% {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.9);
+    }
+  }
+  
+  /* Floating Artifacts */
+  .floatingArtifacts {
+    position: fixed;
+    top: 40px;
+    left: 120px;
+    z-index: 100;
+    display: flex;
+    gap: 24px;
+  }
+  
+  .artifact {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    background: rgba(15, 15, 16, 0.6);
+    border: none;
+    box-shadow: 0 0 3px var(--border-subtle, rgb(255, 198, 173));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    overflow: visible;
+    text-decoration: none;
+  }
+  
+  .artifact:hover {
+    transform: translateY(-5px) scale(1.05);
+    border-color: var(--accent-cyan, #00e1ff);
+    background: rgba(15, 15, 16, 0.9);
+    box-shadow: 0 0 10px var(--accent-cyan, #00e1ff);
+  }
+  
+  .artifact svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--text-secondary, #8B8B8D);
+    fill: none;
+    stroke-width: 1.5;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .artifact:hover svg {
+    stroke: var(--accent-cyan, #00e1ff);
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 6px var(--accent-cyan, #00e1ff));
+  }
+  
+  .artifactLabel {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    color: white;
+  }
+  
+  .artifact:hover .artifactLabel {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-2px);
+  }
+  
+  /* Progress Navigator */
+  .progressNavigator {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+  }
+  
+  .navItem {
+    position: relative;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .navLabel {
+    position: absolute;
+    right: 35px;
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    color: white;
+  }
+  
+  .navItem:hover .navLabel {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .navIcon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .navIcon svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--text-secondary, #8B8B8D);
+    fill: none;
+    stroke-width: 1.5;
+    transition: all 0.3s ease;
+  }
+  
+  .navIcon.active svg {
+    stroke: var(--accent-cyan, #00e1ff);
+    filter: drop-shadow(0 0 10px var(--accent-cyan, #00e1ff));
+    animation: iconPulse 2s ease-in-out infinite;
+  }
+  
+  .navIcon:hover svg {
+    stroke: var(--accent-cyan, #00e1ff);
+    transform: scale(1.2);
+  }
+  
+  .navIcon.active {
+    transform: scale(1.3);
+  }
+  
+  @keyframes iconPulse {
+    0%, 100% { 
+      filter: drop-shadow(0 0 10px var(--accent-cyan, #00e1ff));
+    }
+    50% { 
+      filter: drop-shadow(0 0 20px var(--accent-cyan, #00e1ff));
+    }
+  }
+  
+  /* Flashlight effect */
+  .navLabel.flash {
+    animation: flashlight 15s infinite;
+  }
+  
+  @keyframes flashlight {
+    0%, 100% { opacity: 0; transform: translateX(10px); }
+    5%, 15% { opacity: 1; transform: translateX(0); }
+  }
+  
+  /* Scroll Indicator */
+  .scrollIndicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .scrollIndicator:hover {
+    opacity: 1;
+  }
+  
+  .scrollLine {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--accent-cyan, #00e1ff), transparent);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .scrollLine::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: var(--accent-cyan, #00e1ff);
+    animation: scrollDown 2s linear infinite;
+  }
+  
+  @keyframes scrollDown {
+    to { top: 100%; }
+  }
+  
+  .scrollText {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-secondary, #8B8B8D);
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .heroName {
+      font-size: 3rem;
+    }
+  
+    .progressNavigator {
+      right: 20px;
+    }
+  
+    .navLabel {
+      display: none;
+    }
+  
+    .floatingArtifacts {
+      display: none;
+    }
+  }
