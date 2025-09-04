@@ -20,49 +20,34 @@ const ProgressNavigator = () => {
       )
     },
     {
+      id: 'about',
+      label: 'ABOUT',
+      icon: (
+        <svg viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      )
+    },
+    {
       id: 'portfolio',
-      label: 'DISTRIBUTED SYSTEMS',
-      icon: (
-        <svg viewBox="0 0 24 24">
-          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-          <polyline points="2 17 12 22 22 17"></polyline>
-          <polyline points="2 12 12 17 22 12"></polyline>
-        </svg>
-      )
-    },
-    {
-      id: 'ai-projects',
-      label: 'AI PLATFORMS',
-      icon: (
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"></path>
-          <path d="M12 8v4"></path>
-          <path d="M12 16h.01"></path>
-        </svg>
-      )
-    },
-    {
-      id: 'blockchain',
-      label: 'BLOCKCHAIN',
+      label: 'PROJECTS',
       icon: (
         <svg viewBox="0 0 24 24">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
           <rect x="14" y="14" width="7" height="7"></rect>
           <rect x="3" y="14" width="7" height="7"></rect>
-          <line x1="10" y1="6.5" x2="14" y2="6.5"></line>
-          <line x1="6.5" y1="10" x2="6.5" y2="14"></line>
-          <line x1="10" y1="17.5" x2="14" y2="17.5"></line>
-          <line x1="17.5" y1="10" x2="17.5" y2="14"></line>
         </svg>
       )
     },
     {
       id: 'blog',
-      label: 'THOUGHTS',
+      label: 'BLOG',
       icon: (
         <svg viewBox="0 0 24 24">
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
         </svg>
       )
     },

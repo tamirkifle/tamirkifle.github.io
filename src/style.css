@@ -354,7 +354,7 @@ section {
 
 .portfolio--projects {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 415px));
   gap: 4rem;
   padding: 0;
   align-items: stretch;
@@ -596,8 +596,51 @@ section {
   font-size: var(--fs-l-3);
 }
 
+.modal--featured,
+.modal--wip {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-right: 0.5rem;
+}
+
+.modal--featured {
+  background: var(--accent-amber);
+  color: var(--bg-primary);
+}
+
+.modal--wip {
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+}
+
 .modal--section-title {
   font-size: var(--fs-l-2);
+  color: var(--accent-cyan);
+  margin-top: 2rem;
+}
+
+.modal--highlights {
+  list-style: none;
+  padding: 0;
+}
+
+.modal--highlights li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.modal--highlights li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-amber);
 }
 
 .modal--images {
@@ -634,19 +677,20 @@ section {
 /* Media Queries */
 @media (max-width: 1299.98px) {
   .portfolio--projects {
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 4rem;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 3rem;
   }
 }
 
 @media (max-width: 1199.98px) {
   .portfolio--projects {
-    gap: 3rem;
+    gap: 2.5rem;
   }
 }
 
 @media (max-width: 991.98px) {
   .portfolio--projects {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 2rem;
   }
 

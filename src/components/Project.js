@@ -10,7 +10,13 @@ export default function Project(props) {
   const color = props.color || "#ffffff";
 
   return (
-    <div className="card" onClick={openModal}>
+    <div className={`card ${props.featured ? 'featured' : ''}`} onClick={openModal} style={{position: 'relative'}}>
+      {/* {props.featured && (
+        <span className="featured-badge">Featured</span>
+      )}
+      {props.isWIP && (
+        <span className="wip-badge">In Progress</span>
+      )} */}
       <div className="card--image" style={{ backgroundColor: color }}>
         <img 
           src={coverImg} 
@@ -68,8 +74,10 @@ export default function Project(props) {
         <Modal closeModal={closeModal}>
           <div className="flow-content">
             <h3 className="modal--title">{props.name}</h3>
+            {props.featured && <span className="modal--featured">Featured Project</span>}
+            {props.isWIP && <span className="modal--wip">Work in Progress</span>}
             <div className="modal--images">
-              {props.images.map((image) => (
+              {props.images && props.images.map((image) => (
                 <div
                   key={image}
                 >
@@ -87,6 +95,16 @@ export default function Project(props) {
               <>
                 <h4 className="modal--section-title">Responsibilities</h4>
                 <p className="modal--text">{props.responsibilities}</p>
+              </>
+            )}
+            {props.highlights && props.highlights.length > 0 && (
+              <>
+                <h4 className="modal--section-title">Key Highlights</h4>
+                <ul className="modal--highlights">
+                  {props.highlights.map((highlight, index) => (
+                    <li key={index}>{highlight}</li>
+                  ))}
+                </ul>
               </>
             )}
             <h4 className="modal--section-title">Technologies Used</h4>
