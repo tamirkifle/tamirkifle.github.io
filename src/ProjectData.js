@@ -13,7 +13,7 @@ const projects = [
   {
     id: "kv-database",
     name: "Distributed KV Database",
-    category: categories.DISTRIBUTED,
+    categories: [categories.DISTRIBUTED, categories.DATA_ENG],
     tech: [
       "Java",
       "Spring Boot",
@@ -39,7 +39,7 @@ const projects = [
   {
     id: "skier-tracking",
     name: "Distributed Ski Tracker",
-    category: categories.DISTRIBUTED,
+    categories: [categories.DISTRIBUTED],
     tech: [
       "Java",
       "Spring Boot",
@@ -70,7 +70,7 @@ const projects = [
   {
     id: "interview-ace",
     name: "InterviewAce",
-    category: categories.AI_ML,
+    categories: [categories.AI_ML, categories.FULLSTACK],
     tech: [
       "React",
       "GraphQL",
@@ -97,7 +97,7 @@ const projects = [
   {
     id: "recession-model",
     name: "Recession Prediction Platform",
-    category: categories.AI_ML,
+    categories: [categories.AI_ML, categories.DATA_ENG],
     tech: [
       "Python",
       "TensorFlow",
@@ -128,7 +128,7 @@ const projects = [
   {
     id: "endubis-wallet",
     name: "Endubis Wallet",
-    category: categories.BLOCKCHAIN,
+    categories: [categories.BLOCKCHAIN, categories.FULLSTACK],
     tech: [
       "React",
       "Node.js",
@@ -162,7 +162,7 @@ const projects = [
   {
     id: "defi-yield",
     name: "DeFi Yield Optimizer",
-    category: categories.BLOCKCHAIN,
+    categories: [categories.BLOCKCHAIN],
     tech: [
       "Solidity",
       "Web3.js",
@@ -191,7 +191,7 @@ const projects = [
   {
     id: "job-scraping",
     name: "Job Scraping Pipeline",
-    category: categories.DATA_ENG,
+    categories: [categories.DATA_ENG],
     tech: [
       "Python",
       "Docker",
@@ -220,7 +220,7 @@ const projects = [
   {
     id: "streaming-analytics",
     name: "Real-Time Stream Analytics",
-    category: categories.DATA_ENG,
+    categories: [categories.DATA_ENG, categories.DISTRIBUTED],
     tech: [
       "Apache Kafka",
       "Apache Flink",
@@ -249,7 +249,7 @@ const projects = [
   {
     id: "shophaven",
     name: "ShopHaven E-Commerce",
-    category: categories.FULLSTACK,
+    categories: [categories.FULLSTACK],
     tech: [
       "React",
       "TypeScript",
@@ -277,7 +277,7 @@ const projects = [
   {
     id: "perf-observatory",
     name: "Performance Observatory",
-    category: categories.FULLSTACK,
+    categories: [categories.FULLSTACK, categories.DISTRIBUTED],
     tech: [
       "C++",
       "React",

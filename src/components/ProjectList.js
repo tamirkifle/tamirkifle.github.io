@@ -13,7 +13,9 @@ export default function ProjectList() {
     "All Projects": projects.filter(p => !p.isPlaceholder).length,
     ...Object.values(categories).reduce((acc, category) => ({
       ...acc,
-      [category]: projects.filter(p => p.category === category && !p.isPlaceholder).length
+      [category]: projects.filter(p => 
+        p.categories && p.categories.includes(category) && !p.isPlaceholder
+      ).length
     }), {})
   };
 
@@ -25,7 +27,7 @@ export default function ProjectList() {
         setFilteredProjects(projects.filter(p => !p.isPlaceholder));
       } else {
         setFilteredProjects(projects.filter(p => 
-          p.category === activeCategory && !p.isPlaceholder
+          p.categories && p.categories.includes(activeCategory) && !p.isPlaceholder
         ));
       }
       setIsAnimating(false);

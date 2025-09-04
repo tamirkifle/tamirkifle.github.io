@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import FloatingArtifacts from './FloatingArtifacts';
 import ProgressNavigator from './ProgressNavigator';
 import ScrollIndicator from './ScrollIndicator';
@@ -13,7 +13,7 @@ const HeroSection = () => {
     'Distributed Systems Architect',
     'AI Infrastructure Engineer',
     'Building at Scale'
-  ], 3000);
+  ], 1000);
 
   useEffect(() => {
     // Split name into letters for animation

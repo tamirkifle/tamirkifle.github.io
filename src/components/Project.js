@@ -10,13 +10,7 @@ export default function Project(props) {
   const color = props.color || "#ffffff";
 
   return (
-    <div className={`card ${props.featured ? 'featured' : ''}`} onClick={openModal} style={{position: 'relative'}}>
-      {/* {props.featured && (
-        <span className="featured-badge">Featured</span>
-      )}
-      {props.isWIP && (
-        <span className="wip-badge">In Progress</span>
-      )} */}
+    <div className={`card ${props.featured ? 'featured' : ''}`} onClick={openModal}>
       <div className="card--image" style={{ backgroundColor: color }}>
         <img 
           src={coverImg} 
@@ -25,6 +19,15 @@ export default function Project(props) {
         />
       </div>
       <div className="card--info flow-content">
+        {props.categories && props.categories.length > 1 && (
+          <div className="card--categories">
+            {props.categories.map((cat, index) => (
+              <span key={index} className="category-tag">
+                {cat}
+              </span>
+            ))}
+          </div>
+        )}
         <h3 className="card--info--title">{props.name}</h3>
         <p className="card--info--desc">{props.desc}</p>
         <div className="card--info--tech-used">

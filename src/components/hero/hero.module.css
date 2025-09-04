@@ -391,3 +391,68 @@
       display: none;
     }
   }
+
+  .heroName :global(.letter) {
+    display: inline-block;
+    transition: all 0.1s ease;
+    position: relative;
+    /* Add this animation for automatic glitch */
+    animation: subtleGlitch 8s infinite;
+  }
+  
+  /* Stagger the automatic glitch for each letter */
+  .heroName :global(.letter:nth-child(1)) { animation-delay: 0s; }
+  .heroName :global(.letter:nth-child(2)) { animation-delay: 0.1s; }
+  .heroName :global(.letter:nth-child(3)) { animation-delay: 0.2s; }
+  .heroName :global(.letter:nth-child(4)) { animation-delay: 0.3s; }
+  .heroName :global(.letter:nth-child(5)) { animation-delay: 0.4s; }
+  .heroName :global(.letter:nth-child(6)) { animation-delay: 0.5s; }
+  .heroName :global(.letter:nth-child(7)) { animation-delay: 0.6s; }
+  .heroName :global(.letter:nth-child(8)) { animation-delay: 0.7s; }
+  .heroName :global(.letter:nth-child(9)) { animation-delay: 0.8s; }
+  .heroName :global(.letter:nth-child(10)) { animation-delay: 0.9s; }
+  .heroName :global(.letter:nth-child(11)) { animation-delay: 1.0s; }
+  
+  /* Automatic subtle glitch animation - runs every 8 seconds */
+  @keyframes subtleGlitch {
+    0%, 70%, 100% {
+      transform: translate(0);
+      filter: blur(0);
+      color: white;
+    }
+    72% {
+      transform: translate(1px, -1px);
+      filter: blur(0.5px);
+      color: var(--accent-cyan);
+    }
+    74% {
+      transform: translate(-1px, 1px);
+      filter: blur(0.5px);
+      color: var(--accent-amber);
+    }
+    76% {
+      transform: translate(0);
+      filter: blur(0);
+      color: white;
+    }
+  }
+  
+  /* Keep existing hover animation */
+  @keyframes glitch {
+    0%, 100% { 
+      transform: translate(0);
+      filter: blur(0);
+    }
+    20% { 
+      transform: translate(2px, -2px);
+      filter: blur(1px);
+    }
+    40% { 
+      transform: translate(-2px, 2px);
+      filter: blur(1px);
+    }
+    60% { 
+      transform: translate(1px, 1px);
+      filter: blur(0);
+    }
+  }
