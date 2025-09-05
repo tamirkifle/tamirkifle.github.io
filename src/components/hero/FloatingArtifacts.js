@@ -16,19 +16,19 @@ const FloatingArtifacts = () => {
         </svg>
       )
     },
-    {
-      id: 'blog',
-      href: '#blog',
-      label: 'Tech Blog',
-      icon: (
-        <svg viewBox="0 0 24 24">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-          <line x1="10" y1="8" x2="16" y2="8"></line>
-          <line x1="10" y1="12" x2="14" y2="12"></line>
-        </svg>
-      )
-    },
+    // {
+    //   id: 'blog',
+    //   href: '#blog',
+    //   label: 'Tech Blog',
+    //   icon: (
+    //     <svg viewBox="0 0 24 24">
+    //       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+    //       <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+    //       <line x1="10" y1="8" x2="16" y2="8"></line>
+    //       <line x1="10" y1="12" x2="14" y2="12"></line>
+    //     </svg>
+    //   )
+    // },
     {
       id: 'github',
       href: 'https://github.com/tamirkifle',
