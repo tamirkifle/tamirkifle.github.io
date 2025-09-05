@@ -1,0 +1,807 @@
+/* Resume Page Styles */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+.resumePage {
+  min-height: 100vh;
+  background: #0A0A0B;
+  color: #FFFFFF;
+  overflow-x: hidden;
+  font-family: 'Space Grotesk', sans-serif;
+  padding-top: 100px;
+}
+
+/* Back Button */
+.backButton {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: rgba(15, 15, 16, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  color: #8B8B8D;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backButton:hover {
+  background: rgba(15, 15, 16, 0.95);
+  border-color: #00e1ff;
+  color: #00e1ff;
+  transform: translateX(-5px);
+}
+
+.backButton svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+/* Progress Indicator */
+.progressIndicator {
+  position: fixed;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.progressDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.progressDot:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.3);
+}
+
+.progressDot.active {
+  background: #00e1ff;
+  box-shadow: 0 0 20px #00e1ff;
+  transform: scale(1.5);
+}
+
+/* Simple Header */
+.resumeHeader {
+  padding: 4rem 6rem;
+  text-align: center;
+  background: radial-gradient(ellipse at center, rgba(0, 217, 255, 0.02) 0%, transparent 50%);
+}
+
+.resumeTitle {
+  font-family: 'Orbitron', monospace;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(135deg, #FFFFFF 0%, #00e1ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.resumeSubtitle {
+  font-size: 1.2rem;
+  color: #8B8B8D;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* Section Styles */
+.experienceSection,
+.skillsSection,
+.achievementsSection,
+.contactSection {
+  padding: 4rem 6rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.experienceSection {
+  min-height: auto;
+  background: linear-gradient(135deg, rgba(0, 225, 255, 0.02) 0%, transparent 50%);
+}
+
+.skillsSection {
+  background: linear-gradient(225deg, rgba(255, 184, 0, 0.02) 0%, transparent 50%);
+}
+
+.achievementsSection {
+  background: linear-gradient(45deg, rgba(0, 225, 255, 0.02) 0%, transparent 50%);
+}
+
+.sectionTitle {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 0 0 3rem 0;
+  position: relative;
+  color: white;
+}
+
+.sectionTitle span {
+  position: relative;
+  display: inline-block;
+  color: white;
+}
+
+.sectionTitle span::before,
+.sectionTitle span::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00e1ff);
+}
+
+.sectionTitle span::before {
+  right: calc(100% + 1.5rem);
+  background: linear-gradient(270deg, transparent, #00e1ff);
+}
+
+.sectionTitle span::after {
+  left: calc(100% + 1.5rem);
+}
+
+/* Timeline Styles */
+.timeline {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #00e1ff, transparent);
+  opacity: 0.3;
+}
+
+.timelineItem {
+  position: relative;
+  padding: 1.5rem 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.timelineDot {
+  position: absolute;
+  left: 42px;
+  top: 2rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #0F0F10;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.timelineItem:hover .timelineDot {
+  transform: scale(1.5);
+  box-shadow: 0 0 20px currentColor;
+}
+
+.timelineContent {
+  margin-left: 100px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.timelineItem:hover .timelineContent {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: #00e1ff;
+  box-shadow: 0 10px 30px rgba(0, 225, 255, 0.1);
+}
+
+.timelineHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.timelineHeaderLeft h3,
+.timelineHeaderLeft p,
+.timelineHeaderRight p {
+  margin: 0;
+  padding: 0;
+}
+
+.companyName {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: white;
+}
+
+.role {
+  color: #00e1ff;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.type {
+  color: #8B8B8D;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.period {
+  color: #FFB800;
+  font-weight: 600;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.location {
+  color: #8B8B8D;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.expandIcon {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1.25rem;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.expandIcon svg {
+  width: 100%;
+  height: 100%;
+  stroke: #8B8B8D;
+  fill: none;
+  stroke-width: 2;
+}
+
+.timelineItem.expanded .expandIcon {
+  transform: rotate(180deg);
+}
+
+.timelineExpanded {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.highlights h4,
+.techStack h4 {
+  color: #00e1ff;
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+}
+
+.highlights ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.highlights li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #8B8B8D;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.highlights li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #FFB800;
+}
+
+.techStack {
+  margin-top: 1.25rem;
+}
+
+.techTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.techTag {
+  background: rgba(0, 225, 255, 0.1);
+  color: #00e1ff;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 225, 255, 0.3);
+}
+
+/* Skills Grid */
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skillCategory {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.skillCategory::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--category-color, #00e1ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.skillCategory:hover::before,
+.skillCategory.active::before {
+  transform: scaleX(1);
+}
+
+.skillCategory:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--category-color, #00e1ff);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 225, 255, 0.1);
+}
+
+.categoryIcon {
+  font-size: 1.5rem;
+  color: var(--category-color, #00e1ff);
+  margin-bottom: 0.75rem;
+}
+
+.categoryName {
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+  color: white;
+}
+
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.skillTag {
+  background: rgba(255, 255, 255, 0.05);
+  color: #8B8B8D;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.skillCategory:hover .skillTag {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border-color: var(--skill-color, #00e1ff);
+}
+
+/* Achievements */
+.achievementsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tabNav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.tabButton {
+  background: transparent;
+  border: none;
+  color: #8B8B8D;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.tabButton::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #00e1ff;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.tabButton:hover {
+  color: white;
+}
+
+.tabButton.active {
+  color: #00e1ff;
+}
+
+.tabButton.active::after {
+  transform: scaleX(1);
+}
+
+.degreeCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.degreeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.degreeHeader h3 {
+  font-size: 1.4rem;
+  color: white;
+  margin: 0;
+}
+
+.gpa {
+  background: #FFB800;
+  color: #0A0A0B;
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.school {
+  color: #00e1ff;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.period {
+  color: #8B8B8D;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.courseWork,
+.activities {
+  margin-top: 1.5rem;
+}
+
+.courseWork h4,
+.activities h4 {
+  color: #00e1ff;
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+}
+
+.courseList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.courseItem {
+  background: rgba(0, 225, 255, 0.1);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  border: 1px solid rgba(0, 225, 255, 0.3);
+}
+
+.activities ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.activities li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.6rem;
+  color: #8B8B8D;
+  font-size: 0.9rem;
+}
+
+.activities li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #FFB800;
+}
+
+.certificationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.certCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.certCard:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: #00e1ff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 225, 255, 0.1);
+}
+
+.certIcon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  color: #00e1ff;
+}
+
+.certCard h4 {
+  position: relative;
+  color: white;
+  margin: 0 0 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.certIssuer {
+  color: #8B8B8D;
+  margin-bottom: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.certYear {
+  color: #FFB800;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.externalLinkIcon {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    color: var(--text-secondary, #8B8B8D);
+    opacity: 0.6; /* Icon is subtle by default */
+    transition: all 0.3s ease;
+  }
+  
+  .externalLinkIcon svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  /* On card hover, the icon becomes more prominent and animates slightly */
+  .certCard:hover .externalLinkIcon {
+    opacity: 1;
+    color: var(--accent-cyan, #00e1ff);
+    transform: translate(4px, -4px);
+  }
+
+/* Contact Section */
+.contactSection {
+  padding: 3rem 6rem 4rem;
+  background: linear-gradient(to bottom, transparent, rgba(0, 225, 255, 0.02));
+}
+
+.contactLinks {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  text-decoration: none;
+  color: #8B8B8D;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 120px;
+}
+
+.contactItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #00e1ff;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 225, 255, 0.2);
+}
+
+.contactItem svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  transition: all 0.3s ease;
+}
+
+.contactItem:hover svg {
+  stroke: #00e1ff;
+  filter: drop-shadow(0 0 10px #00e1ff);
+}
+
+.contactItem span {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resumePage {
+    padding-top: 80px;
+  }
+
+  .backButton {
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 0.8rem;
+  }
+
+  .progressIndicator {
+    right: 20px;
+  }
+
+  .resumeHeader,
+  .experienceSection,
+  .educationSection,
+  .skillsSection,
+  .certificationsSection,
+  .contactSection {
+    padding: 2rem 1.5rem;
+  }
+
+  .resumeTitle {
+    font-size: 2rem;
+  }
+
+  .resumeSubtitle {
+    font-size: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+
+  .sectionTitle span::before,
+  .sectionTitle span::after {
+    width: 40px;
+  }
+
+  .timeline::before {
+    left: 20px;
+  }
+  
+  .timelineDot {
+    left: 12px;
+  }
+  
+  .timelineContent {
+    margin-left: 50px;
+    padding: 1rem;
+  }
+  
+  .timelineHeader {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .certificationGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .leadershipItems {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contactLinks {
+    grid-template-columns: 1fr;
+  }
+  
+  .degreeHeader {
+    flex-direction: column;
+  }
+  
+  .gpa {
+    align-self: flex-start;
+  }
+}
