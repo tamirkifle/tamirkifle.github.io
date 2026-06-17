@@ -1,0 +1,34 @@
+{
+  "posts": [
+    {
+      "slug": "building-llm-inference-rust",
+      "title": "Building an LLM Inference Engine in Pure Rust",
+      "summary": "How I implemented Llama inference from scratch with INT8 quantization and SIMD kernels - achieving a 21× decode speedup.",
+      "date": "2026-06-10",
+      "readTime": 12,
+      "featured": true,
+      "public": true,
+      "tags": ["rust", "ml", "systems"]
+    },
+    {
+      "slug": "distributed-kv-consistency",
+      "title": "Testing Distributed Consistency: Jepsen-Style Validation",
+      "summary": "Designing a distributed key-value store with quorum replication and validating it against partition scenarios.",
+      "date": "2026-05-20",
+      "readTime": 8,
+      "featured": true,
+      "public": true,
+      "tags": ["distributed-systems", "java", "testing"]
+    },
+    {
+      "slug": "spark-time-types-rust",
+      "title": "Implementing Spark 4.1 TIME Types in Rust",
+      "summary": "A deep dive into bringing temporal data type support to a Rust-based Spark engine with 100% spec parity.",
+      "date": "2026-04-15",
+      "readTime": 10,
+      "featured": true,
+      "public": true,
+      "tags": ["rust", "spark", "data-engineering"]
+    }
+  ]
+}
