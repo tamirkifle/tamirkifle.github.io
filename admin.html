@@ -22,6 +22,8 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <!-- Admin JS -->
+  <!-- JSZip for exporting all files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="js/admin.js" defer></script>
 </head>
 <body class="admin-layout">
@@ -31,6 +33,7 @@
     <h1>✍️ tamir.info Admin</h1>
     <div class="btn-group">
       <button class="btn" id="btn-export-all">Export All Files</button>
+      <button class="btn btn-danger" id="btn-reset-data" title="Discard browser edits and reload from disk">Reset Local Data</button>
       <button class="btn btn-primary" id="btn-new-post">New Post</button>
     </div>
   </header>
