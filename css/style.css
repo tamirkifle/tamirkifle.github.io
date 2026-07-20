@@ -557,13 +557,11 @@ pre code {
   border-radius: var(--radius-md);
   text-decoration: none;
   color: var(--foreground);
-  border-left: 2px solid transparent;
-  transition: background-color 150ms ease, border-color 250ms var(--ease-out);
+  transition: background-color 150ms ease;
 }
 
 .featured-writing-card:hover {
   background-color: var(--bg-hover);
-  border-left-color: var(--accent);
   color: var(--foreground);
 }
 
