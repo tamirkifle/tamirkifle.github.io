@@ -3,12 +3,16 @@
     {
       "slug": "building-llm-inference-rust",
       "title": "Building an LLM Inference Engine in Pure Rust",
-      "summary": "How I implemented Llama inference from scratch with INT8 quantization and SIMD kernels - achieving a 21× decode speedup.",
+      "summary": "How I implemented Llama inference from scratch with INT8 quantization and SIMD kernels achieving a 21x decode speedup",
       "date": "2026-06-10",
       "readTime": 12,
       "featured": true,
       "public": true,
-      "tags": ["rust", "ml", "systems"]
+      "tags": [
+        "rust",
+        "ml",
+        "systems"
+      ]
     },
     {
       "slug": "distributed-kv-consistency",
@@ -18,7 +22,11 @@
       "readTime": 8,
       "featured": true,
       "public": true,
-      "tags": ["distributed-systems", "java", "testing"]
+      "tags": [
+        "distributed-systems",
+        "java",
+        "testing"
+      ]
     },
     {
       "slug": "spark-time-types-rust",
@@ -28,7 +36,11 @@
       "readTime": 10,
       "featured": true,
       "public": true,
-      "tags": ["rust", "spark", "data-engineering"]
+      "tags": [
+        "rust",
+        "spark",
+        "data-engineering"
+      ]
     }
   ]
 }
