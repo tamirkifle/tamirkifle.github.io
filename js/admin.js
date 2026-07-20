@@ -256,16 +256,36 @@ function downloadMarkdown() {
   showToast(`Downloaded ${slug}.md`);
 }
 
-function exportAll() {
-  // Export a clean index.json (without body content)
+async function exportAll() {
+  if (typeof JSZip === 'undefined') {
+    showToast('JSZip library failed to load');
+    return;
+  }
+
+  const zip = new JSZip();
+
+  // 1. Add index.json
   const exportData = {
     posts: posts.map(({ body, ...meta }) => meta)
   };
+  zip.file('index.json', JSON.stringify(exportData, null, 2));
 
-  const json = JSON.stringify(exportData, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  triggerDownload(blob, 'index.json');
-  showToast('Exported index.json');
+  // 2. Add .md files
+  posts.forEach(post => {
+    if (post.slug && post.body != null) {
+      zip.file(`${post.slug}.md`, post.body);
+    }
+  });
+
+  // 3. Generate and download
+  try {
+    const content = await zip.generateAsync({ type: 'blob' });
+    triggerDownload(content, 'posts.zip');
+    showToast('Exported posts.zip');
+  } catch (err) {
+    console.error('Failed to generate zip:', err);
+    showToast('Failed to generate zip file');
+  }
 }
 
 function triggerDownload(blob, filename) {
@@ -318,6 +338,15 @@ function insertMedia(type) {
 
 function updatePreview() {
   const raw = bodyTextarea.value;
+  
+  // Auto-calculate read time (~200 words per minute)
+  if (raw.trim()) {
+    const wordCount = raw.trim().split(/\s+/).length;
+    readTimeInput.value = Math.max(1, Math.ceil(wordCount / 200));
+  } else {
+    readTimeInput.value = '';
+  }
+
   if (!raw.trim()) {
     previewEl.innerHTML = '<p style="color:var(--foreground-faded); font-style:italic;">Preview will appear here…</p>';
     return;
@@ -364,6 +393,14 @@ function setupEventListeners() {
   // Header buttons
   document.getElementById('btn-new-post').addEventListener('click', newPost);
   document.getElementById('btn-export-all').addEventListener('click', exportAll);
+  document.getElementById('btn-reset-data').addEventListener('click', async () => {
+    if (confirm('Are you sure you want to discard all local edits and reload from the website files? This cannot be undone.')) {
+      localStorage.removeItem(STORAGE_KEY);
+      await loadPosts();
+      renderPostList();
+      showToast('Local data reset from website files.');
+    }
+  });
 
   // Title → auto-slug
   titleInput.addEventListener('input', () => {
