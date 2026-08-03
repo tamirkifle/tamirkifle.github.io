@@ -104,7 +104,7 @@ html {
 
 /* --- Body --- */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 0.9375rem;
   line-height: 1.7;
   color: var(--foreground);
@@ -676,7 +676,7 @@ pre code {
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 500;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
@@ -1461,7 +1461,7 @@ pre code {
 }
 
 /* Labels only surface on hover/focus, so the dock stays icon-clean at rest.
-   Same treatment as the tech-icon tooltips: Inter, sentence case, no tracking. */
+   Same treatment as the tech-icon tooltips: body face, sentence case, no tracking. */
 .dock-tooltip {
   position: absolute;
   bottom: calc(100% + 0.625rem);
