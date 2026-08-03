@@ -53,7 +53,11 @@ html {
   --grid-dot: hsla(220, 15%, 70%, 0.07);
 
   /* Spacing */
-  --content-width: 560px;
+  /* The column is wider than the text inside it: rows, figures and
+     screenshots use all of it, prose stays at a readable measure. */
+  --content-width: 680px;
+  --measure: 34rem;
+  --measure-sm: 28rem;
   --page-padding: 1.5rem;
 
   /* Transitions */
@@ -715,7 +719,7 @@ pre code {
   font-size: 0.8125rem;
   color: var(--foreground-faded);
   margin-top: -0.25rem;
-  max-width: 46em;
+  max-width: var(--measure);
 }
 
 .quests {
@@ -869,6 +873,7 @@ pre code {
 }
 
 .quest-desc {
+  max-width: var(--measure);
   font-size: 0.875rem;
   color: var(--foreground);
 }
@@ -934,6 +939,7 @@ pre code {
 }
 
 .quest-evidence figcaption {
+  max-width: var(--measure-sm);
   font-size: 0.78125rem;
   line-height: 1.65;
   color: var(--foreground);
@@ -1167,6 +1173,8 @@ pre code {
   font-size: 0.75rem;
   line-height: 1.65;
   color: var(--foreground-faded);
+  /* Smaller type fits more characters per inch, so it needs a shorter line. */
+  max-width: var(--measure-sm);
 }
 
 .quest-caveat::before {
@@ -1671,6 +1679,12 @@ pre code {
   margin-top: 2rem;
   margin-bottom: 0.5rem;
   font-size: 1.0625rem;
+}
+
+.post-content p,
+.post-content ul,
+.post-content ol {
+  max-width: var(--measure);
 }
 
 .post-content p {
