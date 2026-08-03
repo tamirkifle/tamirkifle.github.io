@@ -209,13 +209,14 @@
               </figure>
 
               <dl class="ledger">
+                <div><dt>The AWS run: 200,000 requests, every one a 200</dt><dd>4,309 <i>req/s</i></dd></div>
                 <div><dt>Cardinality write requests on the DynamoDB counter</dt><dd>25,163</dd></div>
                 <div><dt>Same workload once HyperLogLog took over the counting</dt><dd>9,635</dd></div>
                 <div><dt>Defects documented, each one pinned by a regression test</dt><dd>38</dd></div>
                 <div><dt>Decision records, rejected alternatives included</dt><dd>11</dd></div>
               </dl>
 
-              <p class="quest-caveat">Every number on this page came off LocalStack on one laptop, never AWS, and LocalStack is the binding constraint in every run, so read the absolute throughput as a property of the rig rather than the architecture. Peak offered load in the sweep was 4,376 req/s and the controller shed hard above that. The 8K req/s I quote elsewhere is a different measurement: an earlier version of this system, driven by JMeter against real EC2 and DynamoDB, before the admission controller and the fleet registry existed. The two are not comparable, so I have not put them side by side. A batching result that looked like a 16% gain did not survive swapping the arm order, so it is not here either. The CI workflow is written but has never actually run.</p>
+              <p class="quest-caveat">Two rigs, two eras. The original ran on AWS, a Spring server on EC2 with RabbitMQ and DynamoDB behind it, and the one report kept from that build records 200,000 requests at 4,309 req/s with every response a 200. Everything after the rebuild ran against LocalStack on one laptop, where LocalStack is the binding constraint in every run, so read those throughput figures as a property of the rig rather than the architecture. Peak offered load in that sweep was 4,376 req/s and the controller shed hard above it. A batching result that looked like a 16% gain did not survive swapping the arm order, so it is not on this page. The CI workflow is written but has never actually run.</p>
 
               <div class="quest-links">
                   <a href="https://github.com/tamirkifle/skier-tracking-system" target="_blank" rel="noopener noreferrer">GitHub
@@ -493,43 +494,36 @@
         <!-- Each row links straight to the credential; nothing to expand. -->
         <div class="list-rows">
           <a class="list-row" href="https://www.credly.com/badges/ef7be6b9-2aba-428d-9e40-adb1bdd224f6/public_url" target="_blank" rel="noopener noreferrer" style="grid-template-columns: 20px 1fr auto auto 14px;">
-            <span class="list-row-icon"><i class="devicon-googlecloud-plain colored" aria-hidden="true"></i></span>
+            <span class="list-row-icon"><i class="devicon-google-plain colored" aria-hidden="true"></i></span>
             <span class="list-row-title">Professional Cloud Architect</span>
             <span class="list-row-subtitle">Google Cloud</span>
             <span class="list-row-date">2026</span>
             <svg class="list-row-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </a>
-          <a class="list-row" href="https://www.credly.com/badges/02553747-d2e1-4034-bba2-0f0029bc7fd0" target="_blank" rel="noopener noreferrer" style="grid-template-columns: 20px 1fr auto auto 14px;">
-            <span class="list-row-icon"><i class="devicon-amazonwebservices-plain colored" aria-hidden="true"></i></span>
-            <span class="list-row-title">AWS Cloud Practitioner Foundations</span>
-            <span class="list-row-subtitle">AWS</span>
-            <span class="list-row-date">2024</span>
-            <svg class="list-row-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-          </a>
           <a class="list-row" href="https://certification.adobe.com/credential/verify/ae363d83-b0ca-11ef-8f8b-42010a40001c" target="_blank" rel="noopener noreferrer" style="grid-template-columns: 20px 1fr auto auto 14px;">
             <span class="list-row-icon"><i class="devicon-magento-original colored" aria-hidden="true"></i></span>
-            <span class="list-row-title">Adobe Commerce Developer: Expert</span>
+            <span class="list-row-title">Commerce Developer: Expert</span>
             <span class="list-row-subtitle">Adobe</span>
             <span class="list-row-date">2024</span>
             <svg class="list-row-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </a>
           <a class="list-row" href="https://certification.adobe.com/credential/verify/ae8a348e-b0ca-11ef-8f8b-42010a40001c" target="_blank" rel="noopener noreferrer" style="grid-template-columns: 20px 1fr auto auto 14px;">
             <span class="list-row-icon"><i class="devicon-magento-original colored" aria-hidden="true"></i></span>
-            <span class="list-row-title">Adobe Commerce Developer: Professional</span>
+            <span class="list-row-title">Commerce Developer: Professional</span>
             <span class="list-row-subtitle">Adobe</span>
             <span class="list-row-date">2023</span>
             <svg class="list-row-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </a>
-          <a class="list-row" href="https://www.credly.com/badges/300c98dc-f894-4379-b0df-9a2d4405e937" target="_blank" rel="noopener noreferrer" style="grid-template-columns: 20px 1fr auto auto 14px;">
+          <a class="list-row is-expired" href="https://www.credly.com/badges/300c98dc-f894-4379-b0df-9a2d4405e937" target="_blank" rel="noopener noreferrer" style="grid-template-columns: 20px 1fr auto auto 14px;">
             <span class="list-row-icon"><i class="devicon-azure-plain colored" aria-hidden="true"></i></span>
-            <span class="list-row-title">Azure AI Engineer Associate (AI-102)</span>
+            <span class="list-row-title">Azure AI Engineer Associate<span class="cert-expired">expired 2023</span></span>
             <span class="list-row-subtitle">Microsoft</span>
             <span class="list-row-date">2021</span>
             <svg class="list-row-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </a>
           <a class="list-row" href="https://www.credly.com/badges/a0ad5ed0-b452-491f-b987-6294fa18d485" target="_blank" rel="noopener noreferrer" style="grid-template-columns: 20px 1fr auto auto 14px;">
             <span class="list-row-icon"><i class="devicon-azure-plain colored" aria-hidden="true"></i></span>
-            <span class="list-row-title">Azure Fundamentals (AZ-900)</span>
+            <span class="list-row-title">Azure Fundamentals</span>
             <span class="list-row-subtitle">Microsoft</span>
             <span class="list-row-date">2021</span>
             <svg class="list-row-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>

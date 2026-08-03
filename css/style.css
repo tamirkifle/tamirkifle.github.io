@@ -515,6 +515,34 @@ pre code {
   text-overflow: ellipsis;
 }
 
+/* Lapsed credentials stay listed, but stop competing with the live ones. */
+.list-row.is-expired .list-row-title,
+.list-row.is-expired .list-row-subtitle,
+.list-row.is-expired .list-row-date {
+  color: var(--foreground-faded);
+}
+
+.list-row.is-expired .list-row-icon i {
+  filter: grayscale(100%);
+  opacity: 0.7;
+}
+
+.list-row.is-expired:hover .list-row-title {
+  color: var(--foreground);
+}
+
+.cert-expired {
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.375rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.02em;
+  color: var(--foreground-faded);
+  vertical-align: 1px;
+}
+
 /* Rows that leave the site, in place of the accordion chevron. */
 .list-row-out {
   width: 14px;
