@@ -39,25 +39,12 @@
       <!-- ==================== Header ==================== -->
       <header class="site-header animate-section" data-delay="0.1">
         <a href="/" class="site-logo" aria-label="Tamir Yirga - Home">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
             <rect width="32" height="32" rx="8" fill="currentColor"/>
             <path d="M8 10.5h16v3H18v10h-4v-10H8z" fill="var(--bg)"/>
           </svg>
+          <span class="site-wordmark">tamir.info</span>
         </a>
-        <div class="header-links">
-          <a href="/writing.html" class="header-link">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            <span class="header-link-label">Blog</span>
-          </a>
-          <a href="https://github.com/tamirkifle" class="header-link" target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            <span class="header-link-label">GitHub</span>
-          </a>
-          <a href="https://linkedin.com/in/tamir-yirga" class="header-link" target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            <span class="header-link-label">LinkedIn</span>
-          </a>
-        </div>
       </header>
 
       <!-- ==================== Intro ==================== -->
@@ -189,23 +176,55 @@
       <!-- ==================== Separator ==================== -->
       <hr class="section-separator">
 
-      <!-- ==================== Side Quests ==================== -->
-      <section class="section animate-section" data-delay="0.5" id="projects" aria-label="Side projects">
+      <!-- ==================== Certifications ==================== -->
+      <section class="section animate-section" data-delay="0.45" id="certifications" aria-label="Certifications">
         <div class="section-header">
-          <a href="#projects" class="section-anchor" aria-label="Link to Side Quests section">
+          <a href="#certifications" class="section-anchor" aria-label="Link to Certifications section">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </a>
-          <h2 data-scramble="true">Side Quests</h2>
+          <h2 data-scramble="true">Certifications</h2>
         </div>
 
-        <p class="quests-intro">Six things I built outside of work, newest first. Every number here was measured. Where a project has no numbers worth publishing, it says so instead of reaching for one.</p>
+        <div class="list-rows">
+          <!-- GCP Professional Cloud Architect -->
+          <div class="list-row accordion-row" aria-expanded="false" aria-controls="acc-gcp-pca" style="grid-template-columns: 20px 1fr auto auto 14px;">
+            <span class="list-row-icon"><i class="devicon-googlecloud-plain colored" aria-hidden="true"></i></span>
+            <span class="list-row-title">Professional Cloud Architect</span>
+            <span class="list-row-subtitle">Google Cloud</span>
+            <span class="list-row-date">Jan 2026</span>
+            <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+          <div class="accordion-content" id="acc-gcp-pca">
+            <div class="accordion-bullets">
+              <span class="accordion-bullet">Designing and planning cloud solution architecture</span>
+              <span class="accordion-bullet">Provisioning and managing infrastructure across regions</span>
+              <span class="accordion-bullet">Security, compliance and reliability at scale</span>
+              <span class="accordion-link"><a href="https://www.credly.com/badges/ef7be6b9-2aba-428d-9e40-adb1bdd224f6/public_url" target="_blank" rel="noopener noreferrer">Verify the badge on Credly</a></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== Separator ==================== -->
+      <hr class="section-separator">
+
+      <!-- ==================== Personal Projects ==================== -->
+      <section class="section animate-section" data-delay="0.5" id="projects" aria-label="Personal projects">
+        <div class="section-header">
+          <a href="#projects" class="section-anchor" aria-label="Link to Personal Projects section">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </a>
+          <h2 data-scramble="true">Personal Projects</h2>
+        </div>
+
+        <p class="quests-intro">Some of my personal projects and experiments. Every number here was measured.</p>
 
         <div class="quests">
         <div class="quest">
           <h3 class="quest-heading">
             <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-llm">
               <span class="quest-mark" style="background-image: url('media/mini-llm.png');" aria-hidden="true"></span>
-              <span class="quest-name">LLM Inference Engine</span>
+              <span class="quest-name">InferRS<span class="quest-alias">Mini LLM Inference Engine</span></span>
               <span class="tech-icons"><i class="devicon-rust-plain colored" data-tooltip="Rust"></i></span>
               <span class="quest-year">2026</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
@@ -254,10 +273,106 @@
 
         <div class="quest">
           <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ledgerkv">
+              <span class="quest-mark" style="background-image: url('media/ledgerkv.png');" aria-hidden="true"></span>
+              <span class="quest-name">Ledger KV<span class="quest-alias">Distributed KV Database</span></span>
+              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-grpc-plain colored" data-tooltip="gRPC"></i><i class="devicon-kubernetes-plain colored" data-tooltip="Kubernetes"></i><i class="devicon-prometheus-original colored" data-tooltip="Prometheus"></i><i class="devicon-grafana-plain colored" data-tooltip="Grafana"></i></span>
+              <span class="quest-year">2025-26</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="quest-line">Both sides of the CAP tradeoff over one storage engine, with CI deciding which is which.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">69,140<span class="figure-unit">ops</span></span><span class="figure-label">Driven through a live 5-node cluster at about 250 a second</span></span><span class="figure"><span class="figure-value is-good">0<span class="figure-unit">failed</span></span><span class="figure-label">No operation dropped and no quorum ever came up short</span></span></span>
+            </button>
+          </h3>
+          <div class="accordion-content" id="q-ledgerkv">
+            <div class="quest-body">
+              <p class="quest-desc">Dynamo-style leaderless quorums and Raft, running over the same LSM storage engine. A linearizability checker in CI decides which guarantee each path actually gives you, so the difference between them is a test result rather than a README claim.</p>
+
+              <figure class="quest-evidence">
+                <a class="shot" href="media/projects/ledgerkv-grafana.png" target="_blank" rel="noopener noreferrer">
+                  <img src="media/projects/ledgerkv-grafana.png" alt="Grafana dashboard showing operations per second, p99 latency, quorum failures and repairs across five LedgerKV nodes while one node is killed and restarted" loading="lazy" width="1600" height="900">
+                  <span class="shot-open">Open full size</span>
+                </a>
+                <figcaption>Grafana reading Prometheus off all five nodes during that run. I killed node2 at 15:14 and brought it back at 15:16: its line drops out, the other four carry the load, and quorum failures stay flat at zero throughout. The two p99 spikes are JVM warm-up and node2 restarting cold, not the kill.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>Steady-state p99 latency, p50 was 2 ms</dt><dd>15 <i>ms</i></dd></div>
+                <div><dt>Time node2 spent dead mid-run</dt><dd>90 <i>s</i></dd></div>
+                <div><dt>Tests passing in CI, linearizability checker included</dt><dd>361</dd></div>
+                </dl>
+
+              <p class="quest-caveat">One run, one cluster, scraped from each node's /metrics endpoint. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
+
+              <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quest">
+          <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ski">
+              <span class="quest-mark" style="background-image: url('media/ski_2.png');" aria-hidden="true"></span>
+              <span class="quest-name">Distributed Ski Tracker</span>
+              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i><i class="devicon-dynamodb-plain colored" data-tooltip="DynamoDB"></i><i class="devicon-docker-plain colored" data-tooltip="Docker"></i></span>
+              <span class="quest-year">2025-26</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="quest-line">Event-driven ingest that throttles its own front door, and a load harness that stopped lying to me.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">9.5<span class="figure-unit">x</span></span><span class="figure-label">How badly the old closed-loop harness understated p50 latency</span></span><span class="figure"><span class="figure-value">62<span class="figure-unit">%</span></span><span class="figure-label">Fewer cardinality write requests, reproduced in both arm orders</span></span></span>
+            </button>
+          </h3>
+          <div class="accordion-content" id="q-ski">
+            <div class="quest-body">
+              <p class="quest-desc">RabbitMQ into DynamoDB with Redis-cached reads, fronted by a token-bucket admission controller that samples queue depth every 200 ms and steers with AIMD. Retreat is a hundred times faster than recovery: it halves the rate on a severe backlog and claws it back ten permits a second. If the broker cannot be reached it holds the current rate instead of reading silence as an empty queue, which was the original bug.</p>
+
+              <p class="quest-desc">Fleet awareness coordinates the instance count rather than the rate. Each replica heartbeats into a Redis sorted set and divides the admission floor by what it sees, because sharing one rate would collapse it by half for every replica. A shrink needs three consecutive confirmations, so a Redis restart cannot talk a replica into thinking it is alone.</p>
+
+              <figure class="quest-evidence">
+                <div class="gauge" role="img" aria-label="Median latency measured two ways: closed loop 1,120 milliseconds, open loop 10,617 milliseconds">
+                  <div class="gauge-row">
+                    <span class="gauge-key">closed</span>
+                    <span class="gauge-track"><span class="gauge-fill" style="--w: 10.5%;"></span></span>
+                    <span class="gauge-val">1,120</span>
+                  </div>
+                  <div class="gauge-row is-lead">
+                    <span class="gauge-key">open</span>
+                    <span class="gauge-track"><span class="gauge-fill" style="--w: 100%;"></span></span>
+                    <span class="gauge-val">10,617</span>
+                  </div>
+                  <p class="gauge-unit">p50 ms, the same system measured two ways</p>
+                </div>
+                <figcaption>A closed-loop harness waits for each response before sending the next one, so when the system slows down the harness politely slows down with it and the delay never lands in the numbers. Rebuilding it open loop, charging latency from when a request was due rather than when it went out, moved p50 from 1,120 ms to 10,617 ms. Nothing about the system changed. The first number was just wrong, and it is the number the assignment asked for.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>Cardinality write requests on the DynamoDB counter</dt><dd>25,163</dd></div>
+                <div><dt>Same workload once HyperLogLog took over the counting</dt><dd>9,635</dd></div>
+                <div><dt>Defects documented, each one pinned by a regression test</dt><dd>38</dd></div>
+                <div><dt>Decision records, rejected alternatives included</dt><dd>11</dd></div>
+              </dl>
+
+              <p class="quest-caveat">All of it ran against LocalStack on one laptop, never AWS, and LocalStack is the binding constraint in every run, so read the absolute throughput as a property of the rig rather than the architecture. Peak offered load in the sweep was 4,376 req/s and the controller shed hard above that. A batching result that looked like a 16% gain did not survive swapping the arm order, so it is not on this page. The CI workflow is written but has never actually run.</p>
+
+              <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/skier-tracking-system" target="_blank" rel="noopener noreferrer">GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quest">
+          <h3 class="quest-heading">
             <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ai4hc">
               <span class="quest-mark" style="background-image: url('media/ai4hc.png');" aria-hidden="true"></span>
               <span class="quest-name">AI4HC Pipeline</span>
-              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i></span>
+              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i><i class="devicon-amazonwebservices-original colored" data-tooltip="AWS Bedrock, Transcribe, S3"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i></span>
               <span class="quest-year">2026</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
               <span class="quest-line">Data lead on a graduate build turning clinician speech into structured records.</span>
@@ -304,7 +419,7 @@
             <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-profiler">
               <span class="quest-mark" style="background-image: url('media/vision_profiler_2.png');" aria-hidden="true"></span>
               <span class="quest-name">Vision Profiler</span>
-              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></span>
+              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></span>
               <span class="quest-year">2025-26</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
               <span class="quest-line">A profiling harness for PyTorch vision models, built to time them correctly.</span>
@@ -391,105 +506,7 @@
             </div>
           </div>
         </div>
-
-        <div class="quest">
-          <h3 class="quest-heading">
-            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ledgerkv">
-              <span class="quest-mark" style="background-image: url('media/ledgerkv.png');" aria-hidden="true"></span>
-              <span class="quest-name">LedgerKV</span>
-              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-kubernetes-plain colored" data-tooltip="Kubernetes"></i><i class="devicon-grafana-plain colored" data-tooltip="Grafana"></i></span>
-              <span class="quest-year">2025-26</span>
-              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">Both sides of the CAP tradeoff over one storage engine, with CI deciding which is which.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">69,140<span class="figure-unit">ops</span></span><span class="figure-label">Driven through a live 5-node cluster at about 250 a second</span></span><span class="figure"><span class="figure-value is-good">0<span class="figure-unit">failed</span></span><span class="figure-label">No operation dropped and no quorum ever came up short</span></span></span>
-            </button>
-          </h3>
-          <div class="accordion-content" id="q-ledgerkv">
-            <div class="quest-body">
-              <p class="quest-desc">Dynamo-style leaderless quorums and Raft, running over the same LSM storage engine. A linearizability checker in CI decides which guarantee each path actually gives you, so the difference between them is a test result rather than a README claim.</p>
-
-              <figure class="quest-evidence">
-                <a class="shot" href="media/projects/ledgerkv-grafana.png" target="_blank" rel="noopener noreferrer">
-                  <img src="media/projects/ledgerkv-grafana.png" alt="Grafana dashboard showing operations per second, p99 latency, quorum failures and repairs across five LedgerKV nodes while one node is killed and restarted" loading="lazy" width="1600" height="900">
-                  <span class="shot-open">Open full size</span>
-                </a>
-                <figcaption>Grafana reading Prometheus off all five nodes during that run. I killed node2 at 15:14 and brought it back at 15:16: its line drops out, the other four carry the load, and quorum failures stay flat at zero throughout. The two p99 spikes are JVM warm-up and node2 restarting cold, not the kill.</figcaption>
-              </figure>
-
-              <dl class="ledger">
-                <div><dt>Steady-state p99 latency, p50 was 2 ms</dt><dd>15 <i>ms</i></dd></div>
-                <div><dt>Time node2 spent dead mid-run</dt><dd>90 <i>s</i></dd></div>
-                <div><dt>Tests passing in CI, linearizability checker included</dt><dd>361</dd></div>
-                </dl>
-
-              <p class="quest-caveat">One run, one cluster, scraped from each node's /metrics endpoint. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
-
-              <div class="quest-links">
-                  <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">GitHub
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </a>
-                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
-              </div>
-            </div>
           </div>
-        </div>
-
-        <div class="quest">
-          <h3 class="quest-heading">
-            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ski">
-              <span class="quest-mark" style="background-image: url('media/ski_2.png');" aria-hidden="true"></span>
-              <span class="quest-name">Ski Tracker</span>
-              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i></span>
-              <span class="quest-year">2025-26</span>
-              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">Event-driven ingest that throttles its own front door, and a load harness that stopped lying to me.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">9.5<span class="figure-unit">x</span></span><span class="figure-label">How badly the old closed-loop harness understated p50 latency</span></span><span class="figure"><span class="figure-value">62<span class="figure-unit">%</span></span><span class="figure-label">Fewer cardinality write requests, reproduced in both arm orders</span></span></span>
-            </button>
-          </h3>
-          <div class="accordion-content" id="q-ski">
-            <div class="quest-body">
-              <p class="quest-desc">RabbitMQ into DynamoDB with Redis-cached reads, fronted by a token-bucket admission controller that samples queue depth every 200 ms and steers with AIMD. Retreat is a hundred times faster than recovery: it halves the rate on a severe backlog and claws it back ten permits a second. If the broker cannot be reached it holds the current rate instead of reading silence as an empty queue, which was the original bug.</p>
-
-              <p class="quest-desc">Fleet awareness coordinates the instance count rather than the rate. Each replica heartbeats into a Redis sorted set and divides the admission floor by what it sees, because sharing one rate would collapse it by half for every replica. A shrink needs three consecutive confirmations, so a Redis restart cannot talk a replica into thinking it is alone.</p>
-
-              <figure class="quest-evidence">
-                <div class="gauge" role="img" aria-label="Median latency measured two ways: closed loop 1,120 milliseconds, open loop 10,617 milliseconds">
-                  <div class="gauge-row">
-                    <span class="gauge-key">closed</span>
-                    <span class="gauge-track"><span class="gauge-fill" style="--w: 10.5%;"></span></span>
-                    <span class="gauge-val">1,120</span>
-                  </div>
-                  <div class="gauge-row is-lead">
-                    <span class="gauge-key">open</span>
-                    <span class="gauge-track"><span class="gauge-fill" style="--w: 100%;"></span></span>
-                    <span class="gauge-val">10,617</span>
-                  </div>
-                  <p class="gauge-unit">p50 ms, the same system measured two ways</p>
-                </div>
-                <figcaption>A closed-loop harness waits for each response before sending the next one, so when the system slows down the harness politely slows down with it and the delay never lands in the numbers. Rebuilding it open loop, charging latency from when a request was due rather than when it went out, moved p50 from 1,120 ms to 10,617 ms. Nothing about the system changed. The first number was just wrong, and it is the number the assignment asked for.</figcaption>
-              </figure>
-
-              <dl class="ledger">
-                <div><dt>Cardinality write requests on the DynamoDB counter</dt><dd>25,163</dd></div>
-                <div><dt>Same workload once HyperLogLog took over the counting</dt><dd>9,635</dd></div>
-                <div><dt>Defects documented, each one pinned by a regression test</dt><dd>38</dd></div>
-                <div><dt>Decision records, rejected alternatives included</dt><dd>11</dd></div>
-              </dl>
-
-              <p class="quest-caveat">All of it ran against LocalStack on one laptop, never AWS, and LocalStack is the binding constraint in every run, so read the absolute throughput as a property of the rig rather than the architecture. Peak offered load in the sweep was 4,376 req/s and the controller shed hard above that. A batching result that looked like a 16% gain did not survive swapping the arm order, so it is not on this page. The CI workflow is written but has never actually run.</p>
-
-              <div class="quest-links">
-                  <a href="https://github.com/tamirkifle/skier-tracking-system" target="_blank" rel="noopener noreferrer">GitHub
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </a>
-                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
-              </div>
-            </div>
-          </div>
-        </div>
-          </div>
-        </div>
-        </div>
       </section>
 
       <!-- ==================== Separator ==================== -->
