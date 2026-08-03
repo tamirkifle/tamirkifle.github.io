@@ -2092,7 +2092,8 @@ pre code {
   }
 
   /* Touch devices latch :hover after a tap, which would strand a tooltip. */
-  .dock-tooltip {
+  .dock-tooltip,
+  .tech-icons i::after {
     display: none;
   }
 }
