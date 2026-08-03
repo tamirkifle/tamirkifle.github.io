@@ -247,12 +247,10 @@
           <p class="quest-caveat">Criterion benchmarks on an M1 Pro. The footprint is read out of the running process, not calculated on paper. These are kernel and memory numbers though. A full 7B generation run is still unfinished, so there is no tokens per second figure here yet.</p>
 
           <div class="quest-links">
-            <a href="https://github.com/tamirkifle/mini-rust-inference" target="_blank" rel="noopener noreferrer">Source
+            <a href="https://github.com/tamirkifle/mini-rust-inference" target="_blank" rel="noopener noreferrer">GitHub
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="post.html?slug=building-llm-inference-rust">How I built it
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
+            <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
           </div>
         </article>
 
@@ -294,43 +292,113 @@
           <p class="quest-caveat">One run, one cluster, scraped from each node's /metrics endpoint. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
 
           <div class="quest-links">
-            <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">Source
+            <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">GitHub
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-            <a href="post.html?slug=distributed-kv-consistency">How I tested it
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
+            <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
           </div>
         </article>
 
         <!-- ---------- The smaller ones ---------- -->
         <div class="quest-shelf">
           <p class="quest-shelf-label">Also on the shelf</p>
-          <div class="side-quests-grid">
-            <a href="https://github.com/tamirkifle/skier-tracking-system" class="side-quest-item" target="_blank" rel="noopener noreferrer">
-              <span class="side-quest-icon" style="background-image: url('media/ski_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
-              <div class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i></div>
-              <span class="side-quest-label">Ski Tracker</span>
-              <span class="side-quest-note">Event-driven ingest with an adaptive admission controller. Held <b class="stat">8K req/s</b>.</span>
-            </a>
-            <a href="https://github.com/tamirkifle/vision-model-profiler" class="side-quest-item" target="_blank" rel="noopener noreferrer">
-              <span class="side-quest-icon" style="background-image: url('media/vision_profiler_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
-              <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></div>
-              <span class="side-quest-label">Vision Profiler</span>
-              <span class="side-quest-note">Profiled 5 CNNs on an M1 Pro GPU. MobileNetV3 landed at <b class="stat">117 img/s</b>.</span>
-            </a>
-            <a href="https://github.com/tamirkifle/realtime-2d-object-recognition" class="side-quest-item" target="_blank" rel="noopener noreferrer">
-              <span class="side-quest-icon" style="background-image: url('media/obj-recognition.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
-              <div class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></div>
-              <span class="side-quest-label">Object Recognition</span>
-              <span class="side-quest-note">Real-time C++ recognition, one shot per object. PCA takes it <b class="stat">4096 to 20</b> dims.</span>
-            </a>
-            <span class="side-quest-item is-quiet">
-              <span class="side-quest-icon" style="background-image: url('media/ai4hc.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
-              <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i></div>
-              <span class="side-quest-label">AI4HC Pipeline</span>
-              <span class="side-quest-note">Data lead on a <b class="stat">10-person</b> build turning clinician speech into structured records. Private repo.</span>
-            </span>
+          <div class="shelf">
+
+            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-ski">
+              <span class="shelf-icon" style="background-image: url('media/ski_2.png');" aria-hidden="true"></span>
+              <span class="shelf-name">Ski Tracker</span>
+              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i></span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="shelf-note">Event-driven ingest with an adaptive admission controller. Held <b class="stat">8K req/s</b>.</span>
+            </button>
+            <div class="accordion-content" id="shelf-ski">
+              <div class="shelf-body">
+                <p>An ingestion pipeline for lift-scan events: RabbitMQ into DynamoDB with Redis-cached reads, fronted by a token-bucket admission controller that watches queue depth and latency and throttles the front door before anything downstream falls over. It is fleet-aware, so three replicas split the admission budget rather than each one assuming it is alone.</p>
+                <p>The testing is the part I am happier about. I rebuilt the load harness to be open-loop so it would stop hiding coordinated omission, then ran the A/B in both orders to rule out ordering bias. I also killed Redis under live load and found a cold-start bug where a scaling replica quietly claimed the whole admission floor.</p>
+                <dl class="ledger">
+                  <div><dt>Sustained throughput on EC2, driven with JMeter</dt><dd>8,000 <i>req/s</i></dd></div>
+                  <div><dt>DynamoDB writes saved by HyperLogLog counting</dt><dd>62<i>%</i></dd></div>
+                  <div><dt>Defects found, each one pinned by a regression test</dt><dd>38</dd></div>
+                </dl>
+                <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/skier-tracking-system" target="_blank" rel="noopener noreferrer">GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-profiler">
+              <span class="shelf-icon" style="background-image: url('media/vision_profiler_2.png');" aria-hidden="true"></span>
+              <span class="shelf-name">Vision Profiler</span>
+              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="shelf-note">Profiled 5 CNNs on an M1 Pro GPU. MobileNetV3 landed at <b class="stat">117 img/s</b>.</span>
+            </button>
+            <div class="accordion-content" id="shelf-profiler">
+              <div class="shelf-body">
+                <p>A profiler for PyTorch vision models that reports where the time and the memory actually go, layer by layer, so a change to an architecture can be argued with a measurement instead of a hunch. I ran five CNNs through it on an M1 Pro GPU using MPS and CUDA profiling hooks.</p>
+                <p>There is a training loop wrapped around it with checkpointing, early stopping and resumption, mostly because fifty-epoch runs on a laptop do get interrupted.</p>
+                <dl class="ledger">
+                  <div><dt>MobileNetV3 inference on the M1 Pro GPU</dt><dd>117 <i>img/s</i></dd></div>
+                  <div><dt>Architectures profiled on identical hardware</dt><dd>5</dd></div>
+                  <div><dt>Longest run that survives interruption and resumes</dt><dd>50 <i>epochs</i></dd></div>
+                </dl>
+                <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/vision-model-profiler" target="_blank" rel="noopener noreferrer">GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-objrec">
+              <span class="shelf-icon" style="background-image: url('media/obj-recognition.png');" aria-hidden="true"></span>
+              <span class="shelf-name">Object Recognition</span>
+              <span class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="shelf-note">Real-time C++ recognition, one shot per object. PCA takes it <b class="stat">4096 to 20</b> dims.</span>
+            </button>
+            <div class="accordion-content" id="shelf-objrec">
+              <div class="shelf-body">
+                <p>Classical computer vision rather than a pretrained network: threshold, segment, compute region features that hold up under rotation and scale, then classify against a labelled database. It learns a new object from one example. PCA takes the feature vector from 4096 dimensions down to 20, and inference samples 6.25% of the pixels, which is what keeps it at frame rate on a live camera.</p>
+                <p>It got every object in my test set right. That set is small and lit the way I lit it, so read that as the pipeline working rather than as a benchmark.</p>
+                <dl class="ledger">
+                  <div><dt>Feature vector after PCA, down from 4096</dt><dd>20 <i>dims</i></dd></div>
+                  <div><dt>Pixels sampled at inference time</dt><dd>6.25<i>%</i></dd></div>
+                  <div><dt>Examples needed to learn a new object</dt><dd>1</dd></div>
+                </dl>
+                <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/realtime-2d-object-recognition" target="_blank" rel="noopener noreferrer">GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-ai4hc">
+              <span class="shelf-icon" style="background-image: url('media/ai4hc.png');" aria-hidden="true"></span>
+              <span class="shelf-name">AI4HC Pipeline</span>
+              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i></span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="shelf-note">Data lead on a <b class="stat">10-person</b> build turning clinician speech into structured records.</span>
+            </button>
+            <div class="accordion-content" id="shelf-ai4hc">
+              <div class="shelf-body">
+                <p>A ten-person graduate build that turns what a clinician says into a structured record: audio to AWS Transcribe, a human review step, then extraction with Claude on Bedrock. I owned the data layer. Clinical events live in JSONB because their shape changes by event type, and nothing reaches the record until a clinician has confirmed it.</p>
+                <p>Two calls I would defend. Patient data never goes into RabbitMQ, only a session id that consumers use to re-query Postgres. And every delete is soft, so the audit trail survives. I also reviewed integration across all five services and blocked eleven of fourteen pull requests on line-level findings, one of which was a CascadeType.ALL that would have cascade-deleted patient records.</p>
+                <dl class="ledger">
+                  <div><dt>Pull requests reviewed, 11 sent back with findings</dt><dd>14</dd></div>
+                  <div><dt>Services in the stack, all of which I ended up debugging</dt><dd>5</dd></div>
+                  <div><dt>Flyway migrations behind the schema</dt><dd>8</dd></div>
+                </dl>
+                <div class="quest-links">
+                  <span class="quest-link-off">GitHub <em>(private repo)</em></span>
+                </div>
+                <p class="shelf-private">Coursework at Northeastern. The speech-to-text benchmark and the model-selection decision were other people's work, not mine.</p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

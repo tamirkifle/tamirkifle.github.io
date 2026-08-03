@@ -254,6 +254,18 @@ function initAccordions() {
       }
     });
   });
+
+  // maxHeight is pinned at open time, so text that rewraps on resize would
+  // otherwise get clipped. Re-measure whatever is currently open.
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      document.querySelectorAll('.accordion-content.expanded').forEach((content) => {
+        content.style.maxHeight = content.scrollHeight + 'px';
+      });
+    }, 120);
+  });
 }
 
 // --- Utility: Format date ---
