@@ -30,10 +30,12 @@ html {
   --border-hover: hsl(220, 10%, 24%);
 
   /* Foreground */
-  --foreground: hsl(220, 10%, 62%);
+  /* 8.7:1 on --bg, which lands on the #b1b1b1 Tamir asked for while keeping
+     the palette's slight blue cast. */
+  --foreground: hsl(220, 10%, 70%);
   --foreground-highlighted: hsl(220, 10%, 93%);
-  /* 4.8:1 on --bg. At the old 38% it was 2.9:1 and unreadable. */
-  --foreground-faded: hsl(220, 10%, 52%);
+  /* 6.3:1, still a clear step below --foreground. It was 2.9:1 originally. */
+  --foreground-faded: hsl(220, 10%, 60%);
 
   /* Accent */
   --accent: hsl(210, 100%, 62%);
