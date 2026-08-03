@@ -731,7 +731,7 @@ pre code {
 }
 
 .quest-line {
-  grid-column: 2 / -1;
+  grid-column: 1 / -1;
   grid-row: 2;
   font-size: 0.8125rem;
   line-height: 1.55;
@@ -741,7 +741,7 @@ pre code {
 /* Figures ride in the row, so every project shows its numbers
    without being opened. */
 .quest-head .quest-figures {
-  grid-column: 2 / -1;
+  grid-column: 1 / -1;
   grid-row: 3;
   margin-top: 0.15rem;
 }
@@ -752,9 +752,7 @@ pre code {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* 8px row padding + 34px mark + 12px gap, so the panel lines up
-     with the project name above it. */
-  padding: 0.25rem 0.5rem 1.75rem 3.375rem;
+  padding: 0.25rem 0.5rem 1.75rem;
 }
 
 .quest-desc {
@@ -1135,11 +1133,6 @@ pre code {
 
   .figure-value {
     font-size: 1.25rem;
-  }
-
-  /* Reclaim the indent; at this width the panel needs the whole column. */
-  .quest-body {
-    padding-left: 0.5rem;
   }
 
   .gauge-row {
