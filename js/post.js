@@ -64,7 +64,7 @@ function showError(headerEl, contentEl) {
   document.title = 'Post Not Found - Tamir Yirga';
   headerEl.innerHTML = '<h1>Post not found</h1>';
   contentEl.innerHTML =
-    '<p style="color:var(--foreground-faded)">The post you\'re looking for doesn\'t exist or has been removed. <a href="writing.html" class="link">Browse all writing →</a></p>';
+    '<p style="color:var(--foreground-faded)">The post you\'re looking for doesn\'t exist or has been removed. <a href="writing.html" class="link">Browse all writing</a></p>';
 }
 
 /** Minimal HTML escaping for safe rendering */

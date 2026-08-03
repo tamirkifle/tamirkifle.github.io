@@ -30,7 +30,6 @@
 
   <!-- Scripts -->
   <script src="js/main.js" defer></script>
-  <script src="js/projects-data.js" defer></script>
   <script src="js/home.js" defer></script>
 </head>
 <body>
@@ -97,7 +96,7 @@
             <div class="accordion-bullets">
               <span class="accordion-bullet">Spark 4.1.1 TIME data types in Rust</span>
               <span class="accordion-bullet">Arrow-native PySpark UDF framework</span>
-              <span class="accordion-bullet">15× throughput speedup via zero-copy Arrow transfer</span>
+              <span class="accordion-bullet">15x throughput speedup via zero-copy Arrow transfer</span>
               <span class="accordion-link"><a href="https://lakesail.com/" target="_blank" rel="noopener noreferrer">https://lakesail.com/</a></span>
             </div>
           </div>
@@ -124,7 +123,7 @@
             <span class="list-row-icon" style="background-color: white;"><img src="media/scandiweb-logo.jpg" alt="Scandiweb Logo" style="object-fit: contain;"></span>
             <span class="list-row-title">Scandiweb</span>
             <span class="list-row-subtitle">Full Stack Engineer</span>
-            <span class="list-row-date">2022–2024</span>
+            <span class="list-row-date">2022-2024</span>
             <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
           <div class="accordion-content" id="acc-scandiweb">
@@ -141,7 +140,7 @@
             <span class="list-row-icon" style="background-color: white;"><img src="media/endubis-logo.jpg" alt="Endubis Logo" style="object-fit: contain;"></span>
             <span class="list-row-title">Endubis</span>
             <span class="list-row-subtitle">Full Stack Engineer</span>
-            <span class="list-row-date">2021–2022</span>
+            <span class="list-row-date">2021-2022</span>
             <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
           <div class="accordion-content" id="acc-endubis">
@@ -199,41 +198,140 @@
           <h2 data-scramble="true">Side Quests</h2>
         </div>
 
-        <p class="section-hint">Click a tile for the full case study — measured benchmarks, real screenshots, live demos.</p>
+        <p class="quests-intro">Two I went deep enough on to have real numbers, and four I built for the fun of it. Everything below was measured. Where I have not measured something, I say so.</p>
 
-        <div class="side-quests-grid" id="side-quests-grid">
-          <button type="button" class="side-quest-item" aria-label="LLM Inference Engine case study" aria-expanded="false" aria-haspopup="dialog" data-slug="llm-engine">
-            <div class="side-quest-icon" style="background-image: url('media/mini-llm.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
+        <!-- ---------- LLM Inference Engine ---------- -->
+        <article class="quest">
+          <header class="quest-head">
+            <span class="quest-mark" style="background-image: url('media/mini-llm.png');" aria-hidden="true"></span>
+            <h3 class="quest-name">LLM Inference Engine</h3>
             <div class="tech-icons"><i class="devicon-rust-plain colored" data-tooltip="Rust"></i></div>
-            <span class="side-quest-label">LLM Engine</span>
-            <span class="side-quest-flag">Case study</span>
-          </button>
-          <button type="button" class="side-quest-item" aria-label="LedgerKV case study" aria-expanded="false" aria-haspopup="dialog" data-slug="ledgerkv">
-            <div class="side-quest-icon" style="background-image: url('media/ledgerkv.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
-            <div class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-docker-plain colored" data-tooltip="Docker"></i></div>
-            <span class="side-quest-label">LedgerKV</span>
-            <span class="side-quest-flag">Case study</span>
-          </button>
-          <button type="button" class="side-quest-item" aria-label="Vision Profiler project" aria-expanded="false" aria-haspopup="dialog" data-slug="vision-profiler">
-            <div class="side-quest-icon" style="background-image: url('media/vision_profiler_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
-            <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></div>
-            <span class="side-quest-label">Vision Profiler</span>
-          </button>
-          <button type="button" class="side-quest-item" aria-label="AI4HC Pipeline project" aria-expanded="false" aria-haspopup="dialog" data-slug="ai4hc">
-            <div class="side-quest-icon" style="background-image: url('media/ai4hc.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
-            <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-tensorflow-original colored" data-tooltip="TensorFlow"></i></div>
-            <span class="side-quest-label">AI4HC Pipeline</span>
-          </button>
-          <button type="button" class="side-quest-item" aria-label="Ski Tracker project" aria-expanded="false" aria-haspopup="dialog" data-slug="ski-tracker">
-            <div class="side-quest-icon" style="background-image: url('media/ski_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
-            <div class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-react-original colored" data-tooltip="React"></i></div>
-            <span class="side-quest-label">Ski Tracker</span>
-          </button>
-          <button type="button" class="side-quest-item" aria-label="Object Recognition project" aria-expanded="false" aria-haspopup="dialog" data-slug="object-recognition">
-            <div class="side-quest-icon" style="background-image: url('media/obj-recognition.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
-            <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></div>
-            <span class="side-quest-label">Object Recognition</span>
-          </button>
+          </header>
+
+          <p class="quest-desc">Llama inference in Rust with no PyTorch, no ONNX and no BLAS. I wrote the kernels by hand, benchmarked them, and rewrote the ones that turned out slower than I expected.</p>
+
+          <div class="quest-figures">
+            <div class="figure">
+              <span class="figure-value">21<span class="figure-unit">x</span></span>
+              <span class="figure-label">INT8 over f32 on the matmul that decoding actually runs</span>
+            </div>
+            <div class="figure">
+              <span class="figure-value">6.03<span class="figure-unit">GB</span></span>
+              <span class="figure-label">Llama-7B weights quantized, down from 24.12 in f32</span>
+            </div>
+          </div>
+
+          <figure class="quest-evidence">
+            <div class="gauge" role="img" aria-label="Decode matmul throughput: f32 at 4.7 Gelem per second, INT8 at 100.6 Gelem per second">
+              <div class="gauge-row">
+                <span class="gauge-key">f32</span>
+                <span class="gauge-track"><span class="gauge-fill" style="--w: 4.7%;"></span></span>
+                <span class="gauge-val">4.7</span>
+              </div>
+              <div class="gauge-row is-lead">
+                <span class="gauge-key">INT8</span>
+                <span class="gauge-track"><span class="gauge-fill" style="--w: 100%;"></span></span>
+                <span class="gauge-val">100.6</span>
+              </div>
+              <p class="gauge-unit">Gelem/s, one token row against a 4096 by 11008 projection</p>
+            </div>
+            <figcaption>Generating a token runs that shape once per layer, every token, and it is bound by memory bandwidth rather than arithmetic. The INT8 weight block fits in L2. The f32 block does not. Square-matrix benchmarks put INT8 at roughly 2x and miss this entirely.</figcaption>
+          </figure>
+
+          <dl class="ledger">
+            <div><dt>f32 GEMM at 1024 square, 10 cores</dt><dd>157.9 <i>Gelem/s</i></dd></div>
+            <div><dt>Naive scalar version of the same kernel</dt><dd>23.3 <i>Gelem/s</i></dd></div>
+            <div><dt>Tests passing across kernels, cache and sampling</dt><dd>923</dd></div>
+          </dl>
+
+          <p class="quest-caveat">Criterion benchmarks on an M1 Pro. The footprint is read out of the running process, not calculated on paper. These are kernel and memory numbers though. A full 7B generation run is still unfinished, so there is no tokens per second figure here yet.</p>
+
+          <div class="quest-links">
+            <a href="https://github.com/tamirkifle/mini-rust-inference" target="_blank" rel="noopener noreferrer">Source
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="post.html?slug=building-llm-inference-rust">How I built it
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- ---------- LedgerKV ---------- -->
+        <article class="quest">
+          <header class="quest-head">
+            <span class="quest-mark" style="background-image: url('media/ledgerkv.png');" aria-hidden="true"></span>
+            <h3 class="quest-name">LedgerKV</h3>
+            <div class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-kubernetes-plain colored" data-tooltip="Kubernetes"></i><i class="devicon-grafana-plain colored" data-tooltip="Grafana"></i></div>
+          </header>
+
+          <p class="quest-desc">A key-value store that runs both sides of the CAP tradeoff over one storage engine: Dynamo-style leaderless quorums, and Raft. A linearizability checker in CI decides which guarantee each path actually gives you, so the difference is a test result rather than a README claim.</p>
+
+          <div class="quest-figures">
+            <div class="figure">
+              <span class="figure-value">69,140<span class="figure-unit">ops</span></span>
+              <span class="figure-label">Driven through a live 5-node cluster at about 250 a second</span>
+            </div>
+            <div class="figure">
+              <span class="figure-value is-good">0<span class="figure-unit">failed</span></span>
+              <span class="figure-label">No operation dropped and no quorum ever came up short</span>
+            </div>
+          </div>
+
+          <figure class="quest-evidence">
+            <a class="shot" href="media/projects/ledgerkv-grafana.png" target="_blank" rel="noopener noreferrer">
+              <img src="media/projects/ledgerkv-grafana.png" alt="Grafana dashboard showing operations per second, p99 latency, quorum failures and repairs across five LedgerKV nodes while one node is killed and restarted" loading="lazy" width="1600" height="900">
+              <span class="shot-open">Open full size</span>
+            </a>
+            <figcaption>Grafana reading Prometheus off all five nodes during that run. I killed node2 at 15:14 and brought it back at 15:16: its line drops out, the other four carry the load, and quorum failures stay flat at zero throughout. The two p99 spikes are JVM warm-up and node2 restarting cold, not the kill.</figcaption>
+          </figure>
+
+          <dl class="ledger">
+            <div><dt>Steady-state p99 latency, p50 was 2 ms</dt><dd>15 <i>ms</i></dd></div>
+            <div><dt>Time node2 spent dead mid-run</dt><dd>90 <i>s</i></dd></div>
+            <div><dt>Tests passing in CI, linearizability checker included</dt><dd>361</dd></div>
+          </dl>
+
+          <p class="quest-caveat">One run, one cluster, scraped from each node's /metrics endpoint. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
+
+          <div class="quest-links">
+            <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">Source
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="post.html?slug=distributed-kv-consistency">How I tested it
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- ---------- The smaller ones ---------- -->
+        <div class="quest-shelf">
+          <p class="quest-shelf-label">Also on the shelf</p>
+          <div class="side-quests-grid">
+            <a href="https://github.com/tamirkifle/skier-tracking-system" class="side-quest-item" target="_blank" rel="noopener noreferrer">
+              <span class="side-quest-icon" style="background-image: url('media/ski_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
+              <div class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i></div>
+              <span class="side-quest-label">Ski Tracker</span>
+              <span class="side-quest-note">Event-driven ingest with an adaptive admission controller. Held <b class="stat">8K req/s</b>.</span>
+            </a>
+            <a href="https://github.com/tamirkifle/vision-model-profiler" class="side-quest-item" target="_blank" rel="noopener noreferrer">
+              <span class="side-quest-icon" style="background-image: url('media/vision_profiler_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
+              <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></div>
+              <span class="side-quest-label">Vision Profiler</span>
+              <span class="side-quest-note">Profiled 5 CNNs on an M1 Pro GPU. MobileNetV3 landed at <b class="stat">117 img/s</b>.</span>
+            </a>
+            <a href="https://github.com/tamirkifle/realtime-2d-object-recognition" class="side-quest-item" target="_blank" rel="noopener noreferrer">
+              <span class="side-quest-icon" style="background-image: url('media/obj-recognition.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
+              <div class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></div>
+              <span class="side-quest-label">Object Recognition</span>
+              <span class="side-quest-note">Real-time C++ recognition, one shot per object. PCA takes it <b class="stat">4096 to 20</b> dims.</span>
+            </a>
+            <span class="side-quest-item is-quiet">
+              <span class="side-quest-icon" style="background-image: url('media/ai4hc.png'); background-size: 95%; background-position: center;" aria-hidden="true"></span>
+              <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i></div>
+              <span class="side-quest-label">AI4HC Pipeline</span>
+              <span class="side-quest-note">Data lead on a <b class="stat">10-person</b> build turning clinician speech into structured records. Private repo.</span>
+            </span>
+          </div>
         </div>
       </section>
 
