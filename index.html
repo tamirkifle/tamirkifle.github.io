@@ -30,6 +30,7 @@
 
   <!-- Scripts -->
   <script src="js/main.js" defer></script>
+  <script src="js/projects-data.js" defer></script>
   <script src="js/home.js" defer></script>
 </head>
 <body>
@@ -198,37 +199,41 @@
           <h2 data-scramble="true">Side Quests</h2>
         </div>
 
-        <div class="side-quests-grid">
-          <a href="https://github.com/tamirkifle/mini-rust-inference" class="side-quest-item" target="_blank" rel="noopener noreferrer" aria-label="Mini LLM Engine project">
-            <div class="side-quest-icon" style="background-image: url('media/mini-llm.png'); background-size: 95%; background-position: center;" aria-label="Mini LLM Engine"></div>
+        <p class="section-hint">Click a tile for the full case study — measured benchmarks, real screenshots, live demos.</p>
+
+        <div class="side-quests-grid" id="side-quests-grid">
+          <button type="button" class="side-quest-item" aria-label="LLM Inference Engine case study" aria-expanded="false" aria-haspopup="dialog" data-slug="llm-engine">
+            <div class="side-quest-icon" style="background-image: url('media/mini-llm.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
             <div class="tech-icons"><i class="devicon-rust-plain colored" data-tooltip="Rust"></i></div>
-            <span class="side-quest-label">Mini LLM Engine</span>
-          </a>
-          <a href="https://github.com/tamirkifle/distributed-kv-database" class="side-quest-item" target="_blank" rel="noopener noreferrer" aria-label="Distributed KV project">
-            <div class="side-quest-icon" style="background-image: url('media/ledgerkv.png'); background-size: 95%; background-position: center;" aria-label="Distributed KV"></div>
-            <div class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i></div>
-            <span class="side-quest-label">Distributed KV</span>
-          </a>
-          <a href="https://github.com/tamirkifle/vision-model-profiler" class="side-quest-item" target="_blank" rel="noopener noreferrer" aria-label="Vision Profiler project">
-            <div class="side-quest-icon" style="background-image: url('media/vision_profiler_2.png'); background-size: 95%; background-position: center;" aria-label="Vision Profiler"></div>
+            <span class="side-quest-label">LLM Engine</span>
+            <span class="side-quest-flag">Case study</span>
+          </button>
+          <button type="button" class="side-quest-item" aria-label="LedgerKV case study" aria-expanded="false" aria-haspopup="dialog" data-slug="ledgerkv">
+            <div class="side-quest-icon" style="background-image: url('media/ledgerkv.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
+            <div class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-docker-plain colored" data-tooltip="Docker"></i></div>
+            <span class="side-quest-label">LedgerKV</span>
+            <span class="side-quest-flag">Case study</span>
+          </button>
+          <button type="button" class="side-quest-item" aria-label="Vision Profiler project" aria-expanded="false" aria-haspopup="dialog" data-slug="vision-profiler">
+            <div class="side-quest-icon" style="background-image: url('media/vision_profiler_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
             <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></div>
             <span class="side-quest-label">Vision Profiler</span>
-          </a>
-          <a href="#" class="side-quest-item" aria-label="AI4HC Pipeline project">
-            <div class="side-quest-icon" style="background-image: url('media/ai4hc.png'); background-size: 95%; background-position: center;" aria-label="AI4HC Pipeline"></div>
+          </button>
+          <button type="button" class="side-quest-item" aria-label="AI4HC Pipeline project" aria-expanded="false" aria-haspopup="dialog" data-slug="ai4hc">
+            <div class="side-quest-icon" style="background-image: url('media/ai4hc.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
             <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-tensorflow-original colored" data-tooltip="TensorFlow"></i></div>
             <span class="side-quest-label">AI4HC Pipeline</span>
-          </a>
-          <a href="https://github.com/tamirkifle/skier-tracking-system" class="side-quest-item" target="_blank" rel="noopener noreferrer" aria-label="Ski Tracker project">
-            <div class="side-quest-icon" style="background-image: url('media/ski_2.png'); background-size: 95%; background-position: center;" aria-label="Ski Tracker"></div>
+          </button>
+          <button type="button" class="side-quest-item" aria-label="Ski Tracker project" aria-expanded="false" aria-haspopup="dialog" data-slug="ski-tracker">
+            <div class="side-quest-icon" style="background-image: url('media/ski_2.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
             <div class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-react-original colored" data-tooltip="React"></i></div>
             <span class="side-quest-label">Ski Tracker</span>
-          </a>
-          <a href="https://github.com/tamirkifle/realtime-2d-object-recognition" class="side-quest-item" target="_blank" rel="noopener noreferrer" aria-label="Object Recognition project">
-            <div class="side-quest-icon" style="background-image: url('media/obj-recognition.png'); background-size: 95%; background-position: center;" aria-label="Object Recognition"></div>
+          </button>
+          <button type="button" class="side-quest-item" aria-label="Object Recognition project" aria-expanded="false" aria-haspopup="dialog" data-slug="object-recognition">
+            <div class="side-quest-icon" style="background-image: url('media/obj-recognition.png'); background-size: 95%; background-position: center;" aria-hidden="true"></div>
             <div class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></div>
             <span class="side-quest-label">Object Recognition</span>
-          </a>
+          </button>
         </div>
       </section>
 
@@ -267,6 +272,6 @@
   </div>
 
   <!-- Dock Navigation -->
-  <script>createDock('home');</script>
+  <script>document.addEventListener('DOMContentLoaded', () => createDock('home'));</script>
 </body>
 </html>
