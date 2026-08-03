@@ -272,6 +272,13 @@ function initTextScramble() {
 
 // --- Accordion ---
 function initAccordions() {
+  // Panels marked data-open start open. They get no pinned height at all, so
+  // lazy images growing the panel can't clip it.
+  document.querySelectorAll('.accordion-row[data-open="true"]').forEach((row) => {
+    const content = document.getElementById(row.getAttribute('aria-controls'));
+    if (content) content.style.maxHeight = 'none';
+  });
+
   document.querySelectorAll('.accordion-row').forEach((row) => {
     row.addEventListener('click', (e) => {
       e.preventDefault();
@@ -281,6 +288,12 @@ function initAccordions() {
       if (!content) return;
 
       if (expanded) {
+        // An unpinned panel has to be given its real height before it can
+        // animate down from it.
+        if (content.style.maxHeight === 'none') {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          void content.offsetHeight;
+        }
         row.setAttribute('aria-expanded', 'false');
         content.style.maxHeight = '0';
         content.classList.remove('expanded');
@@ -299,6 +312,7 @@ function initAccordions() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       document.querySelectorAll('.accordion-content.expanded').forEach((content) => {
+        if (content.style.maxHeight === 'none') return;
         content.style.maxHeight = content.scrollHeight + 'px';
       });
     }, 120);

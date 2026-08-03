@@ -32,7 +32,8 @@ html {
   /* Foreground */
   --foreground: hsl(220, 10%, 62%);
   --foreground-highlighted: hsl(220, 10%, 93%);
-  --foreground-faded: hsl(220, 10%, 38%);
+  /* 4.8:1 on --bg. At the old 38% it was 2.9:1 and unreadable. */
+  --foreground-faded: hsl(220, 10%, 52%);
 
   /* Accent */
   --accent: hsl(210, 100%, 62%);
@@ -79,7 +80,8 @@ html {
 
   --foreground: hsl(220, 10%, 40%);
   --foreground-highlighted: hsl(220, 15%, 12%);
-  --foreground-faded: hsl(220, 5%, 58%);
+  /* Same correction on the light side: 3.0:1 up to 4.2:1. */
+  --foreground-faded: hsl(220, 5%, 48%);
 
   --accent: hsl(210, 100%, 45%);
   --accent-hover: hsl(210, 100%, 38%);
@@ -257,6 +259,40 @@ pre code {
 
 .site-logo:hover .site-wordmark {
   color: var(--foreground);
+}
+
+/* --- Jump Links ---
+   The work history sits below the projects now, so the top of the page needs
+   a way down to it. */
+.jump-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: -0.75rem;
+}
+
+.jump-label {
+  margin-right: 0.25rem;
+  font-size: 0.8125rem;
+  color: var(--foreground-faded);
+}
+
+.jump-link {
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+.jump-link:hover {
+  color: var(--foreground-highlighted);
+  background-color: var(--bg-hover);
+  border-color: var(--border-hover);
 }
 
 /* --- Sections --- */
@@ -475,6 +511,20 @@ pre code {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Rows that leave the site, in place of the accordion chevron. */
+.list-row-out {
+  width: 14px;
+  height: 14px;
+  color: var(--foreground-faded);
+  flex-shrink: 0;
+  transition: transform 200ms var(--ease-out), color 150ms ease;
+}
+
+.list-row:hover .list-row-out {
+  color: var(--foreground);
+  transform: translate(1px, -1px);
 }
 
 .list-row-date {
