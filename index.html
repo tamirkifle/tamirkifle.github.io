@@ -198,208 +198,297 @@
           <h2 data-scramble="true">Side Quests</h2>
         </div>
 
-        <p class="quests-intro">Two I went deep enough on to have real numbers, and four I built for the fun of it. Everything below was measured. Where I have not measured something, I say so.</p>
+        <p class="quests-intro">Six things I built outside of work, newest first. Every number here was measured. Where a project has no numbers worth publishing, it says so instead of reaching for one.</p>
 
-        <!-- ---------- LLM Inference Engine ---------- -->
-        <article class="quest">
-          <header class="quest-head">
-            <span class="quest-mark" style="background-image: url('media/mini-llm.png');" aria-hidden="true"></span>
-            <h3 class="quest-name">LLM Inference Engine</h3>
-            <div class="tech-icons"><i class="devicon-rust-plain colored" data-tooltip="Rust"></i></div>
-          </header>
-
-          <p class="quest-desc">Llama inference in Rust with no PyTorch, no ONNX and no BLAS. I wrote the kernels by hand, benchmarked them, and rewrote the ones that turned out slower than I expected.</p>
-
-          <div class="quest-figures">
-            <div class="figure">
-              <span class="figure-value">21<span class="figure-unit">x</span></span>
-              <span class="figure-label">INT8 over f32 on the matmul that decoding actually runs</span>
-            </div>
-            <div class="figure">
-              <span class="figure-value">6.03<span class="figure-unit">GB</span></span>
-              <span class="figure-label">Llama-7B weights quantized, down from 24.12 in f32</span>
-            </div>
-          </div>
-
-          <figure class="quest-evidence">
-            <div class="gauge" role="img" aria-label="Decode matmul throughput: f32 at 4.7 Gelem per second, INT8 at 100.6 Gelem per second">
-              <div class="gauge-row">
-                <span class="gauge-key">f32</span>
-                <span class="gauge-track"><span class="gauge-fill" style="--w: 4.7%;"></span></span>
-                <span class="gauge-val">4.7</span>
-              </div>
-              <div class="gauge-row is-lead">
-                <span class="gauge-key">INT8</span>
-                <span class="gauge-track"><span class="gauge-fill" style="--w: 100%;"></span></span>
-                <span class="gauge-val">100.6</span>
-              </div>
-              <p class="gauge-unit">Gelem/s, one token row against a 4096 by 11008 projection</p>
-            </div>
-            <figcaption>Generating a token runs that shape once per layer, every token, and it is bound by memory bandwidth rather than arithmetic. The INT8 weight block fits in L2. The f32 block does not. Square-matrix benchmarks put INT8 at roughly 2x and miss this entirely.</figcaption>
-          </figure>
-
-          <dl class="ledger">
-            <div><dt>f32 GEMM at 1024 square, 10 cores</dt><dd>157.9 <i>Gelem/s</i></dd></div>
-            <div><dt>Naive scalar version of the same kernel</dt><dd>23.3 <i>Gelem/s</i></dd></div>
-            <div><dt>Tests passing across kernels, cache and sampling</dt><dd>923</dd></div>
-          </dl>
-
-          <p class="quest-caveat">Criterion benchmarks on an M1 Pro. The footprint is read out of the running process, not calculated on paper. These are kernel and memory numbers though. A full 7B generation run is still unfinished, so there is no tokens per second figure here yet.</p>
-
-          <div class="quest-links">
-            <a href="https://github.com/tamirkifle/mini-rust-inference" target="_blank" rel="noopener noreferrer">GitHub
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
-          </div>
-        </article>
-
-        <!-- ---------- LedgerKV ---------- -->
-        <article class="quest">
-          <header class="quest-head">
-            <span class="quest-mark" style="background-image: url('media/ledgerkv.png');" aria-hidden="true"></span>
-            <h3 class="quest-name">LedgerKV</h3>
-            <div class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-kubernetes-plain colored" data-tooltip="Kubernetes"></i><i class="devicon-grafana-plain colored" data-tooltip="Grafana"></i></div>
-          </header>
-
-          <p class="quest-desc">A key-value store that runs both sides of the CAP tradeoff over one storage engine: Dynamo-style leaderless quorums, and Raft. A linearizability checker in CI decides which guarantee each path actually gives you, so the difference is a test result rather than a README claim.</p>
-
-          <div class="quest-figures">
-            <div class="figure">
-              <span class="figure-value">69,140<span class="figure-unit">ops</span></span>
-              <span class="figure-label">Driven through a live 5-node cluster at about 250 a second</span>
-            </div>
-            <div class="figure">
-              <span class="figure-value is-good">0<span class="figure-unit">failed</span></span>
-              <span class="figure-label">No operation dropped and no quorum ever came up short</span>
-            </div>
-          </div>
-
-          <figure class="quest-evidence">
-            <a class="shot" href="media/projects/ledgerkv-grafana.png" target="_blank" rel="noopener noreferrer">
-              <img src="media/projects/ledgerkv-grafana.png" alt="Grafana dashboard showing operations per second, p99 latency, quorum failures and repairs across five LedgerKV nodes while one node is killed and restarted" loading="lazy" width="1600" height="900">
-              <span class="shot-open">Open full size</span>
-            </a>
-            <figcaption>Grafana reading Prometheus off all five nodes during that run. I killed node2 at 15:14 and brought it back at 15:16: its line drops out, the other four carry the load, and quorum failures stay flat at zero throughout. The two p99 spikes are JVM warm-up and node2 restarting cold, not the kill.</figcaption>
-          </figure>
-
-          <dl class="ledger">
-            <div><dt>Steady-state p99 latency, p50 was 2 ms</dt><dd>15 <i>ms</i></dd></div>
-            <div><dt>Time node2 spent dead mid-run</dt><dd>90 <i>s</i></dd></div>
-            <div><dt>Tests passing in CI, linearizability checker included</dt><dd>361</dd></div>
-          </dl>
-
-          <p class="quest-caveat">One run, one cluster, scraped from each node's /metrics endpoint. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
-
-          <div class="quest-links">
-            <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">GitHub
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
-          </div>
-        </article>
-
-        <!-- ---------- The smaller ones ---------- -->
-        <div class="quest-shelf">
-          <p class="quest-shelf-label">Also on the shelf</p>
-          <div class="shelf">
-
-            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-ski">
-              <span class="shelf-icon" style="background-image: url('media/ski_2.png');" aria-hidden="true"></span>
-              <span class="shelf-name">Ski Tracker</span>
-              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i></span>
+        <div class="quests">
+        <div class="quest">
+          <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-llm">
+              <span class="quest-mark" style="background-image: url('media/mini-llm.png');" aria-hidden="true"></span>
+              <span class="quest-name">LLM Inference Engine</span>
+              <span class="tech-icons"><i class="devicon-rust-plain colored" data-tooltip="Rust"></i></span>
+              <span class="quest-year">2026</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="shelf-note">Event-driven ingest with an adaptive admission controller. Held <b class="stat">8K req/s</b>.</span>
+              <span class="quest-line">Llama inference in Rust with no PyTorch, no ONNX and no BLAS.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">21<span class="figure-unit">x</span></span><span class="figure-label">INT8 over f32 on the matmul that decoding actually runs</span></span><span class="figure"><span class="figure-value">6.03<span class="figure-unit">GB</span></span><span class="figure-label">Llama-7B weights quantized, down from 24.12</span></span></span>
             </button>
-            <div class="accordion-content" id="shelf-ski">
-              <div class="shelf-body">
-                <p>An ingestion pipeline for lift-scan events: RabbitMQ into DynamoDB with Redis-cached reads, fronted by a token-bucket admission controller that watches queue depth and latency and throttles the front door before anything downstream falls over. It is fleet-aware, so three replicas split the admission budget rather than each one assuming it is alone.</p>
-                <p>The testing is the part I am happier about. I rebuilt the load harness to be open-loop so it would stop hiding coordinated omission, then ran the A/B in both orders to rule out ordering bias. I also killed Redis under live load and found a cold-start bug where a scaling replica quietly claimed the whole admission floor.</p>
-                <dl class="ledger">
-                  <div><dt>Sustained throughput on EC2, driven with JMeter</dt><dd>8,000 <i>req/s</i></dd></div>
-                  <div><dt>DynamoDB writes saved by HyperLogLog counting</dt><dd>62<i>%</i></dd></div>
-                  <div><dt>Defects found, each one pinned by a regression test</dt><dd>38</dd></div>
+          </h3>
+          <div class="accordion-content" id="q-llm">
+            <div class="quest-body">
+              <p class="quest-desc">Every kernel is custom built, benchmarked, and rewritten when it turned out slower than I expected. A GGUF parser memory-maps the weights, attention is grouped-query over a paged KV cache, and the SIMD backend is chosen once at startup so the hot path pays a single atomic load.</p>
+
+              <figure class="quest-evidence">
+                <div class="gauge" role="img" aria-label="Decode matmul throughput: f32 at 4.7 Gelem per second, INT8 at 100.6 Gelem per second">
+                  <div class="gauge-row">
+                    <span class="gauge-key">f32</span>
+                    <span class="gauge-track"><span class="gauge-fill" style="--w: 4.7%;"></span></span>
+                    <span class="gauge-val">4.7</span>
+                  </div>
+                  <div class="gauge-row is-lead">
+                    <span class="gauge-key">INT8</span>
+                    <span class="gauge-track"><span class="gauge-fill" style="--w: 100%;"></span></span>
+                    <span class="gauge-val">100.6</span>
+                  </div>
+                  <p class="gauge-unit">Gelem/s, one token row against a 4096 by 11008 projection</p>
+                </div>
+                <figcaption>Generating a token runs that shape once per layer, every token, and it is bound by memory bandwidth rather than arithmetic. The INT8 weight block fits in L2. The f32 block does not. Square-matrix benchmarks put INT8 at roughly 2x and miss this entirely.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>f32 GEMM at 1024 square, 10 cores</dt><dd>157.9 <i>Gelem/s</i></dd></div>
+                <div><dt>Naive scalar version of the same kernel</dt><dd>23.3 <i>Gelem/s</i></dd></div>
+                <div><dt>Tests passing across kernels, cache and sampling</dt><dd>923</dd></div>
                 </dl>
-                <div class="quest-links">
-                  <a href="https://github.com/tamirkifle/skier-tracking-system" target="_blank" rel="noopener noreferrer">GitHub
+
+              <p class="quest-caveat">Criterion benchmarks on an M1 Pro. The footprint is read out of the running process, not calculated on paper. These are kernel and memory numbers though. A full 7B generation run is still unfinished, so there is no tokens per second figure here yet.</p>
+
+              <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/mini-rust-inference" target="_blank" rel="noopener noreferrer">GitHub
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                   </a>
-                </div>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
               </div>
             </div>
+          </div>
+        </div>
 
-            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-profiler">
-              <span class="shelf-icon" style="background-image: url('media/vision_profiler_2.png');" aria-hidden="true"></span>
-              <span class="shelf-name">Vision Profiler</span>
-              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></span>
+        <div class="quest">
+          <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ai4hc">
+              <span class="quest-mark" style="background-image: url('media/ai4hc.png');" aria-hidden="true"></span>
+              <span class="quest-name">AI4HC Pipeline</span>
+              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i></span>
+              <span class="quest-year">2026</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="shelf-note">Profiled 5 CNNs on an M1 Pro GPU. MobileNetV3 landed at <b class="stat">117 img/s</b>.</span>
+              <span class="quest-line">Data lead on a graduate build turning clinician speech into structured records.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">7<span class="figure-unit">types</span></span><span class="figure-label">Clinical event shapes pinned by one spec, each with its own required fields</span></span><span class="figure"><span class="figure-value">4<span class="figure-unit">tables</span></span><span class="figure-label">One JSONB column absorbs every event shape without a migration</span></span></span>
             </button>
-            <div class="accordion-content" id="shelf-profiler">
-              <div class="shelf-body">
-                <p>A profiler for PyTorch vision models that reports where the time and the memory actually go, layer by layer, so a change to an architecture can be argued with a measurement instead of a hunch. I ran five CNNs through it on an M1 Pro GPU using MPS and CUDA profiling hooks.</p>
-                <p>There is a training loop wrapped around it with checkpointing, early stopping and resumption, mostly because fifty-epoch runs on a laptop do get interrupted.</p>
-                <dl class="ledger">
-                  <div><dt>MobileNetV3 inference on the M1 Pro GPU</dt><dd>117 <i>img/s</i></dd></div>
-                  <div><dt>Architectures profiled on identical hardware</dt><dd>5</dd></div>
-                  <div><dt>Longest run that survives interruption and resumes</dt><dd>50 <i>epochs</i></dd></div>
+          </h3>
+          <div class="accordion-content" id="q-ai4hc">
+            <div class="quest-body">
+              <p class="quest-desc">I owned the data layer. Clinical events live in JSONB because their shape changes by type, with a GIN index over the payload and a partial index that keeps soft-deleted rows out of the query path everything else uses. Deletes are soft throughout, so the audit trail survives.</p>
+
+              <p class="quest-desc">The part that mattered most was the spec. Three teams were building against the same records, so I wrote the one document that says what a clinical event is: every enum lowercase, every field named exactly, and the required fields listed per event type. Blood pressure gets systolic and diastolic and never a generic value field. A named drug is always a medication, never a procedure, even when it is injected.</p>
+
+              <figure class="quest-evidence">
+                <div class="flow flow--list">
+                  <div class="flow-step"><span class="flow-name">vital_sign<span class="flow-detail">vital_type, then per type. Blood pressure needs systolic and diastolic. Heart rate carries no unit field because the unit is fixed.</span></span></div>
+                  <div class="flow-step"><span class="flow-name">symptom<span class="flow-detail">symptom. Onset is a timestamp, duration is a length of time, and they are not interchangeable.</span></span></div>
+                  <div class="flow-step"><span class="flow-name">mental_state<span class="flow-detail">state, one of twelve. No severity field on this type, and nothing outside the list.</span></span></div>
+                  <div class="flow-step"><span class="flow-name">medication<span class="flow-detail">medication_name and status, always. The field is dose_amount, not dose or dosage.</span></span></div>
+                  <div class="flow-step"><span class="flow-name">procedure<span class="flow-detail">procedure_name and status.</span></span></div>
+                  <div class="flow-step"><span class="flow-name">allergy<span class="flow-detail">allergen and allergy_type. Severity describes a past reaction, criticality describes future risk.</span></span></div>
+                  <div class="flow-step"><span class="flow-name">other<span class="flow-detail">description.</span></span></div>
+                  </div>
+                <figcaption>The required fields per event type, from the schema spec. Pinning the names and the enum casing is what stopped three teams from inventing three different shapes for the same record.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>Flyway migrations behind the schema, seven of them mine</dt><dd>8</dd></div>
+                <div><dt>Containers in the Compose stack I assembled</dt><dd>6</dd></div>
+                <div><dt>Mental state values the spec allows, up from five</dt><dd>12</dd></div>
                 </dl>
-                <div class="quest-links">
+
+              <p class="quest-caveat">Team project, so the lines matter. The schema, the migrations, the event spec and the Compose stack are mine. The transcript confirmation gate, the Python extraction consumer and the architecture diagrams are other people's work, and so were the speech-to-text vendor comparison and the model-selection decision. Nobody measured throughput or latency on this, so there are no performance numbers to show.</p>
+
+              <div class="quest-links">
+                <span class="quest-link-off">GitHub <em>(private repo)</em></span>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quest">
+          <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-profiler">
+              <span class="quest-mark" style="background-image: url('media/vision_profiler_2.png');" aria-hidden="true"></span>
+              <span class="quest-name">Vision Profiler</span>
+              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i></span>
+              <span class="quest-year">2025-26</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="quest-line">A profiling harness for PyTorch vision models, built to time them correctly.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">4<span class="figure-unit">nets</span></span><span class="figure-label">ResNet-50, ConvNeXt-Tiny, EfficientNet-B3 and MobileNetV3, one harness</span></span><span class="figure"><span class="figure-value">100<span class="figure-unit">runs</span></span><span class="figure-label">Timed passes behind every measurement, after ten warmup passes</span></span></span>
+            </button>
+          </h3>
+          <div class="accordion-content" id="q-profiler">
+            <div class="quest-body">
+              <p class="quest-desc">The interesting problem here is not speed, it is measuring speed without lying to yourself. MPS and CUDA queue work asynchronously, so a timer wrapped around a forward pass measures how long it took to hand the kernels to the GPU, not how long the GPU spent on them. Every timed call is bracketed by a device synchronize, and ten warmup passes run first so Metal shader compilation stays out of the numbers.</p>
+
+              <figure class="quest-evidence">
+                <div class="flow">
+                  <div class="flow-step"><b>01</b><span class="flow-name">Warm up<span class="flow-detail">Ten untimed passes. Absorbs Metal shader compilation and the allocator settling.</span></span></div>
+                  <div class="flow-step"><b>02</b><span class="flow-name">Synchronize<span class="flow-detail">Wait for the queue to actually drain, so the clock starts on a quiet device.</span></span></div>
+                  <div class="flow-step"><b>03</b><span class="flow-name">Time 100 passes<span class="flow-detail">perf_counter around each one, synchronizing after every call rather than at the end.</span></span></div>
+                  <div class="flow-step"><b>04</b><span class="flow-name">Report the spread<span class="flow-detail">Mean, standard deviation, min and max. Throughput is derived from the mean, not counted separately.</span></span></div>
+                  </div>
+                <figcaption>The measurement protocol. Skip the synchronize and a model can look ten times faster than it is, which is the failure mode this exists to avoid.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>Architectures through the same harness and hardware</dt><dd>4</dd></div>
+                <div><dt>Warmup passes before the clock starts</dt><dd>10</dd></div>
+                <div><dt>Timed passes per measurement</dt><dd>100</dd></div>
+                </dl>
+
+              <p class="quest-caveat">Straight answer: the harness writes its results into a gitignored directory, so nothing is committed that I can quote here, and I am not going to publish a throughput number from memory. Rerunning it and publishing the table is the obvious next step. This was a three-person course project and the architecture comparison was my track.</p>
+
+              <div class="quest-links">
                   <a href="https://github.com/tamirkifle/vision-model-profiler" target="_blank" rel="noopener noreferrer">GitHub
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                   </a>
-                </div>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
               </div>
             </div>
+          </div>
+        </div>
 
-            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-objrec">
-              <span class="shelf-icon" style="background-image: url('media/obj-recognition.png');" aria-hidden="true"></span>
-              <span class="shelf-name">Object Recognition</span>
+        <div class="quest">
+          <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-objrec">
+              <span class="quest-mark" style="background-image: url('media/obj-recognition.png');" aria-hidden="true"></span>
+              <span class="quest-name">Object Recognition</span>
               <span class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></span>
+              <span class="quest-year">2025</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="shelf-note">Real-time C++ recognition, one shot per object. PCA takes it <b class="stat">4096 to 20</b> dims.</span>
+              <span class="quest-line">Classical vision on a live camera, no pretrained network anywhere.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">20<span class="figure-unit">dims</span></span><span class="figure-label">Principal components carrying a 4096 pixel patch</span></span><span class="figure"><span class="figure-value">1<span class="figure-unit">image</span></span><span class="figure-label">Enough to learn a new object, no training run</span></span></span>
             </button>
-            <div class="accordion-content" id="shelf-objrec">
-              <div class="shelf-body">
-                <p>Classical computer vision rather than a pretrained network: threshold, segment, compute region features that hold up under rotation and scale, then classify against a labelled database. It learns a new object from one example. PCA takes the feature vector from 4096 dimensions down to 20, and inference samples 6.25% of the pixels, which is what keeps it at frame rate on a live camera.</p>
-                <p>It got every object in my test set right. That set is small and lit the way I lit it, so read that as the pipeline working rather than as a benchmark.</p>
-                <dl class="ledger">
-                  <div><dt>Feature vector after PCA, down from 4096</dt><dd>20 <i>dims</i></dd></div>
-                  <div><dt>Pixels sampled at inference time</dt><dd>6.25<i>%</i></dd></div>
-                  <div><dt>Examples needed to learn a new object</dt><dd>1</dd></div>
+          </h3>
+          <div class="accordion-content" id="q-objrec">
+            <div class="quest-body">
+              <p class="quest-desc">Threshold, segment, then describe each region with seven features chosen to survive rotation and scale: how much of its oriented box the region fills, aspect ratio, the first three Hu moments, compactness and extent. The thresholding, blur and morphology are implemented directly rather than called out of OpenCV, which was the point of the exercise.</p>
+
+              <p class="quest-desc">The eigenspace path rotates each object onto its axis of least central moment, flattens it to a 64 by 64 patch, and projects that 4096 pixel vector onto 20 principal components. Matching happens in those 20 dimensions, and one image per object is enough to add it.</p>
+
+              <figure class="quest-evidence">
+                <div class="flow">
+                  <div class="flow-step"><b>01</b><span class="flow-name">Threshold<span class="flow-detail">ISODATA over a 6.25% random pixel sample, so the cutoff tracks the scene without reading every pixel.</span></span></div>
+                  <div class="flow-step"><b>02</b><span class="flow-name">Segment and orient<span class="flow-detail">Connected regions, each rotated onto its axis of least central moment.</span></span></div>
+                  <div class="flow-step"><b>03</b><span class="flow-name">Describe<span class="flow-detail">Seven invariant features, or a 64 by 64 canonical patch for the eigenspace path.</span></span></div>
+                  <div class="flow-step"><b>04</b><span class="flow-name">Classify<span class="flow-detail">Nearest neighbour under scaled Euclidean distance, with a cutoff that lets it answer "unknown".</span></span></div>
+                  </div>
+                <figcaption>Every stage runs per frame on live video. The 6.25% sample is what keeps the threshold step cheap enough to do that.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>Principal components, down from 4096 pixels</dt><dd>20</dd></div>
+                <div><dt>Rotation and scale invariant features per region</dt><dd>7</dd></div>
+                <div><dt>Pixels sampled to estimate the threshold</dt><dd>6.25<i>%</i></dd></div>
                 </dl>
-                <div class="quest-links">
+
+              <p class="quest-caveat">No benchmark is committed for this one. There are accuracy figures in the old write-up, but they sit in an example output block rather than a recorded run, so I am not going to repeat them. There is no timing code in the project either, which means I cannot honestly quote a frame rate. The demo video is the real evidence.</p>
+
+              <div class="quest-links">
                   <a href="https://github.com/tamirkifle/realtime-2d-object-recognition" target="_blank" rel="noopener noreferrer">GitHub
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                   </a>
-                </div>
+                  <a href="https://youtu.be/xzrkeZ7salo" target="_blank" rel="noopener noreferrer">Demo video
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
               </div>
             </div>
-
-            <button type="button" class="shelf-row accordion-row" aria-expanded="false" aria-controls="shelf-ai4hc">
-              <span class="shelf-icon" style="background-image: url('media/ai4hc.png');" aria-hidden="true"></span>
-              <span class="shelf-name">AI4HC Pipeline</span>
-              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i></span>
-              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="shelf-note">Data lead on a <b class="stat">10-person</b> build turning clinician speech into structured records.</span>
-            </button>
-            <div class="accordion-content" id="shelf-ai4hc">
-              <div class="shelf-body">
-                <p>A ten-person graduate build that turns what a clinician says into a structured record: audio to AWS Transcribe, a human review step, then extraction with Claude on Bedrock. I owned the data layer. Clinical events live in JSONB because their shape changes by event type, and nothing reaches the record until a clinician has confirmed it.</p>
-                <p>Two calls I would defend. Patient data never goes into RabbitMQ, only a session id that consumers use to re-query Postgres. And every delete is soft, so the audit trail survives. I also reviewed integration across all five services and blocked eleven of fourteen pull requests on line-level findings, one of which was a CascadeType.ALL that would have cascade-deleted patient records.</p>
-                <dl class="ledger">
-                  <div><dt>Pull requests reviewed, 11 sent back with findings</dt><dd>14</dd></div>
-                  <div><dt>Services in the stack, all of which I ended up debugging</dt><dd>5</dd></div>
-                  <div><dt>Flyway migrations behind the schema</dt><dd>8</dd></div>
-                </dl>
-                <div class="quest-links">
-                  <span class="quest-link-off">GitHub <em>(private repo)</em></span>
-                </div>
-                <p class="shelf-private">Coursework at Northeastern. The speech-to-text benchmark and the model-selection decision were other people's work, not mine.</p>
-              </div>
-            </div>
-
           </div>
+        </div>
+
+        <div class="quest">
+          <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ledgerkv">
+              <span class="quest-mark" style="background-image: url('media/ledgerkv.png');" aria-hidden="true"></span>
+              <span class="quest-name">LedgerKV</span>
+              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-kubernetes-plain colored" data-tooltip="Kubernetes"></i><i class="devicon-grafana-plain colored" data-tooltip="Grafana"></i></span>
+              <span class="quest-year">2025-26</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="quest-line">Both sides of the CAP tradeoff over one storage engine, with CI deciding which is which.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">69,140<span class="figure-unit">ops</span></span><span class="figure-label">Driven through a live 5-node cluster at about 250 a second</span></span><span class="figure"><span class="figure-value is-good">0<span class="figure-unit">failed</span></span><span class="figure-label">No operation dropped and no quorum ever came up short</span></span></span>
+            </button>
+          </h3>
+          <div class="accordion-content" id="q-ledgerkv">
+            <div class="quest-body">
+              <p class="quest-desc">Dynamo-style leaderless quorums and Raft, running over the same LSM storage engine. A linearizability checker in CI decides which guarantee each path actually gives you, so the difference between them is a test result rather than a README claim.</p>
+
+              <figure class="quest-evidence">
+                <a class="shot" href="media/projects/ledgerkv-grafana.png" target="_blank" rel="noopener noreferrer">
+                  <img src="media/projects/ledgerkv-grafana.png" alt="Grafana dashboard showing operations per second, p99 latency, quorum failures and repairs across five LedgerKV nodes while one node is killed and restarted" loading="lazy" width="1600" height="900">
+                  <span class="shot-open">Open full size</span>
+                </a>
+                <figcaption>Grafana reading Prometheus off all five nodes during that run. I killed node2 at 15:14 and brought it back at 15:16: its line drops out, the other four carry the load, and quorum failures stay flat at zero throughout. The two p99 spikes are JVM warm-up and node2 restarting cold, not the kill.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>Steady-state p99 latency, p50 was 2 ms</dt><dd>15 <i>ms</i></dd></div>
+                <div><dt>Time node2 spent dead mid-run</dt><dd>90 <i>s</i></dd></div>
+                <div><dt>Tests passing in CI, linearizability checker included</dt><dd>361</dd></div>
+                </dl>
+
+              <p class="quest-caveat">One run, one cluster, scraped from each node's /metrics endpoint. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
+
+              <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quest">
+          <h3 class="quest-heading">
+            <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ski">
+              <span class="quest-mark" style="background-image: url('media/ski_2.png');" aria-hidden="true"></span>
+              <span class="quest-name">Ski Tracker</span>
+              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i></span>
+              <span class="quest-year">2025-26</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span class="quest-line">Event-driven ingest that throttles its own front door, and a load harness that stopped lying to me.</span>
+              <span class="quest-figures"><span class="figure"><span class="figure-value">9.5<span class="figure-unit">x</span></span><span class="figure-label">How badly the old closed-loop harness understated p50 latency</span></span><span class="figure"><span class="figure-value">62<span class="figure-unit">%</span></span><span class="figure-label">Fewer cardinality write requests, reproduced in both arm orders</span></span></span>
+            </button>
+          </h3>
+          <div class="accordion-content" id="q-ski">
+            <div class="quest-body">
+              <p class="quest-desc">RabbitMQ into DynamoDB with Redis-cached reads, fronted by a token-bucket admission controller that samples queue depth every 200 ms and steers with AIMD. Retreat is a hundred times faster than recovery: it halves the rate on a severe backlog and claws it back ten permits a second. If the broker cannot be reached it holds the current rate instead of reading silence as an empty queue, which was the original bug.</p>
+
+              <p class="quest-desc">Fleet awareness coordinates the instance count rather than the rate. Each replica heartbeats into a Redis sorted set and divides the admission floor by what it sees, because sharing one rate would collapse it by half for every replica. A shrink needs three consecutive confirmations, so a Redis restart cannot talk a replica into thinking it is alone.</p>
+
+              <figure class="quest-evidence">
+                <div class="gauge" role="img" aria-label="Median latency measured two ways: closed loop 1,120 milliseconds, open loop 10,617 milliseconds">
+                  <div class="gauge-row">
+                    <span class="gauge-key">closed</span>
+                    <span class="gauge-track"><span class="gauge-fill" style="--w: 10.5%;"></span></span>
+                    <span class="gauge-val">1,120</span>
+                  </div>
+                  <div class="gauge-row is-lead">
+                    <span class="gauge-key">open</span>
+                    <span class="gauge-track"><span class="gauge-fill" style="--w: 100%;"></span></span>
+                    <span class="gauge-val">10,617</span>
+                  </div>
+                  <p class="gauge-unit">p50 ms, the same system measured two ways</p>
+                </div>
+                <figcaption>A closed-loop harness waits for each response before sending the next one, so when the system slows down the harness politely slows down with it and the delay never lands in the numbers. Rebuilding it open loop, charging latency from when a request was due rather than when it went out, moved p50 from 1,120 ms to 10,617 ms. Nothing about the system changed. The first number was just wrong, and it is the number the assignment asked for.</figcaption>
+              </figure>
+
+              <dl class="ledger">
+                <div><dt>Cardinality write requests on the DynamoDB counter</dt><dd>25,163</dd></div>
+                <div><dt>Same workload once HyperLogLog took over the counting</dt><dd>9,635</dd></div>
+                <div><dt>Defects documented, each one pinned by a regression test</dt><dd>38</dd></div>
+                <div><dt>Decision records, rejected alternatives included</dt><dd>11</dd></div>
+              </dl>
+
+              <p class="quest-caveat">All of it ran against LocalStack on one laptop, never AWS, and LocalStack is the binding constraint in every run, so read the absolute throughput as a property of the rig rather than the architecture. Peak offered load in the sweep was 4,376 req/s and the controller shed hard above that. A batching result that looked like a 16% gain did not survive swapping the arm order, so it is not on this page. The CI workflow is written but has never actually run.</p>
+
+              <div class="quest-links">
+                  <a href="https://github.com/tamirkifle/skier-tracking-system" target="_blank" rel="noopener noreferrer">GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                <span class="quest-link-off">Blog post <em>(coming soon)</em></span>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
         </div>
       </section>
 
