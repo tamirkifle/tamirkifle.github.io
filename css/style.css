@@ -1454,6 +1454,91 @@ pre code {
   height: 20px;
 }
 
+/* --- Theme Toggle Icon --- */
+/* A fixed 20px box centred in the button, so the icons hold their position
+   while the dock's magnification effect resizes the button underneath them. */
+.theme-icons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+}
+
+/* Sun and moon are stacked and both always rendered; [data-theme] decides
+   which is forward. */
+#theme-toggle .theme-icons svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 250ms ease, transform 350ms var(--ease-spring);
+}
+
+[data-theme='dark'] #theme-toggle .icon-moon,
+[data-theme='light'] #theme-toggle .icon-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+[data-theme='dark'] #theme-toggle .icon-sun,
+[data-theme='light'] #theme-toggle .icon-moon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+/* --- Theme Wipe (View Transition) --- */
+/* During a view transition the live DOM is replaced by snapshots, so the icon
+   crossfade above would be frozen inside the root snapshot and reduced to a
+   hard cut at the wipe front. Naming an element lifts it into its own snapshot
+   pair that animates over the top of the wipe.
+
+   The name goes on the icon wrapper rather than the button: a snapshot is a
+   flat image of the whole element, so naming the button would rotate the
+   tooltip and the active dot along with the icons. */
+.theme-icons {
+  view-transition-name: theme-toggle;
+}
+
+::view-transition-group(theme-toggle) {
+  animation-duration: 450ms;
+}
+
+::view-transition-old(theme-toggle) {
+  animation: theme-icon-out 450ms var(--ease-out) forwards;
+}
+
+::view-transition-new(theme-toggle) {
+  animation: theme-icon-in 450ms var(--ease-out) forwards;
+}
+
+@keyframes theme-icon-out {
+  to {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.4);
+  }
+}
+
+@keyframes theme-icon-in {
+  from {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #theme-toggle .theme-icons svg {
+    transition: none;
+  }
+
+  /* ThemeManager already skips the wipe here, but a name left in place would
+     still hand the icons to the browser's default cross-fade. */
+  .theme-icons {
+    view-transition-name: none;
+  }
+}
+
 .dock-divider {
   flex: none;
   width: 1px;

@@ -3,6 +3,75 @@
    ============================================ */
 
 // --- Theme Toggle ---
+// Switching themes plays a soft-edged circle out from the toggle, revealing the
+// incoming theme over the outgoing one. It's a View Transition: the browser
+// snapshots the page before and after, and we animate a mask across the "after"
+// snapshot while the "before" one holds still underneath.
+const WIPE_MS = 800;
+
+// easeOutQuad, exactly -- a cubic Bezier with these control points reduces to
+// y = 1-(1-t)^2. Worth being precise about: --ease-out is far more aggressive
+// (~35% travelled by t=0.05) and collapses the whole wipe into a few frames.
+const WIPE_EASE = 'cubic-bezier(0.333, 0.667, 0.667, 1)';
+
+// Final mask size, as a multiple of the distance from the button to the
+// furthest viewport corner. Most of this is deliberate overshoot: the mask's
+// circle is a quarter of the image width and heavily blurred, so scaling it
+// well past the viewport is what buys a wide, soft front instead of a hard
+// expanding disc. Measuring the corner (rather than using a flat multiple of
+// the viewport) keeps the pacing the same on any screen size.
+const WIPE_SCALE = 9.5;
+
+// Blurred circle: r=33 with a 5-unit Gaussian inside a 132-unit viewBox, so the
+// blur has room to fall off without being clipped. Single-quoted internally so
+// it can sit inside a double-quoted url(), and '#' escaped for the data URI.
+const WIPE_MASK =
+  "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-66 -66 132 132'>" +
+  "<defs><filter id='b'><feGaussianBlur stdDeviation='5'/></filter></defs>" +
+  "<circle r='33' fill='black' filter='url(%23b)'/></svg>";
+
+function wipeSize(cx, cy) {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const maxDist = Math.max(
+    Math.hypot(cx, cy),
+    Math.hypot(w - cx, cy),
+    Math.hypot(cx, h - cy),
+    Math.hypot(w - cx, h - cy)
+  );
+  return maxDist * WIPE_SCALE;
+}
+
+// The keyframes depend on where the button is, so the rule is built per click
+// and torn down when the transition ends.
+function injectWipeStyles(originEl) {
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const span = wipeSize(cx, cy);
+
+  const style = document.createElement('style');
+  style.textContent = `
+    ::view-transition-group(root) { animation-duration: ${WIPE_MS}ms; }
+
+    /* The outgoing theme holds still underneath rather than cross-fading.
+       That's what makes this read as a reveal instead of a dissolve. */
+    ::view-transition-old(root) { animation: none; z-index: -1; }
+
+    ::view-transition-new(root) {
+      animation: theme-wipe ${WIPE_MS}ms ${WIPE_EASE} forwards;
+      mask: url("${WIPE_MASK}") 0 0 / 100% 100% no-repeat;
+    }
+
+    @keyframes theme-wipe {
+      from { mask-position: ${cx}px ${cy}px; mask-size: 0; }
+      to   { mask-position: ${cx - span / 2}px ${cy - span / 2}px; mask-size: ${span}px; }
+    }
+  `;
+  document.head.appendChild(style);
+  return style;
+}
+
 const ThemeManager = {
   init() {
     const saved = localStorage.getItem('theme');
@@ -14,23 +83,31 @@ const ThemeManager = {
   set(theme, save = true) {
     document.documentElement.setAttribute('data-theme', theme);
     if (save) localStorage.setItem('theme', theme);
-    this.updateIcon(theme);
   },
 
-  toggle() {
+  // originEl is the element the wipe radiates from. Without it, or without
+  // View Transition support, or when the visitor has asked for less motion,
+  // this falls back to the plain instant swap.
+  toggle(originEl) {
     const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    this.set(current === 'dark' ? 'light' : 'dark');
-  },
+    const next = current === 'dark' ? 'light' : 'dark';
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  updateIcon(theme) {
-    const btn = document.getElementById('theme-toggle');
-    if (!btn) return;
-    const sunIcon = btn.querySelector('.icon-sun');
-    const moonIcon = btn.querySelector('.icon-moon');
-    if (sunIcon && moonIcon) {
-      sunIcon.style.display = theme === 'dark' ? 'none' : 'block';
-      moonIcon.style.display = theme === 'dark' ? 'block' : 'none';
+    if (!originEl || reduced || !document.startViewTransition) {
+      this.set(next);
+      return;
     }
+
+    const style = injectWipeStyles(originEl);
+    const transition = document.startViewTransition(() => this.set(next));
+
+    // Both promises reject if the browser abandons the transition (it will,
+    // for one, if the DOM update takes too long). Nothing is waiting on the
+    // outcome, but an unhandled rejection would still surface in the console,
+    // so settle them explicitly and clean up either way.
+    const cleanup = () => style.remove();
+    transition.ready.catch(() => {});
+    transition.finished.then(cleanup, cleanup);
   }
 };
 
@@ -52,20 +129,26 @@ const DOCK_ICONS = {
   linkedin: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
   </svg>`,
-  theme: `<svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none" aria-hidden="true">
-    <circle cx="12" cy="12" r="5"></circle>
-    <line x1="12" y1="1" x2="12" y2="3"></line>
-    <line x1="12" y1="21" x2="12" y2="23"></line>
-    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-    <line x1="1" y1="12" x2="3" y2="12"></line>
-    <line x1="21" y1="12" x2="23" y2="12"></line>
-    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-  </svg>
-  <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-  </svg>`,
+  // Both icons are always present and stacked; which one shows is decided by
+  // [data-theme] in CSS, so it crossfades rather than hard-swapping. The
+  // wrapper is what the view transition rotates -- it has to hold the icons
+  // and nothing else, or the tooltip inside the button spins along with them.
+  theme: `<span class="theme-icons">
+    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </span>`,
 };
 
 const DOCK_ITEMS = [
@@ -108,13 +191,10 @@ function createDock(activePage) {
 
   document.body.appendChild(dockWrapper);
 
-  // ThemeManager.init() runs before the dock exists, so the toggle ships with
-  // the dark-mode icon baked in. Sync it now that the button is in the DOM.
-  ThemeManager.updateIcon(document.documentElement.getAttribute('data-theme') || 'dark');
-
-  // Theme toggle click
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    ThemeManager.toggle();
+  // Theme toggle click. The button doubles as the origin of the wipe.
+  const themeToggle = document.getElementById('theme-toggle');
+  themeToggle.addEventListener('click', () => {
+    ThemeManager.toggle(themeToggle);
   });
 
   // Dock magnification effect
