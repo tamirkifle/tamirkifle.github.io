@@ -45,6 +45,12 @@ html {
   /* Semantic status */
   --good: hsl(150, 62%, 52%);
 
+  /* Logo ramp. Rust, three steps, inverting per theme the way Paul's does:
+     light-toned glyph on the dark background, dark-toned on the light one. */
+  --logo-1a: #C2661C; --logo-1b: #DD8235;
+  --logo-2a: #E9944E; --logo-2b: #F0AC74;
+  --logo-3a: #F5CDA4; --logo-3b: #FBE3C6;
+
   /* Dock */
   --dock-bg: hsla(220, 15%, 12%, 0.72);
   --dock-border: hsla(220, 10%, 24%, 0.5);
@@ -95,6 +101,10 @@ html {
   --accent-faded: hsla(210, 100%, 50%, 0.08);
 
   --good: hsl(150, 55%, 32%);
+
+  --logo-1a: #2E1203; --logo-1b: #5A2708;
+  --logo-2a: #7A3309; --logo-2b: #A34B12;
+  --logo-3a: #A34B12; --logo-3b: #C2661C;
 
   --dock-bg: hsla(0, 0%, 100%, 0.78);
   --dock-border: hsla(0, 0%, 0%, 0.08);
@@ -251,9 +261,11 @@ pre code {
   color: var(--foreground-highlighted);
 }
 
-.site-logo svg {
-  width: 32px;
-  height: 32px;
+/* The mark is a wordmark now, roughly 2.7:1, so height drives it and the
+   width follows. */
+.site-logo .site-mark {
+  height: 26px;
+  width: auto;
 }
 
 .site-wordmark {
@@ -263,6 +275,9 @@ pre code {
   letter-spacing: 0.04em;
   color: var(--foreground-faded);
   transition: color 150ms ease;
+  /* Optical, not geometric: centring the two boxes leaves the domain sitting
+     high against the wordmark's baseline, since "tmr." has no descenders. */
+  transform: translateY(3px);
 }
 
 .site-logo:hover .site-wordmark {
@@ -503,6 +518,16 @@ pre code {
   height: 100%;
   object-fit: cover;
   border-radius: 4px;
+}
+
+/* An SVG standing in for a devicon glyph rather than filling the slot as a
+   logo tile. Matches the icon-font size above so it lines up with its
+   neighbours instead of running the full 20px. */
+.list-row-icon.is-glyph img {
+  width: 1.0625rem;
+  height: 1.0625rem;
+  object-fit: contain;
+  border-radius: 0;
 }
 
 .list-row-title {
@@ -1648,14 +1673,6 @@ pre code {
   padding: 3rem 0 2rem;
   color: var(--foreground-faded);
   font-size: 0.8125rem;
-}
-
-.site-footer .footer-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
 }
 
 .site-footer a {
