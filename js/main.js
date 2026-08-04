@@ -72,6 +72,10 @@ function injectWipeStyles(originEl) {
   return style;
 }
 
+// The wipe currently on screen, if any, and when the theme last flipped.
+let activeWipe = null;
+let lastToggleAt = -Infinity;
+
 const ThemeManager = {
   init() {
     const saved = localStorage.getItem('theme');
@@ -93,6 +97,25 @@ const ThemeManager = {
     const next = current === 'dark' ? 'light' : 'dark';
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Clicking faster than the wipe can run. Starting a second transition here
+    // would snapshot the half-finished frame and re-grow from the button, so
+    // the screen lurches back towards the old theme before moving forward
+    // again. Cut the wipe and swap outright instead.
+    //
+    // The elapsed-time half of this matters as much as the in-flight half:
+    // with only the in-flight check, every other click would start a wipe that
+    // gets cut a moment later, and a burst becomes a stutter of half-bloomed
+    // circles. Animation returns once the clicking stops.
+    const now = performance.now();
+    const outrunning = activeWipe !== null || now - lastToggleAt < WIPE_MS;
+    lastToggleAt = now;
+
+    if (outrunning) {
+      if (activeWipe) activeWipe.transition.skipTransition();
+      this.set(next);
+      return;
+    }
+
     if (!originEl || reduced || !document.startViewTransition) {
       this.set(next);
       return;
@@ -100,12 +123,18 @@ const ThemeManager = {
 
     const style = injectWipeStyles(originEl);
     const transition = document.startViewTransition(() => this.set(next));
+    const wipe = { transition, style };
+    activeWipe = wipe;
 
-    // Both promises reject if the browser abandons the transition (it will,
-    // for one, if the DOM update takes too long). Nothing is waiting on the
-    // outcome, but an unhandled rejection would still surface in the console,
-    // so settle them explicitly and clean up either way.
-    const cleanup = () => style.remove();
+    // Both promises reject if the transition is skipped or the browser
+    // abandons it (it will, for one, if the DOM update takes too long).
+    // Nothing is waiting on the outcome, but an unhandled rejection would
+    // still surface in the console, so settle them explicitly and clean up
+    // either way.
+    const cleanup = () => {
+      style.remove();
+      if (activeWipe === wipe) activeWipe = null;
+    };
     transition.ready.catch(() => {});
     transition.finished.then(cleanup, cleanup);
   }
@@ -196,6 +225,20 @@ function createDock(activePage) {
   themeToggle.addEventListener('click', () => {
     ThemeManager.toggle(themeToggle);
   });
+
+  // While a wipe is running, the browser has captured the whole page into a
+  // snapshot and stopped painting the live DOM, so nothing inside it can be
+  // hit-tested -- the click retargets to <html> and the button's own handler
+  // never runs. The event still reaches the document with usable coordinates,
+  // though, so match it against the button's box by hand. Keyboard activation
+  // doesn't need this: it dispatches straight at the focused element.
+  document.addEventListener('click', (event) => {
+    if (!activeWipe) return;
+    const r = themeToggle.getBoundingClientRect();
+    const hit = event.clientX >= r.left && event.clientX <= r.right &&
+                event.clientY >= r.top && event.clientY <= r.bottom;
+    if (hit) ThemeManager.toggle(themeToggle);
+  }, true);
 
   // Dock magnification effect
   initDockMagnification(dockWrapper.querySelector('.dock-nav'));
