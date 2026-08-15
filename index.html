@@ -24,8 +24,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600,700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
@@ -73,7 +74,7 @@
           <img src="media/profile.jpeg" alt="Colored-pencil caricature portrait of Tamir Yirga" class="intro-portrait" width="128" height="128">
           <div>
             <h1 class="intro-name" data-scramble="true">Tamir Yirga</h1>
-            <p class="intro-bio">Software engineer building high-performance data infrastructure and distributed systems. I primarily write Rust, with a growing interest in ML inference systems. Currently finishing my MS in Computer Science at Northeastern.</p>
+            <p class="intro-bio">Software engineer building <span class="k">high-performance data infrastructure and distributed systems</span>. I primarily write <span class="k">Rust</span>, with a growing interest in <span class="k">ML inference systems</span>. Currently finishing my MS in Computer Science at Northeastern.</p>
           </div>
         </div>
       </section>
@@ -97,7 +98,7 @@
           <span class="section-rule" aria-hidden="true"></span>
         </div>
 
-        <p class="quests-intro">Some of my personal projects and experiments. Every number here was measured.</p>
+        <p class="quests-intro">A selection of the personal and course projects I have most enjoyed building. Every number on this page comes from a run I can point to, and where I do not have a number, I say so.</p>
 
         <div class="quests">
         <div class="quest">
@@ -105,16 +106,18 @@
             <button type="button" class="quest-head accordion-row" aria-expanded="true" aria-controls="q-llm" data-open="true">
               <span class="quest-mark" style="background-image: url('media/mini-llm.png');" aria-hidden="true"></span>
               <span class="quest-name">InferRS<span class="quest-alias">Mini LLM Inference Engine</span></span>
-              <span class="tech-icons"><i class="devicon-rust-plain colored" data-tooltip="Rust"></i></span>
-              <span class="quest-year">2026</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">Llama inference in Rust with no PyTorch, no ONNX and no BLAS.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">21<span class="figure-unit">x</span></span><span class="figure-label">INT8 over f32 on the matmul that decoding actually runs</span></span><span class="figure"><span class="figure-value">6.03<span class="figure-unit">GB</span></span><span class="figure-label">Llama-7B weights quantized, down from 24.12</span></span></span>
+              <span class="quest-line">An LLM inference engine in Rust. No PyTorch, no ONNX, no BLAS.</span>
+              <span class="quest-shelf"><span class="quest-figures"><span class="figure"><span class="figure-value">21<span class="figure-unit">x</span></span><span class="figure-label">Faster INT8 decode than f32, on the matrix multiply that dominates token generation</span></span><span class="figure"><span class="figure-value">6.03<span class="figure-unit">GB</span></span><span class="figure-label">Llama-7B weights after INT8 quantization, down from 24.12 GB</span></span></span><span class="quest-meta"><span class="tech-icons"><i class="devicon-rust-plain colored" data-tooltip="Rust"></i></span><span class="quest-year">2026</span></span></span>
             </button>
           </h3>
           <div class="accordion-content expanded" id="q-llm">
             <div class="quest-body">
-              <p class="quest-desc">Every kernel is custom built, benchmarked, and rewritten when it turned out slower than I expected. A GGUF parser memory-maps the weights, attention is grouped-query over a paged KV cache, and the SIMD backend is chosen once at startup so the hot path pays a single atomic load.</p>
+              <p class="quest-desc">The goal of this project was to understand exactly what happens between a model file sitting on disk and a token appearing on screen, by writing every layer of it myself. That meant a GGUF parser, the tensor handling, the attention mechanism, the sampling, and above all the matrix multiplication kernels which the whole thing lives or dies by.</p>
+
+              <p class="quest-desc">A 7B model in float32 is roughly 24 GB, so the weights are memory-mapped rather than read into a buffer, and quantizing them to INT8 brings that down to 6 GB. Decoding a single token is one row of activations against a full weight matrix, which makes it bound by memory bandwidth rather than by arithmetic; at INT8 the weight block fits in L2 cache and at float32 it does not. Crossing that cache threshold is worth 21x, which is why the square-matrix benchmarks people usually quote, at around 2x, miss the effect completely.</p>
+
+              <p class="quest-desc">Every kernel was custom written and benchmarked, and not every rewrite paid off. Cache-tiling the inner loop and adding NEON intrinsics helped at small matrix sizes, but gave nothing back at 1024 square, where it ran at 22.2 Gelem/s against 23.3 for the naive scalar version; the tiled loop structure defeated LLVM's auto-vectorization on ARM. The gain at that size came from Rayon row-parallelism instead, which took the same shape to 157.9.</p>
 
               <figure class="quest-evidence">
                 <div class="gauge" role="img" aria-label="Decode matmul throughput: f32 at 4.7 Gelem per second, INT8 at 100.6 Gelem per second">
@@ -130,16 +133,16 @@
                   </div>
                   <p class="gauge-unit">Gelem/s, one token row against a 4096 by 11008 projection</p>
                 </div>
-                <figcaption>Generating a token runs that shape once per layer, every token, and it is bound by memory bandwidth rather than arithmetic. The INT8 weight block fits in L2. The f32 block does not. Square-matrix benchmarks put INT8 at roughly 2x and miss this entirely.</figcaption>
+                <figcaption>Generating a token runs this shape once per layer, every layer, every token. The INT8 weight block fits in L2 cache and the f32 block does not, and that cache residency is where the speedup comes from rather than any change in instructions.</figcaption>
               </figure>
 
               <dl class="ledger">
                 <div><dt>f32 GEMM at 1024 square, 10 cores</dt><dd>157.9 <i>Gelem/s</i></dd></div>
                 <div><dt>Naive scalar version of the same kernel</dt><dd>23.3 <i>Gelem/s</i></dd></div>
-                <div><dt>Tests passing across kernels, cache and sampling</dt><dd>923</dd></div>
-                </dl>
+                <div><dt>Tests passing across kernels, cache and sampling</dt><dd>873</dd></div>
+              </dl>
 
-              <p class="quest-caveat">Criterion benchmarks on an M1 Pro. The footprint is read out of the running process, not calculated on paper. These are kernel and memory numbers though. A full 7B generation run is still unfinished, so there is no tokens per second figure here yet.</p>
+              <p class="quest-caveat">These are Criterion benchmarks on an M1 Pro, and the memory footprint is read out of the running process rather than calculated on paper. They are kernel and memory numbers though. A full 7B generation run is still unfinished, so there is no tokens per second figure here yet.</p>
 
               <div class="quest-links">
                   <a href="https://github.com/tamirkifle/mini-rust-inference" target="_blank" rel="noopener noreferrer">GitHub
@@ -155,33 +158,35 @@
           <h3 class="quest-heading">
             <button type="button" class="quest-head accordion-row" aria-expanded="true" aria-controls="q-ledgerkv" data-open="true">
               <span class="quest-mark" style="background-image: url('media/ledgerkv.png');" aria-hidden="true"></span>
-              <span class="quest-name">Ledger KV<span class="quest-alias">Distributed KV Database</span></span>
-              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-grpc-plain colored" data-tooltip="gRPC"></i><i class="devicon-kubernetes-plain colored" data-tooltip="Kubernetes"></i><i class="devicon-prometheus-original colored" data-tooltip="Prometheus"></i><i class="devicon-grafana-plain colored" data-tooltip="Grafana"></i></span>
-              <span class="quest-year">2025-26</span>
+              <span class="quest-name">LedgerKV<span class="quest-alias">Distributed KV Database</span></span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">Both sides of the CAP tradeoff over one storage engine, with CI deciding which is which.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">69,140<span class="figure-unit">ops</span></span><span class="figure-label">Driven through a live 5-node cluster at about 250 a second</span></span><span class="figure"><span class="figure-value is-good">0<span class="figure-unit">failed</span></span><span class="figure-label">No operation dropped and no quorum ever came up short</span></span></span>
+              <span class="quest-line">A leaderless quorum path and a Raft path over one shared storage engine.</span>
+              <span class="quest-shelf"><span class="quest-figures"><span class="figure"><span class="figure-value">69,140<span class="figure-unit">ops</span></span><span class="figure-label">Driven through a live 5-node cluster at roughly 250 operations per second</span></span><span class="figure"><span class="figure-value is-good">0<span class="figure-unit">failed</span></span><span class="figure-label">No dropped operations and no failed quorums, including while a node was down</span></span></span><span class="quest-meta"><span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-grpc-plain colored" data-tooltip="gRPC"></i><i class="devicon-kubernetes-plain colored" data-tooltip="Kubernetes"></i><i class="devicon-prometheus-original colored" data-tooltip="Prometheus"></i><i class="devicon-grafana-plain colored" data-tooltip="Grafana"></i></span><span class="quest-year">2025-26</span></span></span>
             </button>
           </h3>
           <div class="accordion-content expanded" id="q-ledgerkv">
             <div class="quest-body">
-              <p class="quest-desc">Dynamo-style leaderless quorums and Raft, running over the same LSM storage engine. A linearizability checker in CI decides which guarantee each path actually gives you, so the difference between them is a test result rather than a README claim.</p>
+              <p class="quest-desc">The goal of this project was to stop treating the CAP theorem as something you read about, and to build both sides of it in one codebase. Most systems pick availability or consistency and then describe the tradeoff in their documentation. I wanted the difference to be something I could demonstrate on demand.</p>
+
+              <p class="quest-desc">Everything below the replication layer is shared between the two paths: the same write-ahead log, the same LSM storage engine with its MemTable, SSTables and compaction, the same Bloom filters. Only the protocol above it differs. On top of that I wrote a linearizability checker modeled on the ones Jepsen uses, and pointed it at both paths under injected partitions. Raft comes back linearizable. The quorum path comes back with a witness, a specific read which no valid ordering can explain. Because the storage engine underneath is identical, the protocol is the only thing which could have produced the difference.</p>
+
+              <p class="quest-desc">The distinction the checker makes precise is the one which is easiest to get wrong on paper. W + R &gt; N gives quorum overlap, but it does not give linearizability. Overlap only guarantees that a read set and a write set intersect. Linearizability additionally requires that every operation appears to take effect at a single instant between its start and its end, in an order consistent with real time. The quorum path satisfies the first condition and fails the second, and the checker returns the specific read which proves it.</p>
 
               <figure class="quest-evidence">
                 <a class="shot" href="media/projects/ledgerkv-grafana.png" target="_blank" rel="noopener noreferrer">
                   <img src="media/projects/ledgerkv-grafana.png" alt="Grafana dashboard showing operations per second, p99 latency, quorum failures and repairs across five LedgerKV nodes while one node is killed and restarted" loading="lazy" width="1600" height="900">
                   <span class="shot-open">Open full size</span>
                 </a>
-                <figcaption>Grafana reading Prometheus off all five nodes during that run. I killed node2 at 15:14 and brought it back at 15:16: its line drops out, the other four carry the load, and quorum failures stay flat at zero throughout. The two p99 spikes are JVM warm-up and node2 restarting cold, not the kill.</figcaption>
+                <figcaption>Grafana reading Prometheus off all five nodes during that run. I killed node2 at 15:14 and brought it back at 15:16: its line drops out, the other four carry the load, and quorum failures stay flat at zero throughout. The two p99 spikes are JVM warm-up and node2 restarting cold, not the kill itself.</figcaption>
               </figure>
 
               <dl class="ledger">
                 <div><dt>Steady-state p99 latency, p50 was 2 ms</dt><dd>15 <i>ms</i></dd></div>
                 <div><dt>Time node2 spent dead mid-run</dt><dd>90 <i>s</i></dd></div>
                 <div><dt>Tests passing in CI, linearizability checker included</dt><dd>361</dd></div>
-                </dl>
+              </dl>
 
-              <p class="quest-caveat">One run, one cluster, scraped from each node's /metrics endpoint. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
+              <p class="quest-caveat">This is one run on one cluster, scraped from each node's /metrics endpoint. The checker is a bounded bug finder rather than a proof: a linearizable verdict only means that no counterexample was found in the history it examined, whereas a non-linearizable verdict is definitive because it comes with a witness. Hinted handoff and read repair are both implemented, but I have not measured how long a recovered replica takes to converge, so there is no number for that here.</p>
 
               <div class="quest-links">
                   <a href="https://github.com/tamirkifle/distributed-kv-database" target="_blank" rel="noopener noreferrer">GitHub
@@ -198,18 +203,18 @@
             <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ski">
               <span class="quest-mark" style="background-image: url('media/ski_2.png');" aria-hidden="true"></span>
               <span class="quest-name">Distributed Ski Tracker</span>
-              <span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i><i class="devicon-dynamodb-plain colored" data-tooltip="DynamoDB"></i><i class="devicon-docker-plain colored" data-tooltip="Docker"></i></span>
-              <span class="quest-year">2025-26</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">Event-driven ingest that throttles its own front door, and a load harness that stopped lying to me.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">9.5<span class="figure-unit">x</span></span><span class="figure-label">How badly the old closed-loop harness understated p50 latency</span></span><span class="figure"><span class="figure-value">62<span class="figure-unit">%</span></span><span class="figure-label">Fewer cardinality write requests, reproduced in both arm orders</span></span></span>
+              <span class="quest-line">An ingestion pipeline that throttles itself when the queue falls behind.</span>
+              <span class="quest-shelf"><span class="quest-figures"><span class="figure"><span class="figure-value">9.5<span class="figure-unit">x</span></span><span class="figure-label">How much the old closed-loop harness understated real p50 latency</span></span><span class="figure"><span class="figure-value">62<span class="figure-unit">%</span></span><span class="figure-label">Fewer distinct-count write requests, reproduced in both run orders</span></span></span><span class="quest-meta"><span class="tech-icons"><i class="devicon-java-plain colored" data-tooltip="Java"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i><i class="devicon-redis-plain colored" data-tooltip="Redis"></i><i class="devicon-dynamodb-plain colored" data-tooltip="DynamoDB"></i><i class="devicon-docker-plain colored" data-tooltip="Docker"></i></span><span class="quest-year">2025-26</span></span></span>
             </button>
           </h3>
           <div class="accordion-content" id="q-ski">
             <div class="quest-body">
-              <p class="quest-desc">RabbitMQ into DynamoDB with Redis-cached reads, fronted by a token-bucket admission controller that samples queue depth every 200 ms and steers with AIMD. Retreat is a hundred times faster than recovery: it halves the rate on a severe backlog and claws it back ten permits a second. If the broker cannot be reached it holds the current rate instead of reading silence as an empty queue, which was the original bug.</p>
+              <p class="quest-desc">Lift-ride events arrive over HTTP, go onto a queue, and are written into DynamoDB with Redis caching the reads. In front of all of that sits a token-bucket admission controller which samples queue depth every 200 ms and steers with AIMD. Backing off is deliberately far more aggressive than recovering: a severe backlog halves the admitted rate straight away, while recovery only adds ten permits a second. If the broker cannot be reached at all, the controller now holds its current rate, because the original version read silence as an empty queue and opened the gates at exactly the wrong moment.</p>
 
-              <p class="quest-desc">Fleet awareness coordinates the instance count rather than the rate. Each replica heartbeats into a Redis sorted set and divides the admission floor by what it sees, because sharing one rate would collapse it by half for every replica. A shrink needs three consecutive confirmations, so a Redis restart cannot talk a replica into thinking it is alone.</p>
+              <p class="quest-desc">The controller is also fleet-aware. Each replica heartbeats into a Redis sorted set and divides the admission floor by the number of live replicas it can see, so adding a replica does not multiply the rate the cluster admits in total. Scaling up takes effect immediately, but scaling down needs three consecutive confirmations, otherwise a Redis restart could convince a replica it was running alone and hand it the entire budget.</p>
+
+              <p class="quest-desc">The load harness needed rebuilding before any of these numbers meant anything. The original was closed-loop, which understates latency under load by a factor of 9.5 on this workload. Rebuilding it open-loop, and running every A/B comparison in both orders so that ordering bias could be ruled out, is what makes the remaining figures worth quoting at all.</p>
 
               <figure class="quest-evidence">
                 <div class="gauge" role="img" aria-label="Median latency measured two ways: closed loop 1,120 milliseconds, open loop 10,617 milliseconds">
@@ -225,18 +230,18 @@
                   </div>
                   <p class="gauge-unit">p50 ms, the same system measured two ways</p>
                 </div>
-                <figcaption>A closed-loop harness waits for each response before sending the next one, so when the system slows down the harness politely slows down with it and the delay never lands in the numbers. Rebuilding it open loop, charging latency from when a request was due rather than when it went out, moved p50 from 1,120 ms to 10,617 ms. Nothing about the system changed. The first number was just wrong, and it is the number the assignment asked for.</figcaption>
+                <figcaption>The same system measured two ways. A closed-loop harness waits for each response before sending the next request, so it slows down alongside the system it is measuring and the queueing delay never lands in the numbers. This is coordinated omission. Charging latency from when a request was due, rather than from when it actually went out, is the fix.</figcaption>
               </figure>
 
               <dl class="ledger">
-                <div><dt>The AWS run: 200,000 requests, every one a 200</dt><dd>4,309 <i>req/s</i></dd></div>
-                <div><dt>Cardinality write requests on the DynamoDB counter</dt><dd>25,163</dd></div>
-                <div><dt>Same workload once HyperLogLog took over the counting</dt><dd>9,635</dd></div>
+                <div><dt>The AWS run: 200,000 requests, every one returning 200</dt><dd>4,309 <i>req/s</i></dd></div>
+                <div><dt>Distinct-count write requests against the DynamoDB counter</dt><dd>25,163</dd></div>
+                <div><dt>Same workload, once HyperLogLog took over the counting</dt><dd>9,635</dd></div>
                 <div><dt>Defects documented, each one pinned by a regression test</dt><dd>38</dd></div>
                 <div><dt>Decision records, rejected alternatives included</dt><dd>11</dd></div>
               </dl>
 
-              <p class="quest-caveat">Two rigs, two eras. The original ran on AWS, a Spring server on EC2 with RabbitMQ and DynamoDB behind it, and the one report kept from that build records 200,000 requests at 4,309 req/s with every response a 200. Everything after the rebuild ran against LocalStack on one laptop, where LocalStack is the binding constraint in every run, so read those throughput figures as a property of the rig rather than the architecture. Peak offered load in that sweep was 4,376 req/s and the controller shed hard above it. A batching result that looked like a 16% gain did not survive swapping the arm order, so it is not on this page. The CI workflow is written but has never actually run.</p>
+              <p class="quest-caveat">These numbers come from two different setups. The original ran on AWS, a Spring server on EC2 with RabbitMQ and DynamoDB behind it, and the one report I kept from that build records 200,000 requests at 4,309 req/s with every response a 200. Everything after the rebuild ran against LocalStack on a single laptop, where LocalStack is the binding constraint in every run, so read those throughput figures as a property of the test rig rather than of the architecture. Peak offered load in that sweep was 4,376 req/s, above which the controller shed hard. A batching result which looked like a 16% gain did not survive swapping the run order, so it is not on this page. The CI workflow is written but has never actually run.</p>
 
               <div class="quest-links">
                   <a href="https://github.com/tamirkifle/skier-tracking-system" target="_blank" rel="noopener noreferrer">GitHub
@@ -253,18 +258,18 @@
             <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-ai4hc">
               <span class="quest-mark" style="background-image: url('media/ai4hc.png');" aria-hidden="true"></span>
               <span class="quest-name">AI4HC Pipeline</span>
-              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i><i class="devicon-amazonwebservices-plain colored" data-tooltip="AWS Bedrock, Transcribe, S3"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i></span>
-              <span class="quest-year">2026</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">Data lead on a graduate build turning clinician speech into structured records.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">7<span class="figure-unit">types</span></span><span class="figure-label">Clinical event shapes pinned by one spec, each with its own required fields</span></span><span class="figure"><span class="figure-value">4<span class="figure-unit">tables</span></span><span class="figure-label">One JSONB column absorbs every event shape without a migration</span></span></span>
+              <span class="quest-line">Clinician speech into structured medical records. I was the data lead.</span>
+              <span class="quest-shelf"><span class="quest-figures"><span class="figure"><span class="figure-value">7<span class="figure-unit">types</span></span><span class="figure-label">Clinical event shapes pinned by one spec, each with its own required fields</span></span><span class="figure"><span class="figure-value">4<span class="figure-unit">tables</span></span><span class="figure-label">Postgres tables carry every event shape, with JSONB absorbing the variation</span></span></span><span class="quest-meta"><span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-spring-original colored" data-tooltip="Spring Boot"></i><i class="devicon-postgresql-plain colored" data-tooltip="PostgreSQL"></i><i class="devicon-amazonwebservices-plain colored" data-tooltip="AWS Bedrock, Transcribe, S3"></i><i class="devicon-rabbitmq-original colored" data-tooltip="RabbitMQ"></i></span><span class="quest-year">2026</span></span></span>
             </button>
           </h3>
           <div class="accordion-content" id="q-ai4hc">
             <div class="quest-body">
-              <p class="quest-desc">I owned the data layer. Clinical events live in JSONB because their shape changes by type, with a GIN index over the payload and a partial index that keeps soft-deleted rows out of the query path everything else uses. Deletes are soft throughout, so the audit trail survives.</p>
+              <p class="quest-desc">My responsibility was the data layer end to end: the PostgreSQL schema, eight Flyway migrations, and the Docker Compose stack the rest of the team developed against. Clinical events vary in shape depending on their type, so they live in a JSONB column with a GIN index over the payload, and a partial index keeps soft-deleted rows out of the paths every other query uses. Deletes are soft throughout so the audit trail survives, which matters for anything touching a clinical record.</p>
 
-              <p class="quest-desc">The part that mattered most was the spec. Three teams were building against the same records, so I wrote the one document that says what a clinical event is: every enum lowercase, every field named exactly, and the required fields listed per event type. Blood pressure gets systolic and diastolic and never a generic value field. A named drug is always a medication, never a procedure, even when it is injected.</p>
+              <p class="quest-desc">The part which mattered most was not code. Three teams were building against the same records, so I wrote the single document defining what a clinical event actually is: every enum lowercase, every field named exactly, and the required fields listed per type. Blood pressure gets systolic and diastolic, never a generic value field. A named drug is always a medication and never a procedure, even when it is injected. That document gave the LLM extraction layer an exact contract to target, and stopped three teams inventing three different shapes for the same record.</p>
+
+              <p class="quest-desc">Alongside the data layer I acted as integration reviewer for the team, reviewing 14 pull requests and blocking 11 of them on line-level findings: a CascadeType.ALL which would have cascade-deleted patient data, double-encoded JSONB corrupting every API response, a Float and Double mismatch across two concurrent branches, and contradictory prompt instructions producing non-deterministic extraction output.</p>
 
               <figure class="quest-evidence">
                 <div class="flow flow--list">
@@ -275,17 +280,17 @@
                   <div class="flow-step"><span class="flow-name">procedure<span class="flow-detail">procedure_name and status.</span></span></div>
                   <div class="flow-step"><span class="flow-name">allergy<span class="flow-detail">allergen and allergy_type. Severity describes a past reaction, criticality describes future risk.</span></span></div>
                   <div class="flow-step"><span class="flow-name">other<span class="flow-detail">description.</span></span></div>
-                  </div>
-                <figcaption>The required fields per event type, from the schema spec. Pinning the names and the enum casing is what stopped three teams from inventing three different shapes for the same record.</figcaption>
+                </div>
+                <figcaption>The required fields for each event type, taken from the schema spec. Pinning down the field names and the enum casing is what kept three teams building the same record rather than three variations on it.</figcaption>
               </figure>
 
               <dl class="ledger">
                 <div><dt>Flyway migrations behind the schema, seven of them mine</dt><dd>8</dd></div>
                 <div><dt>Containers in the Compose stack I assembled</dt><dd>6</dd></div>
                 <div><dt>Mental state values the spec allows, up from five</dt><dd>12</dd></div>
-                </dl>
+              </dl>
 
-              <p class="quest-caveat">Team project, so the lines matter. The schema, the migrations, the event spec and the Compose stack are mine. The transcript confirmation gate, the Python extraction consumer and the architecture diagrams are other people's work, and so were the speech-to-text vendor comparison and the model-selection decision. Nobody measured throughput or latency on this, so there are no performance numbers to show.</p>
+              <p class="quest-caveat">This was a team project, so the lines matter. The schema, the migrations, the event spec and the Compose stack are mine. The Python extraction consumer and the architecture diagrams are other people's work, and so were the speech-to-text vendor comparison and the model-selection decision. Nobody measured throughput or latency on this build, so there are no performance numbers to show.</p>
 
               <div class="quest-links">
                 <span class="quest-link-off">GitHub <em>(private repo)</em></span>
@@ -300,16 +305,16 @@
             <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-profiler">
               <span class="quest-mark" style="background-image: url('media/vision_profiler_2.png');" aria-hidden="true"></span>
               <span class="quest-name">Vision Profiler</span>
-              <span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></span>
-              <span class="quest-year">2025-26</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">A profiling harness for PyTorch vision models, built to time them correctly.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">4<span class="figure-unit">nets</span></span><span class="figure-label">ResNet-50, ConvNeXt-Tiny, EfficientNet-B3 and MobileNetV3, one harness</span></span><span class="figure"><span class="figure-value">100<span class="figure-unit">runs</span></span><span class="figure-label">Timed passes behind every measurement, after ten warmup passes</span></span></span>
+              <span class="quest-line">A benchmarking harness for PyTorch vision models, timed correctly.</span>
+              <span class="quest-shelf"><span class="quest-figures"><span class="figure"><span class="figure-value">4<span class="figure-unit">nets</span></span><span class="figure-label">ResNet-50, ConvNeXt-Tiny, EfficientNet-B3 and MobileNetV3, through one harness</span></span><span class="figure"><span class="figure-value">100<span class="figure-unit">runs</span></span><span class="figure-label">Timed passes behind every measurement, after ten warmup passes</span></span></span><span class="quest-meta"><span class="tech-icons"><i class="devicon-python-plain colored" data-tooltip="Python"></i><i class="devicon-pytorch-original colored" data-tooltip="PyTorch"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></span><span class="quest-year">2025-26</span></span></span>
             </button>
           </h3>
           <div class="accordion-content" id="q-profiler">
             <div class="quest-body">
-              <p class="quest-desc">The interesting problem here is not speed, it is measuring speed without lying to yourself. MPS and CUDA queue work asynchronously, so a timer wrapped around a forward pass measures how long it took to hand the kernels to the GPU, not how long the GPU spent on them. Every timed call is bracketed by a device synchronize, and ten warmup passes run first so Metal shader compilation stays out of the numbers.</p>
+              <p class="quest-desc">The aim was to compare four convolutional architectures, ResNet-50, ConvNeXt-Tiny, EfficientNet-B3 and MobileNetV3, on the same hardware. The harder problem turned out to be the measurement rather than the comparison. MPS and CUDA queue their work asynchronously, so a timer wrapped around a forward pass measures how long it took to hand the kernels to the GPU rather than how long the GPU spent running them.</p>
+
+              <p class="quest-desc">The protocol the harness settled on is ten untimed warmup passes to absorb Metal shader compilation and let the allocator settle, then a device synchronize so the clock starts on a quiet device, then a hundred timed passes with a synchronize after each one rather than only at the end. It reports mean, standard deviation, min and max, and derives throughput from the mean instead of counting it separately. None of that is complicated, but getting it wrong is easy and the resulting numbers look perfectly plausible.</p>
 
               <figure class="quest-evidence">
                 <div class="flow">
@@ -317,17 +322,17 @@
                   <div class="flow-step"><b>02</b><span class="flow-name">Synchronize<span class="flow-detail">Wait for the queue to actually drain, so the clock starts on a quiet device.</span></span></div>
                   <div class="flow-step"><b>03</b><span class="flow-name">Time 100 passes<span class="flow-detail">perf_counter around each one, synchronizing after every call rather than at the end.</span></span></div>
                   <div class="flow-step"><b>04</b><span class="flow-name">Report the spread<span class="flow-detail">Mean, standard deviation, min and max. Throughput is derived from the mean, not counted separately.</span></span></div>
-                  </div>
-                <figcaption>The measurement protocol. Skip the synchronize and a model can look ten times faster than it is, which is the failure mode this exists to avoid.</figcaption>
+                </div>
+                <figcaption>The measurement protocol. Skip the synchronize and a model can look ten times faster than it really is, which is the failure mode this harness exists to avoid.</figcaption>
               </figure>
 
               <dl class="ledger">
                 <div><dt>Architectures through the same harness and hardware</dt><dd>4</dd></div>
                 <div><dt>Warmup passes before the clock starts</dt><dd>10</dd></div>
                 <div><dt>Timed passes per measurement</dt><dd>100</dd></div>
-                </dl>
+              </dl>
 
-              <p class="quest-caveat">Straight answer: the harness writes its results into a gitignored directory, so nothing is committed that I can quote here, and I am not going to publish a throughput number from memory. Rerunning it and publishing the table is the obvious next step. This was a three-person course project and the architecture comparison was my track.</p>
+              <p class="quest-caveat">This was a three-person course project and the architecture comparison was my track. The harness writes its results into a gitignored directory, so there is nothing committed which can be quoted here. Rerunning it and publishing the full table is the obvious next step.</p>
 
               <div class="quest-links">
                   <a href="https://github.com/tamirkifle/vision-model-profiler" target="_blank" rel="noopener noreferrer">GitHub
@@ -344,36 +349,34 @@
             <button type="button" class="quest-head accordion-row" aria-expanded="false" aria-controls="q-objrec">
               <span class="quest-mark" style="background-image: url('media/obj-recognition.png');" aria-hidden="true"></span>
               <span class="quest-name">Real-time Object Recognition System</span>
-              <span class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></span>
-              <span class="quest-year">2025</span>
               <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-              <span class="quest-line">Classical vision on a live camera, no pretrained network anywhere.</span>
-              <span class="quest-figures"><span class="figure"><span class="figure-value">20<span class="figure-unit">dims</span></span><span class="figure-label">Principal components carrying a 4096 pixel patch</span></span><span class="figure"><span class="figure-value">1<span class="figure-unit">image</span></span><span class="figure-label">Enough to learn a new object, no training run</span></span></span>
+              <span class="quest-line">Vision primitives written from scratch, not a pretrained network.</span>
+              <span class="quest-shelf"><span class="quest-figures"><span class="figure"><span class="figure-value">20<span class="figure-unit">dims</span></span><span class="figure-label">Principal components representing a 4,096-pixel image patch</span></span><span class="figure"><span class="figure-value">1<span class="figure-unit">image</span></span><span class="figure-label">All it takes to add a new object, with no training run</span></span></span><span class="quest-meta"><span class="tech-icons"><i class="devicon-cplusplus-plain colored" data-tooltip="C++"></i><i class="devicon-opencv-plain colored" data-tooltip="OpenCV"></i></span><span class="quest-year">2025</span></span></span>
             </button>
           </h3>
           <div class="accordion-content" id="q-objrec">
             <div class="quest-body">
-              <p class="quest-desc">Threshold, segment, then describe each region with seven features chosen to survive rotation and scale: how much of its oriented box the region fills, aspect ratio, the first three Hu moments, compactness and extent. The thresholding, blur and morphology are implemented directly rather than called out of OpenCV, which was the point of the exercise.</p>
+              <p class="quest-desc">The point of the exercise was to implement the pipeline directly instead of calling it out of OpenCV, so the thresholding, blur and morphology are all written from scratch. Each frame is thresholded using ISODATA over a 6.25% random pixel sample, which keeps that step cheap enough to run on live video, then segmented into connected regions, and each region is rotated onto its axis of least central moment so that orientation stops mattering.</p>
 
-              <p class="quest-desc">The eigenspace path rotates each object onto its axis of least central moment, flattens it to a 64 by 64 patch, and projects that 4096 pixel vector onto 20 principal components. Matching happens in those 20 dimensions, and one image per object is enough to add it.</p>
+              <p class="quest-desc">Regions are then described in one of two ways. The first is seven features chosen to survive rotation and scale: how much of its oriented bounding box the region fills, aspect ratio, the first three Hu moments, compactness and extent. The second flattens the region to a 64 by 64 patch and projects that 4,096-pixel vector onto 20 principal components. Matching happens in those 20 dimensions, which is why a single image is enough to teach it a new object with no training run at all.</p>
 
               <figure class="quest-evidence">
                 <div class="flow">
                   <div class="flow-step"><b>01</b><span class="flow-name">Threshold<span class="flow-detail">ISODATA over a 6.25% random pixel sample, so the cutoff tracks the scene without reading every pixel.</span></span></div>
                   <div class="flow-step"><b>02</b><span class="flow-name">Segment and orient<span class="flow-detail">Connected regions, each rotated onto its axis of least central moment.</span></span></div>
                   <div class="flow-step"><b>03</b><span class="flow-name">Describe<span class="flow-detail">Seven invariant features, or a 64 by 64 canonical patch for the eigenspace path.</span></span></div>
-                  <div class="flow-step"><b>04</b><span class="flow-name">Classify<span class="flow-detail">Nearest neighbour under scaled Euclidean distance, with a cutoff that lets it answer "unknown".</span></span></div>
-                  </div>
-                <figcaption>Every stage runs per frame on live video. The 6.25% sample is what keeps the threshold step cheap enough to do that.</figcaption>
+                  <div class="flow-step"><b>04</b><span class="flow-name">Classify<span class="flow-detail">Nearest neighbor under scaled Euclidean distance, with a cutoff that lets it answer "unknown".</span></span></div>
+                </div>
+                <figcaption>Every stage runs per frame on live video. The 6.25% pixel sample is what keeps the thresholding cheap enough to do that.</figcaption>
               </figure>
 
               <dl class="ledger">
-                <div><dt>Principal components, down from 4096 pixels</dt><dd>20</dd></div>
-                <div><dt>Rotation and scale invariant features per region</dt><dd>7</dd></div>
+                <div><dt>Principal components, down from 4,096 pixels</dt><dd>20</dd></div>
+                <div><dt>Rotation- and scale-invariant features per region</dt><dd>7</dd></div>
                 <div><dt>Pixels sampled to estimate the threshold</dt><dd>6.25<i>%</i></dd></div>
-                </dl>
+              </dl>
 
-              <p class="quest-caveat">No benchmark is committed for this one. There are accuracy figures in the old write-up, but they sit in an example output block rather than a recorded run, so I am not going to repeat them. There is no timing code in the project either, which means I cannot honestly quote a frame rate. The demo video is the real evidence.</p>
+              <p class="quest-caveat">There is no benchmark committed for this one. Accuracy figures exist in the old write-up, but they sit in an example output block rather than in a recorded run, so they are not repeated here. There is no timing code in the project either, so there is no honest frame rate to quote. The demo video is the real evidence.</p>
 
               <div class="quest-links">
                   <a href="https://github.com/tamirkifle/realtime-2d-object-recognition" target="_blank" rel="noopener noreferrer">GitHub
@@ -445,7 +448,7 @@
           </div>
           <div class="accordion-content" id="acc-scandiweb">
             <div class="accordion-bullets">
-              <span class="accordion-bullet">8 e-commerce platforms with $50M+ revenue</span>
+              <span class="accordion-bullet">8 e-commerce platforms for clients with $50M+ annual revenue</span>
               <span class="accordion-bullet">Platform migration with 60% legacy refactor</span>
               <span class="accordion-bullet">Reduced cart abandonment by 18%</span>
               <span class="accordion-link"><a href="https://scandiweb.com/" target="_blank" rel="noopener noreferrer">https://scandiweb.com/</a></span>
@@ -464,7 +467,7 @@
             <div class="accordion-bullets">
               <span class="accordion-bullet">Non-custodial wallet for 7,000+ users</span>
               <span class="accordion-bullet">Real-time sync with Firestore + WASM</span>
-              <span class="accordion-bullet">60% throughput boost via UTXO caching</span>
+              <span class="accordion-bullet">60% faster wallet sync via batched UTXO filtering</span>
               <span class="accordion-link"><a href="https://github.com/Endubis-Solutions/" target="_blank" rel="noopener noreferrer">https://github.com/Endubis-Solutions/</a></span>
             </div>
           </div>

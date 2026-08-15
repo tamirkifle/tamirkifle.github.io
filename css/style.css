@@ -18,32 +18,43 @@ html {
 }
 
 /* --- Custom Properties (Dark Mode Default) --- */
+/* Warm ink. The neutrals sit at the same hue as the logo ramp, so the rust
+   reads as part of the palette rather than a colour dropped on top of it.
+
+   Two colours carry meaning and nothing else is allowed to be either:
+     --metric  a number that came off a benchmark
+     --accent  a thing you can click                                        */
 :root {
   /* Backgrounds */
-  --bg: hsl(220, 15%, 7%);
-  --bg-hover: hsl(220, 15%, 11%);
-  --bg-highlighted: hsl(220, 15%, 14%);
-  --bg-card: hsl(220, 15%, 10%);
+  --bg: hsl(30, 8%, 6%);
+  --bg-hover: hsl(30, 8%, 10.5%);
+  --bg-highlighted: hsl(30, 8%, 14%);
+  --bg-card: hsl(30, 8%, 8.5%);
+  /* The ledge across the bottom of every project card. One step up from the
+     card, one step down from hover, so a hovered card still lights up. */
+  --shelf: hsl(30, 9%, 11.5%);
 
   /* Borders */
-  --border: hsl(220, 10%, 16%);
-  --border-hover: hsl(220, 10%, 24%);
+  --border: hsl(30, 9%, 17%);
+  --border-hover: hsl(30, 9%, 27%);
 
   /* Foreground */
-  /* 8.7:1 on --bg, which lands on the #b1b1b1 Tamir asked for while keeping
-     the palette's slight blue cast. */
-  --foreground: hsl(220, 10%, 70%);
-  --foreground-highlighted: hsl(220, 10%, 93%);
-  /* 6.3:1, still a clear step below --foreground. It was 2.9:1 originally. */
-  --foreground-faded: hsl(220, 10%, 60%);
+  --foreground: hsl(35, 9%, 78%);
+  --foreground-highlighted: hsl(40, 22%, 96%);
+  /* Still a clear step below --foreground, still above 4.5:1 on --bg. */
+  --foreground-faded: hsl(34, 7%, 58%);
 
-  /* Accent */
-  --accent: hsl(210, 100%, 62%);
-  --accent-hover: hsl(210, 100%, 70%);
-  --accent-faded: hsla(210, 100%, 62%, 0.12);
+  /* Accent: links, focus, and nothing else */
+  --accent: hsl(205, 92%, 67%);
+  --accent-hover: hsl(205, 96%, 76%);
+  --accent-faded: hsla(205, 92%, 67%, 0.14);
+
+  /* Measured values */
+  --metric: hsl(28, 88%, 68%);
+  --metric-dim: hsla(28, 88%, 68%, 0.3);
 
   /* Semantic status */
-  --good: hsl(150, 62%, 52%);
+  --good: hsl(152, 55%, 55%);
 
   /* Logo ramp. Rust, three steps, inverting per theme the way Paul's does:
      light-toned glyph on the dark background, dark-toned on the light one. */
@@ -52,20 +63,27 @@ html {
   --logo-3a: #F5CDA4; --logo-3b: #FBE3C6;
 
   /* Dock */
-  --dock-bg: hsla(220, 15%, 12%, 0.72);
-  --dock-border: hsla(220, 10%, 24%, 0.5);
-  --dock-shadow: rgba(0, 0, 0, 0.35);
-  --card-shadow: rgba(0, 0, 0, 0.45);
+  --dock-bg: hsla(30, 10%, 13%, 0.74);
+  --dock-border: hsla(32, 10%, 30%, 0.5);
+  --dock-shadow: rgba(0, 0, 0, 0.4);
+  --card-shadow: rgba(0, 0, 0, 0.5);
 
-  /* Background pattern */
-  --grid-dot: hsla(220, 15%, 70%, 0.07);
+  /* Background pattern and the corner wash */
+  --grid-dot: hsla(35, 30%, 70%, 0.055);
+  --glow: hsla(28, 80%, 50%, 0.10);
+
+  /* Type */
+  /* Rationed: the name, the six project headlines, the section titles. */
+  --font-display: 'Clash Grotesk', 'General Sans', -apple-system, sans-serif;
+  --font-body: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Spacing */
   /* The column is wider than the text inside it: rows, figures and
      screenshots use all of it, prose stays at a readable measure. */
-  --content-width: 680px;
-  --measure: 34rem;
-  --measure-sm: 28rem;
+  --content-width: 700px;
+  --measure: 35rem;
+  --measure-sm: 30rem;
   --page-padding: 1.5rem;
 
   /* Transitions */
@@ -75,50 +93,55 @@ html {
   /* Radii */
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-lg: 14px;
   --radius-xl: 20px;
 }
 
 /* --- Light Mode --- */
+/* Warm off-white, deliberately short of cream. */
 [data-theme="light"] {
   color-scheme: light;
 
-  --bg: hsl(0, 0%, 98%);
-  --bg-hover: hsl(0, 0%, 93%);
-  --bg-highlighted: hsl(0, 0%, 96%);
-  --bg-card: hsl(0, 0%, 100%);
+  --bg: hsl(38, 16%, 97%);
+  --bg-hover: hsl(36, 14%, 93%);
+  --bg-highlighted: hsl(36, 14%, 95%);
+  --bg-card: hsl(40, 30%, 99.5%);
+  --shelf: hsl(36, 16%, 96%);
 
-  --border: hsl(0, 0%, 88%);
-  --border-hover: hsl(0, 0%, 78%);
+  --border: hsl(34, 12%, 87%);
+  --border-hover: hsl(32, 12%, 76%);
 
-  --foreground: hsl(220, 10%, 40%);
-  --foreground-highlighted: hsl(220, 15%, 12%);
-  /* Same correction on the light side: 3.0:1 up to 4.2:1. */
-  --foreground-faded: hsl(220, 5%, 48%);
+  --foreground: hsl(28, 10%, 33%);
+  --foreground-highlighted: hsl(26, 18%, 12%);
+  --foreground-faded: hsl(28, 8%, 47%);
 
-  --accent: hsl(210, 100%, 45%);
-  --accent-hover: hsl(210, 100%, 38%);
-  --accent-faded: hsla(210, 100%, 50%, 0.08);
+  --accent: hsl(210, 92%, 40%);
+  --accent-hover: hsl(210, 92%, 32%);
+  --accent-faded: hsla(210, 92%, 40%, 0.09);
 
-  --good: hsl(150, 55%, 32%);
+  --metric: hsl(21, 82%, 38%);
+  --metric-dim: hsla(21, 82%, 38%, 0.25);
+
+  --good: hsl(152, 55%, 30%);
 
   --logo-1a: #2E1203; --logo-1b: #5A2708;
   --logo-2a: #7A3309; --logo-2b: #A34B12;
   --logo-3a: #A34B12; --logo-3b: #C2661C;
 
-  --dock-bg: hsla(0, 0%, 100%, 0.78);
-  --dock-border: hsla(0, 0%, 0%, 0.08);
-  --dock-shadow: rgba(15, 23, 42, 0.12);
-  --card-shadow: rgba(15, 23, 42, 0.10);
+  --dock-bg: hsla(40, 40%, 100%, 0.8);
+  --dock-border: hsla(30, 20%, 20%, 0.09);
+  --dock-shadow: rgba(60, 40, 20, 0.12);
+  --card-shadow: rgba(60, 40, 20, 0.10);
 
-  --grid-dot: hsla(220, 15%, 30%, 0.06);
+  --grid-dot: hsla(30, 30%, 30%, 0.055);
+  --glow: hsla(28, 80%, 55%, 0.10);
 }
 
 /* --- Body --- */
 body {
-  font-family: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 0.9375rem;
-  line-height: 1.7;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--foreground);
   background-color: var(--bg);
   background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
@@ -138,7 +161,7 @@ body::before {
   z-index: -1;
   pointer-events: none;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-faded), transparent 70%);
+  background: radial-gradient(circle, var(--glow), transparent 70%);
 }
 
 /* --- Typography --- */
@@ -148,18 +171,24 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
-h1 {
-  font-size: 1.5rem;
+/* The display face is rationed. It sets the name, the section titles and the
+   six project headlines; everything else stays in the body face. */
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
+h1 {
+  font-size: 1.75rem;
+}
+
 h2 {
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 h3 {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -196,7 +225,7 @@ p:last-child {
 
 /* Code */
 code {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: var(--font-mono);
   font-size: 0.85em;
   background: var(--bg-highlighted);
   padding: 0.15em 0.4em;
@@ -233,7 +262,7 @@ pre code {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 3rem;
 }
 
 /* --- Header --- */
@@ -269,7 +298,7 @@ pre code {
 }
 
 .site-wordmark {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -285,44 +314,63 @@ pre code {
 }
 
 /* --- Jump Links ---
-   The work history sits below the projects now, so the top of the page needs
-   a way down to it. */
+   The work history sits below the projects, so the top of the page needs a way
+   down to it. Set as a masthead index, not as controls: the four sections have
+   no order between them, so nothing here is numbered, and the one arrow says
+   once that the whole row scrolls down. */
 .jump-links {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.375rem;
-  margin-top: -0.75rem;
+  align-items: baseline;
+  column-gap: 1.25rem;
+  row-gap: 0.5rem;
+  margin-top: -0.25rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border);
 }
 
 .jump-label {
-  margin-right: 0.25rem;
-  font-size: 0.8125rem;
+  margin-right: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--foreground-faded);
 }
 
-.jump-link {
-  padding: 0.25rem 0.625rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: -0.01em;
-  color: var(--foreground);
-  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+.jump-label::after {
+  content: '\2193';
+  margin-left: 0.4rem;
+  letter-spacing: 0;
 }
 
-.jump-link:hover {
+.jump-link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.jump-link + .jump-link {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--border);
+}
+
+.jump-link:hover,
+.jump-link:focus-visible {
   color: var(--foreground-highlighted);
-  background-color: var(--bg-hover);
-  border-color: var(--border-hover);
+  text-decoration-color: var(--foreground-highlighted);
 }
 
 /* --- Sections --- */
 .section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.125rem;
   margin-top: 1.5rem;
   scroll-margin-top: 100px;
 }
@@ -338,21 +386,20 @@ pre code {
 .section-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin-bottom: 0.25rem;
 }
 
 .section-header h2 {
   flex: none;
-  font-size: 1.125rem;
-  letter-spacing: -0.015em;
+  font-size: 1.625rem;
 }
 
 .section-rule {
   flex: 1;
   height: 1px;
   min-width: 1.5rem;
-  background: linear-gradient(to right, var(--border) 0%, var(--border) 55%, transparent 100%);
+  background: linear-gradient(to right, var(--metric-dim) 0%, var(--border) 40%, transparent 100%);
 }
 
 .section-anchor {
@@ -390,7 +437,7 @@ pre code {
 .intro-row {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .intro-portrait {
@@ -412,14 +459,22 @@ pre code {
 }
 
 .intro-name {
-  margin-bottom: 0.5rem;
-  font-size: 1.375rem;
-  line-height: 1;
+  margin-bottom: 0.65rem;
+  font-size: 2.625rem;
+  line-height: 0.98;
 }
 
 .intro-bio {
   color: var(--foreground);
-  max-width: 480px;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  max-width: 33rem;
+}
+
+/* A marked phrase in the bio: the three things worth catching on a skim. */
+.intro-bio .k {
+  color: var(--foreground-highlighted);
+  font-weight: 600;
 }
 
 .social-links {
@@ -471,29 +526,33 @@ pre code {
   border-color: var(--border-hover);
 }
 
-/* --- List Rows (Work Life / Education) --- */
+/* --- List Rows (Work Life / Education / Certifications) ---
+   Set as a ruled table rather than free-floating rows: a hairline between
+   entries, and hover lifts the title into the metric colour instead of
+   painting a block behind it. */
 .list-rows {
   display: flex;
   flex-direction: column;
-  margin: 0.25rem -0.5rem 0;
+  margin: 0.25rem 0 0;
 }
 
 .list-row {
   display: grid;
   grid-template-columns: 20px 1fr auto auto;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.625rem 0.5rem;
-  border-radius: var(--radius-md);
+  gap: 0.875rem;
+  padding: 0.9rem 0.25rem;
   text-decoration: none;
   color: var(--foreground);
-  transition: background-color 150ms ease;
   cursor: pointer;
 }
 
-.list-row:hover {
-  background-color: var(--bg-hover);
-  color: var(--foreground);
+.list-row:not(:first-child) {
+  border-top: 1px solid var(--border);
+}
+
+.list-row:hover .list-row-title {
+  color: var(--metric);
 }
 
 .list-row-icon {
@@ -531,15 +590,17 @@ pre code {
 }
 
 .list-row-title {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
   color: var(--foreground-highlighted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 150ms ease;
 }
 
 .list-row-subtitle {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--foreground-faded);
   white-space: nowrap;
   overflow: hidden;
@@ -563,11 +624,14 @@ pre code {
 }
 
 .cert-expired {
+  font-family: var(--font-mono);
+}
+
+.cert-expired {
   margin-left: 0.5rem;
   padding: 0.05rem 0.375rem;
   border: 1px solid var(--border);
   border-radius: 999px;
-  font-family: 'JetBrains Mono', monospace;
   font-size: 0.625rem;
   letter-spacing: 0.02em;
   color: var(--foreground-faded);
@@ -589,8 +653,8 @@ pre code {
 }
 
 .list-row-date {
-  font-size: 0.75rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
   color: var(--foreground-faded);
   letter-spacing: -0.02em;
   text-align: right;
@@ -627,16 +691,16 @@ pre code {
 }
 
 .accordion-bullets {
-  padding: 0.375rem 0 0.625rem 2.75rem;
+  padding: 0.375rem 0 0.75rem 2.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.375rem;
 }
 
 .accordion-bullet {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--foreground);
-  line-height: 1.5;
+  line-height: 1.55;
   position: relative;
   padding-left: 1rem;
 }
@@ -650,8 +714,8 @@ pre code {
 }
 
 .accordion-link {
-  font-size: 0.8125rem;
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.55;
   position: relative;
   padding-left: 1.125rem;
   margin-top: 0.125rem;
@@ -703,7 +767,7 @@ pre code {
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 500;
-  font-family: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
@@ -737,13 +801,18 @@ pre code {
    headline figures, opening onto the same showcase underneath.
    No project is styled as the lesser one.
 
-   The readings are set as a ledger, dotted leaders binding each
-   label to its figure, with a hairline gutter marking the block
-   as recorded data rather than copy.
+   Every card ends on a shelf: a tinted ledge bled to both edges
+   carrying the two measured figures, with the stack and the year
+   filed behind a rule on the right. The section claims every
+   metric was measured, so the numbers get their own furniture.
+
+   Inside, the readings are set as a ledger, dotted leaders binding
+   each label to its figure, with a hairline gutter marking the
+   block as recorded data rather than copy.
    ============================================================ */
 
 .quests-intro {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--foreground-faded);
   margin-top: -0.25rem;
   max-width: var(--measure);
@@ -752,7 +821,7 @@ pre code {
 .quests {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.875rem;
 }
 
 /* Each project is its own card, so the section reads as six things rather
@@ -784,23 +853,25 @@ pre code {
 
 .quest-head {
   display: grid;
-  grid-template-columns: 34px 1fr auto auto 14px;
-  column-gap: 0.75rem;
-  row-gap: 0.5rem;
-  align-items: center;
+  grid-template-columns: 40px 1fr 14px;
+  column-gap: 1rem;
+  row-gap: 0;
+  align-items: start;
   width: 100%;
-  padding: 1.125rem 1.25rem;
+  /* No bottom padding: the shelf closes the card off instead. */
+  padding: 1.375rem 1.5rem 0;
   border: none;
   border-radius: var(--radius-lg);
   background: none;
   font: inherit;
   text-align: left;
   color: var(--foreground);
-  transition: background-color 150ms ease;
 }
 
-.quest-head:hover {
-  background-color: var(--bg-hover);
+/* The shelf paints its own surface, so hover lights the shelf rather
+   than tinting the whole button behind it. */
+.quest:hover .quest-shelf {
+  background: var(--bg-highlighted);
 }
 
 /* Closed, the head is the whole card and keeps every corner. Open, it hands
@@ -818,9 +889,9 @@ pre code {
 .quest-mark {
   grid-column: 1;
   grid-row: 1;
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
   background-color: var(--bg-highlighted);
   background-size: 92%;
   background-position: center;
@@ -832,62 +903,110 @@ pre code {
   grid-column: 2;
   grid-row: 1;
   min-width: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--foreground-highlighted);
-  letter-spacing: -0.01em;
-}
-
-/* The full project name, carried after the short one it goes by. */
-.quest-alias {
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: var(--foreground-faded);
-  white-space: nowrap;
-}
-
-.quest-alias::before {
-  content: '·';
-  margin: 0 0.4rem;
-}
-
-.quest-head .tech-icons {
-  grid-column: 3;
-  grid-row: 1;
+  font-family: var(--font-display);
   font-size: 1.25rem;
-  gap: 0.5rem;
-  margin-top: 0;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--foreground-highlighted);
 }
 
-.quest-year {
-  grid-column: 4;
-  grid-row: 1;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: -0.02em;
+/* The full project name. It reads better as a kicker underneath the short
+   one than trailing behind it, and it lands in the same register as the
+   rest of the card's metadata. */
+.quest-alias {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
   color: var(--foreground-faded);
 }
 
 .quest-head .chevron-icon {
-  grid-column: 5;
+  grid-column: 3;
   grid-row: 1;
+  margin-top: 0.45rem;
 }
 
+/* The claim the project makes, hung under the name. */
 .quest-line {
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
   grid-row: 2;
-  font-size: 0.8125rem;
-  line-height: 1.55;
-  color: var(--foreground-faded);
+  margin-top: 0.85rem;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--foreground-highlighted);
+  /* Wider than the prose measure: the lede is one sentence and wants to
+     land on one line, not to be read as a paragraph. */
+  max-width: 36rem;
 }
 
-/* Figures ride in the row, so every project shows its numbers
-   without being opened. */
-.quest-head .quest-figures {
+/* --- the shelf --- */
+
+.quest-shelf {
   grid-column: 1 / -1;
   grid-row: 3;
-  margin-top: 0.15rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem;
+  /* Bleeds past the head's padding to both card edges. */
+  margin: 1.375rem -1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: var(--shelf);
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  transition: background-color 200ms ease;
+}
+
+/* Open, the shelf hands its corners to the panel below and closes with a rule. */
+.quest-head[aria-expanded="true"] .quest-shelf {
+  border-radius: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.quest-head .quest-figures {
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 1.5rem;
+}
+
+/* Filed to the right of the readings behind its own rule, the same way the
+   two figures are divided from each other. */
+.quest-meta {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  flex: none;
+  gap: 0.75rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+}
+
+/* Brand logos are the loudest thing in a card and the least load-bearing, so
+   they sit in the metadata slot, colourless until you point at one. */
+.quest-meta .tech-icons {
+  font-size: 1rem;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.quest-meta .tech-icons i {
+  opacity: 0.62;
+}
+
+.quest-meta .tech-icons i:hover {
+  opacity: 1;
+}
+
+.quest-year {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: -0.02em;
+  color: var(--foreground-faded);
 }
 
 /* --- the panel --- */
@@ -895,13 +1014,14 @@ pre code {
 .quest-body {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 0.25rem 1.25rem 1.5rem;
+  gap: 1.375rem;
+  padding: 1.375rem 1.5rem 1.625rem;
 }
 
 .quest-desc {
   max-width: var(--measure);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
   color: var(--foreground);
 }
 
@@ -920,12 +1040,12 @@ pre code {
 
 .figure-value {
   display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
   line-height: 1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
-  color: var(--foreground-highlighted);
+  color: var(--metric);
 }
 
 .figure-value.is-good {
@@ -933,23 +1053,28 @@ pre code {
 }
 
 .figure-unit {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   letter-spacing: 0;
-  color: var(--foreground-faded);
+  color: var(--metric);
+  opacity: 0.7;
   margin-left: 0.3rem;
+}
+
+.figure-value.is-good .figure-unit {
+  color: var(--good);
 }
 
 .figure-label {
   display: block;
-  margin-top: 0.4rem;
-  font-size: 0.6875rem;
-  line-height: 1.45;
+  margin-top: 0.45rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
   color: var(--foreground-faded);
 }
 
 /* Carried over from the row summaries: an inline measured value. */
 .quest-line .stat {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 400;
   font-variant-numeric: tabular-nums;
@@ -967,8 +1092,8 @@ pre code {
 
 .quest-evidence figcaption {
   max-width: var(--measure-sm);
-  font-size: 0.78125rem;
-  line-height: 1.65;
+  font-size: 0.875rem;
+  line-height: 1.6;
   color: var(--foreground);
 }
 
@@ -981,7 +1106,7 @@ pre code {
   padding: 1rem 1.125rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background: var(--bg-card);
+  background: var(--shelf);
 }
 
 .gauge-row {
@@ -993,8 +1118,8 @@ pre code {
 
 .gauge-key,
 .gauge-val {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
   color: var(--foreground-faded);
 }
@@ -1005,7 +1130,7 @@ pre code {
 
 .gauge-row.is-lead .gauge-key,
 .gauge-row.is-lead .gauge-val {
-  color: var(--foreground-highlighted);
+  color: var(--metric);
 }
 
 .gauge-track {
@@ -1026,12 +1151,12 @@ pre code {
 }
 
 .gauge-row.is-lead .gauge-fill {
-  background: var(--foreground-highlighted);
+  background: var(--metric);
 }
 
 .gauge-unit {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   line-height: 1.5;
   color: var(--foreground-faded);
   padding-left: 3.5rem;
@@ -1065,7 +1190,7 @@ pre code {
   position: absolute;
   right: 0.5rem;
   bottom: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -1110,15 +1235,15 @@ pre code {
 }
 
 .flow-step > b {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-weight: 400;
   color: var(--foreground-faded);
   font-variant-numeric: tabular-nums;
 }
 
 .flow-name {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--foreground-highlighted);
 }
@@ -1126,8 +1251,8 @@ pre code {
 .flow-detail {
   display: block;
   margin-top: 0.15rem;
-  font-size: 0.75rem;
-  line-height: 1.5;
+  font-size: 0.8125rem;
+  line-height: 1.55;
   font-weight: 400;
   color: var(--foreground-faded);
 }
@@ -1143,9 +1268,10 @@ pre code {
 }
 
 .flow--list .flow-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78125rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
   font-weight: 400;
+  color: var(--metric);
 }
 
 /* --- the ledger --- */
@@ -1161,7 +1287,7 @@ pre code {
 .ledger > div {
   display: flex;
   align-items: baseline;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
 }
 
 .ledger dt {
@@ -1181,23 +1307,23 @@ pre code {
 
 .ledger dd {
   order: 3;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  color: var(--foreground-highlighted);
+  color: var(--metric);
 }
 
 .ledger dd i {
   font-style: normal;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--foreground-faded);
 }
 
 /* --- what I have not measured --- */
 
 .quest-caveat {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.65;
   color: var(--foreground-faded);
   /* Smaller type fits more characters per inch, so it needs a shorter line. */
@@ -1208,7 +1334,7 @@ pre code {
   content: 'Fine print';
   display: block;
   margin-bottom: 0.3rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1227,7 +1353,7 @@ pre code {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--accent);
   text-decoration: none;
@@ -1253,15 +1379,15 @@ pre code {
   display: inline-flex;
   align-items: baseline;
   gap: 0.35rem;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--foreground-faded);
   cursor: default;
 }
 
 .quest-link-off em {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   font-style: normal;
   opacity: 0.85;
 }
@@ -1269,44 +1395,49 @@ pre code {
 /* --- responsive --- */
 
 @media (max-width: 620px) {
-  /* Keep the pair side by side rather than stacking, so a row stays
-     scannable at a glance. Shrink the figures instead. */
-  /* Narrow rows: let the full name wrap instead of widening the grid column,
-     and drop the tech icons to their own line so the name keeps the width. */
-  .quest-alias {
-    white-space: normal;
-  }
-
   .quest-head {
-    grid-template-columns: 34px 1fr auto 14px;
+    grid-template-columns: 36px 1fr 14px;
+    padding: 1.125rem 1.125rem 0;
   }
 
-  /* Their own line, tucked against the right edge of the card. */
-  .quest-head .tech-icons {
-    grid-column: 2 / -1;
-    grid-row: 2;
-    justify-content: flex-end;
-    gap: 0.625rem;
+  .quest-mark {
+    width: 36px;
+    height: 36px;
   }
 
-  .quest-year {
-    grid-column: 3;
-  }
-
-  .quest-head .chevron-icon {
-    grid-column: 4;
-  }
-
+  /* The lede gives up its indent and takes the full width. */
   .quest-line {
-    grid-row: 3;
+    grid-column: 1 / -1;
+    font-size: 1rem;
   }
 
+  .quest-shelf {
+    flex-wrap: wrap;
+    margin: 1.125rem -1.125rem 0;
+    padding: 0.875rem 1.125rem;
+  }
+
+  /* Wrapped onto its own line, the meta rule turns from a column divider
+     into a row divider. */
+  .quest-meta {
+    flex: 1 1 100%;
+    justify-content: flex-end;
+    align-self: auto;
+    padding: 0.75rem 0 0;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .quest-body {
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
+  }
+
+  /* Keep the pair side by side rather than stacking, so a card stays
+     scannable at a glance. Shrink the figures instead. */
   .quest-head .quest-figures {
-    grid-row: 4;
-  }
-
-  .quest-figures {
-    gap: 0.75rem;
+    flex: 1 1 100%;
+    gap: 1rem;
   }
 
   .quest-figures .figure + .figure {
@@ -1314,7 +1445,7 @@ pre code {
   }
 
   .figure-value {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
 
   .gauge-row {
@@ -1337,49 +1468,61 @@ pre code {
     display: none;
   }
 
+  /* The masthead rules collapse; the entries just wrap. */
+  .jump-link + .jump-link {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .jump-links {
+    column-gap: 1rem;
+  }
 }
 
 /* --- Featured Writing Cards --- */
+/* Same ruled table as the work rows. */
 .featured-writing-list {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin: 0 -0.5rem;
+  margin: 0.25rem 0 0;
 }
 
 .featured-writing-card {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 0.75rem 0.5rem;
-  border-radius: var(--radius-md);
+  padding: 0.9rem 0.25rem;
   text-decoration: none;
   color: var(--foreground);
-  transition: background-color 150ms ease;
 }
 
-.featured-writing-card:hover {
-  background-color: var(--bg-hover);
-  color: var(--foreground);
+.featured-writing-card:not(:first-child) {
+  border-top: 1px solid var(--border);
+}
+
+.featured-writing-card:hover .card-title {
+  color: var(--metric);
 }
 
 .featured-writing-card .card-title {
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 1.0625rem;
+  font-weight: 600;
   color: var(--foreground-highlighted);
   line-height: 1.3;
+  transition: color 150ms ease;
 }
 
 .featured-writing-card .card-summary {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--foreground-faded);
   line-height: 1.5;
 }
 
 .featured-writing-card .card-meta {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--foreground-faded);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   letter-spacing: -0.02em;
   margin-top: 0.125rem;
 }
@@ -1388,10 +1531,10 @@ pre code {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--foreground-faded);
-  padding: 0.5rem 0.5rem;
-  margin-left: -0.5rem;
+  padding: 0.5rem 0.25rem;
+  margin-left: -0.25rem;
   border-radius: var(--radius-sm);
   transition: color 150ms ease, background-color 150ms ease;
 }
@@ -1672,7 +1815,7 @@ pre code {
   text-align: center;
   padding: 3rem 0 2rem;
   color: var(--foreground-faded);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
 }
 
 .site-footer a {
@@ -1689,41 +1832,43 @@ pre code {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin: 0 -0.5rem;
+  margin: 0.25rem 0 0;
 }
 
 .writing-item {
   display: flex;
   flex-direction: column;
   gap: 0.1875rem;
-  padding: 0.75rem 0.5rem;
-  border-radius: var(--radius-md);
+  padding: 0.9rem 0.25rem;
   text-decoration: none;
   color: var(--foreground);
-  transition: background-color 150ms ease;
 }
 
-.writing-item:hover {
-  background-color: var(--bg-hover);
-  color: var(--foreground);
+.writing-item:not(:first-child) {
+  border-top: 1px solid var(--border);
+}
+
+.writing-item:hover .writing-title {
+  color: var(--metric);
 }
 
 .writing-item .writing-title {
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 1.0625rem;
+  font-weight: 600;
   color: var(--foreground-highlighted);
+  transition: color 150ms ease;
 }
 
 .writing-item .writing-summary {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--foreground-faded);
   line-height: 1.5;
 }
 
 .writing-item .writing-meta {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--foreground-faded);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   letter-spacing: -0.02em;
 }
 
@@ -1752,15 +1897,15 @@ pre code {
 }
 
 .post-header h1 {
-  font-size: 1.75rem;
-  line-height: 1.25;
-  letter-spacing: -0.03em;
+  font-size: 2.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 
 .post-meta {
   font-size: 0.8125rem;
   color: var(--foreground-faded);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   letter-spacing: -0.02em;
 }
 
@@ -1779,13 +1924,13 @@ pre code {
 .post-content h2 {
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
 
 .post-content h3 {
   margin-top: 2rem;
   margin-bottom: 0.5rem;
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
 }
 
 .post-content p,
@@ -1836,7 +1981,7 @@ pre code {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--foreground-faded);
   margin-bottom: 2rem;
   transition: color 150ms ease;
@@ -2006,7 +2151,7 @@ pre code {
 
 .form-textarea {
   min-height: 400px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.6;
   resize: vertical;
@@ -2128,7 +2273,7 @@ pre code {
   border: none;
   background: var(--bg-card);
   color: var(--foreground-highlighted);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.6;
   resize: vertical;
@@ -2166,6 +2311,18 @@ pre code {
   .intro-portrait {
     width: 84px;
     height: 84px;
+  }
+
+  .intro-name {
+    font-size: 2.125rem;
+  }
+
+  .intro-bio {
+    font-size: 1rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.375rem;
   }
 
   .list-row {
