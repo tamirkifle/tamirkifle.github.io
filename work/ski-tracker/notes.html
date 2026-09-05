@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" id="top"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admission control and write batching — Distributed Ski Tracker</title><meta name="description" content="Coordinating a fleet-wide limit, reducing writes, and keeping local and cloud experiments separate."><meta name="theme-color" content="#f5f3ed"><link rel="canonical" href="https://tamir.info/work/ski-tracker/notes.html">
+
+<meta property="og:type" content="website"><meta property="og:title" content="Admission control and write batching — Distributed Ski Tracker"><meta property="og:description" content="Coordinating a fleet-wide limit, reducing writes, and keeping local and cloud experiments separate."><meta property="og:url" content="https://tamir.info/work/ski-tracker/notes.html"><meta property="og:image" content="https://tamir.info/media/social-card.png"><meta property="og:image:alt" content="Tamir Yirga — Projects and engineering notes"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="preload" href="/media/type/instrument-sans-400-normal.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/css/diagrams.css"><link rel="stylesheet" href="/css/style.css"><script src="/js/theme.js"></script><script src="/js/main.js" defer></script>
+</head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header wrap">
+    <a class="wordmark" href="/" aria-label="Tamir Yirga, home">tamir.info</a>
+    <nav class="main-nav" aria-label="Main navigation"><a href="/work.html" >Projects</a><a href="/writing.html" aria-current="page">Writing</a><a href="/about.html" >About</a></nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5a7.5 7.5 0 0 1 0 15Z" fill="currentColor" stroke="none"/></svg></button>
+  </header><main id="main" tabindex="-1"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Projects</a><span aria-hidden="true">/</span><a href="/work/ski-tracker.html">Distributed Ski Tracker</a><span aria-hidden="true">/</span><span>Notes</span></nav><header class="article-intro"><a class="article-project" href="/work/ski-tracker.html">Distributed Ski Tracker</a><h1>Admission control and write batching</h1><p>Coordinating a fleet-wide limit, reducing writes, and keeping local and cloud experiments separate.</p></header><article class="prose article-body"><h2>What it does</h2>
+<p>The system ingests ski lift-ride events through RabbitMQ, stores them in DynamoDB, and serves cached reads through Redis. An admission controller coordinates a rate limit across replicas and sheds load when the queue falls behind.</p>
+<p>Two separate questions drive the implementation: how many events the system admits, and how much downstream work each admitted event creates.</p>
+<h2>A rate limit belongs to the fleet</h2>
+<p>A per-replica limit grows with the number of replicas. The rebuilt admission controller uses Redis coordination to apply a shared target across the fleet.</p>
+<p>In the recorded saturation experiment, admission moved from about 200 events per second to 99.8 events per second against a target of 100. This tests rate-control behavior, not maximum ingestion capacity.</p>
+<h2>Reducing downstream writes</h2>
+<p>Batch coalescing reduced DynamoDB write requests from 13,168 to 533, a 96% reduction in the local comparison. HyperLogLog-based distinct counting reduced distinct-count writes from 25,163 to 9,635, or 62%.</p>
+<p>These post-rebuild comparisons ran locally against LocalStack. They measure write-request reduction in those experiments; they are not cloud throughput or billing measurements.</p>
+<h2>Keep the runs separate</h2>
+<p>An earlier EC2 run using the DynamoDB service sustained 4,309 requests per second across 200,000 requests, with all requests succeeding. That run predates the local rebuild comparisons above.</p>
+<p>A batching throughput result changed when the run order was swapped, so it does not support a stable throughput claim. The write-count and admission-control observations are the narrower results to take from the later experiments.</p>
+<h2>Source</h2>
+<p><a href="https://github.com/tamirkifle/skier-tracking-system">Browse the pipeline, experiments, and architecture decisions on GitHub</a>.</p>
+</article><div class="article-return"><a href="/work/ski-tracker.html">More from Distributed Ski Tracker <span aria-hidden="true">→</span></a></div></div></main><footer class="site-footer wrap" id="contact"><span>Tamir Yirga</span><nav aria-label="Elsewhere"><a href="mailto:tamirkyirga@gmail.com">Email</a><a href="https://github.com/tamirkifle">GitHub</a><a href="https://linkedin.com/in/tamir-yirga">LinkedIn</a></nav></footer></body></html>

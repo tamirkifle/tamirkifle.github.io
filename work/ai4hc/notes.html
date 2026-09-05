@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" id="top"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schema and integration notes — AI4HC Pipeline</title><meta name="description" content="The event contract, database migrations, and integration review in a team project."><meta name="theme-color" content="#f5f3ed"><link rel="canonical" href="https://tamir.info/work/ai4hc/notes.html">
+
+<meta property="og:type" content="website"><meta property="og:title" content="Schema and integration notes — AI4HC Pipeline"><meta property="og:description" content="The event contract, database migrations, and integration review in a team project."><meta property="og:url" content="https://tamir.info/work/ai4hc/notes.html"><meta property="og:image" content="https://tamir.info/media/social-card.png"><meta property="og:image:alt" content="Tamir Yirga — Projects and engineering notes"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="preload" href="/media/type/instrument-sans-400-normal.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/css/diagrams.css"><link rel="stylesheet" href="/css/style.css"><script src="/js/theme.js"></script><script src="/js/main.js" defer></script>
+</head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header wrap">
+    <a class="wordmark" href="/" aria-label="Tamir Yirga, home">tamir.info</a>
+    <nav class="main-nav" aria-label="Main navigation"><a href="/work.html" >Projects</a><a href="/writing.html" aria-current="page">Writing</a><a href="/about.html" >About</a></nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5a7.5 7.5 0 0 1 0 15Z" fill="currentColor" stroke="none"/></svg></button>
+  </header><main id="main" tabindex="-1"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Projects</a><span aria-hidden="true">/</span><a href="/work/ai4hc.html">AI4HC Pipeline</a><span aria-hidden="true">/</span><span>Notes</span></nav><header class="article-intro"><a class="article-project" href="/work/ai4hc.html">AI4HC Pipeline</a><h1>Schema and integration notes</h1><p>The event contract, database migrations, and integration review in a team project.</p></header><article class="prose article-body"><h2>The pipeline</h2>
+<p>AI4HC takes clinician audio through AWS Transcribe and LLM extraction into structured records in PostgreSQL. It was built by a team of ten.</p>
+<h2>My contribution</h2>
+<p>I was the data lead and integration reviewer. My scope was the database schema, migrations, canonical event specification, and Docker Compose stack.</p>
+<p>The schema uses four tables, with JSONB for event shapes that vary. The shared specification defines field names and required fields for seven clinical event types across three teams. I authored seven of the eight Flyway migrations.</p>
+<h2>The integration boundary</h2>
+<p>I reviewed 14 pull requests at the integration gate and blocked 11 with critical findings, including patient-data cascade deletion and corrupted JSONB. These are review counts, not a performance result.</p>
+<p>The extraction consumer, architecture diagrams, and model-selection decision record were teammates&#39; work. No performance measurements were collected for this project.</p>
+<h2>Source availability</h2>
+<p>The repository is private. This page describes my contribution; there is no public implementation link to inspect.</p>
+</article><div class="article-return"><a href="/work/ai4hc.html">More from AI4HC Pipeline <span aria-hidden="true">→</span></a></div></div></main><footer class="site-footer wrap" id="contact"><span>Tamir Yirga</span><nav aria-label="Elsewhere"><a href="mailto:tamirkyirga@gmail.com">Email</a><a href="https://github.com/tamirkifle">GitHub</a><a href="https://linkedin.com/in/tamir-yirga">LinkedIn</a></nav></footer></body></html>

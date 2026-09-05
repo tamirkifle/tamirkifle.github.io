@@ -1,99 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Writing - Tamir Yirga</title>
-  <link rel="icon" type="image/svg+xml" href="/media/favicon.svg">
-  <meta name="description" content="Thoughts on systems engineering, machine learning, Rust, and distributed systems.">
+<html lang="en" id="top"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing — Tamir Yirga</title><meta name="description" content="Engineering notes on inference, distributed storage, data pipelines, and computer vision."><meta name="theme-color" content="#f5f3ed"><link rel="canonical" href="https://tamir.info/writing.html">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Writing - Tamir Yirga">
-  <meta property="og:description" content="Thoughts on systems engineering, machine learning, Rust, and distributed systems.">
-  <meta property="og:url" content="https://tamir.info/writing">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Tamir Yirga">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.fontshare.com">
-  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
-  <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600,700&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- Scripts -->
-  <script src="js/main.js" defer></script>
-  <script src="js/writing.js" defer></script>
-</head>
-<body>
-  <div class="page-wrapper">
-    <div class="content-container">
-
-      <!-- Header -->
-      <header class="site-header" role="banner">
-        <a href="/" class="site-logo" aria-label="Tamir Yirga - Home">
-          <svg class="site-mark" viewBox="0 0 87.01 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <linearGradient id="tmr1" x1="16" y1="0" x2="16" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="var(--logo-1a)"/><stop offset="1" stop-color="var(--logo-1b)"/></linearGradient>
-              <linearGradient id="tmr2" x1="16" y1="0" x2="16" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="var(--logo-2a)"/><stop offset="1" stop-color="var(--logo-2b)"/></linearGradient>
-              <linearGradient id="tmr3" x1="16" y1="0" x2="16" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="var(--logo-3a)"/><stop offset="1" stop-color="var(--logo-3b)"/></linearGradient>
-              <mask id="tmr-mask" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="87.01" height="32">
-                <path d="M6.05 3V8.87H3V9.51H6.05V23.54Q6.05 24.36 6.14 25.31Q6.23 26.27 6.85 27.09Q7.46 27.91 8.76 28.45Q10.06 29 12.43 29Q13.29 29 14.25 28.84Q15.2 28.68 16.05 28.18Q16.89 27.68 17.55 26.75Q18.21 25.81 18.48 24.26L17.8 24.13Q17.62 24.81 17.32 25.54Q17.02 26.27 16.57 26.84Q16.11 27.41 15.5 27.77Q14.88 28.13 14.02 28.13Q13.25 28.13 12.77 27.86Q12.29 27.59 12.04 27.11Q11.79 26.63 11.7 26.04Q11.61 25.45 11.61 24.77V9.51H16.93V8.87H11.61V3Q10.92 3.27 10.22 3.46Q9.51 3.64 8.83 3.64Q8.15 3.64 7.44 3.46Q6.73 3.27 6.05 3ZM20.21 8.87V9.51H23.22V27.77H20.21V28.41H31.46V27.77H28.77V16.66Q28.77 15.52 28.84 14.73Q28.91 13.93 29.07 13.31Q29.23 12.7 29.5 12.22Q29.77 11.74 30.14 11.29Q31.5 9.69 33.33 9.69Q34.37 9.69 35.24 10.49Q36.1 11.29 36.1 13.29V27.77H33.37V28.41H44.35V27.77H41.66V14.34Q41.66 13.11 42.14 12.22Q42.61 11.33 43.3 10.79Q43.98 10.24 44.71 9.97Q45.44 9.69 45.94 9.69Q47.58 9.69 48.28 10.72Q48.99 11.74 48.99 13.65V27.77H46.3V28.41H57.55V27.77H54.54V15.34Q54.54 14.52 54.43 13.34Q54.32 12.15 53.68 11.08Q53.04 10.01 51.63 9.24Q50.22 8.46 47.62 8.46Q47.12 8.46 46.35 8.58Q45.57 8.69 44.71 9.08Q43.84 9.47 43 10.17Q42.16 10.88 41.48 12.11Q41.11 11.47 40.68 10.83Q40.25 10.19 39.54 9.67Q38.84 9.15 37.77 8.81Q36.7 8.46 35.1 8.46Q33.6 8.46 32.53 8.87Q31.46 9.28 30.71 9.85Q29.96 10.42 29.5 11.04Q29.05 11.65 28.77 12.11H28.68V8.87ZM60.65 8.87V9.51H63.61V27.77H60.65V28.41H72.76V27.77H69.16V16.11Q69.16 14.66 69.59 13.5Q70.03 12.33 70.62 11.51Q71.21 10.7 71.89 10.26Q72.58 9.83 73.03 9.83Q73.44 9.83 73.65 9.99Q73.85 10.15 73.94 10.35Q74.03 10.56 74.06 10.74Q74.08 10.92 74.08 10.92Q74.08 10.97 74.03 11.29Q73.99 11.61 73.92 11.99Q73.85 12.38 73.81 12.72Q73.76 13.06 73.76 13.2Q73.76 14.38 74.63 14.82Q75.49 15.25 76.54 15.25Q77.99 15.25 78.65 14.47Q79.32 13.7 79.32 12.33Q79.32 10.51 78.13 9.49Q76.95 8.46 75.04 8.46Q72.76 8.46 71.37 9.72Q69.98 10.97 69.16 12.7H69.07V8.87ZM77.54 25.63Q77.54 26.95 78.5 27.88Q79.45 28.82 80.77 28.82Q82.09 28.82 83.05 27.88Q84.01 26.95 84.01 25.63Q84.01 24.31 83.05 23.35Q82.09 22.4 80.77 22.4Q79.45 22.4 78.5 23.35Q77.54 24.31 77.54 25.63Z" fill="#fff"/>
-              </mask>
-            </defs>
-            <!-- Bands are drawn against a 32-wide box, then stretched over the
-                 mark's real width so the whole wordmark is banded. -->
-            <g mask="url(#tmr-mask)">
-              <g transform="scale(2.7191 1)">
-                <g transform="rotate(-8 16 16)">
-                  <rect x="-20" y="-20" width="80" height="80" fill="url(#tmr1)"/>
-                  <rect x="-4" y="10" width="120" height="120" rx="30" fill="url(#tmr2)"/>
-                  <rect x="-4" y="18" width="120" height="120" rx="30" fill="url(#tmr3)"/>
-                </g>
-              </g>
-            </g>
-          </svg>
-          <span class="site-wordmark">tamir.info</span>
-        </a>
-      </header>
-
-      <!-- Page Title -->
-      <section class="animate-section" aria-labelledby="writing-heading">
-        <a class="post-back-link" href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
-          Home
-        </a>
-        <h1 id="writing-heading" data-scramble="true">Writing</h1>
-        <p class="intro-bio">Thoughts on systems engineering, machine learning, Rust, and distributed systems.</p>
-      </section>
-
-      <!-- Separator -->
-      <hr class="section-separator">
-
-      <!-- Writing List -->
-      <section class="animate-section" data-delay="0.2" aria-label="Blog posts">
-        <div class="writing-list" id="writing-list">
-          <!-- Populated by writing.js -->
-        </div>
-      </section>
-
-      <!-- Footer -->
-      <footer class="site-footer" role="contentinfo">
-        <p>&copy; 2026 Tamir Yirga</p>
-      </footer>
-
-    </div>
-  </div>
-
-  <!-- Dock -->
-  <script>document.addEventListener('DOMContentLoaded', () => createDock('writing'));</script>
-</body>
-</html>
+<meta property="og:type" content="website"><meta property="og:title" content="Writing — Tamir Yirga"><meta property="og:description" content="Engineering notes on inference, distributed storage, data pipelines, and computer vision."><meta property="og:url" content="https://tamir.info/writing.html"><meta property="og:image" content="https://tamir.info/media/social-card.png"><meta property="og:image:alt" content="Tamir Yirga — Projects and engineering notes"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="preload" href="/media/type/instrument-sans-400-normal.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/css/diagrams.css"><link rel="stylesheet" href="/css/style.css"><script src="/js/theme.js"></script><script src="/js/main.js" defer></script>
+</head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header wrap">
+    <a class="wordmark" href="/" aria-label="Tamir Yirga, home">tamir.info</a>
+    <nav class="main-nav" aria-label="Main navigation"><a href="/work.html" >Projects</a><a href="/writing.html" aria-current="page">Writing</a><a href="/about.html" >About</a></nav>
+    <button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5a7.5 7.5 0 0 1 0 15Z" fill="currentColor" stroke="none"/></svg></button>
+  </header><main id="main" tabindex="-1"><header class="page-intro wrap"><h1>Writing</h1><p>Notes on implementation, experiments, and things still in progress.</p></header><section class="wrap writing-index" aria-label="Notes and articles"><div class="notes-list"><article class="note-row"><p class="note-project">InferRS</p><h3><a href="/work/inferrs/notes.html">Memory, quantization, and the unfinished parts</a></h3><p>What is implemented in InferRS, what the component measurements mean, and what remains open.</p></article><article class="note-row"><p class="note-project">LedgerKV</p><h3><a href="/work/ledgerkv/notes.html">Two replication paths and a consistency check</a></h3><p>Raft and quorum replication on the same storage engine, and what a bounded checker can tell us.</p></article><article class="note-row"><p class="note-project">Distributed Ski Tracker</p><h3><a href="/work/ski-tracker/notes.html">Admission control and write batching</a></h3><p>Coordinating a fleet-wide limit, reducing writes, and keeping local and cloud experiments separate.</p></article><article class="note-row"><p class="note-project">AI4HC Pipeline</p><h3><a href="/work/ai4hc/notes.html">Schema and integration notes</a></h3><p>The event contract, database migrations, and integration review in a team project.</p></article><article class="note-row"><p class="note-project">Vision Profiler</p><h3><a href="/work/vision-profiler/notes.html">Measuring asynchronous GPU work</a></h3><p>Warmup, synchronization, and the difference between queuing work and finishing it.</p></article><article class="note-row"><p class="note-project">Object Recognition</p><h3><a href="/work/object-recognition/notes.html">From pixels to feature matching</a></h3><p>Thresholding, region features, and matching in a smaller representation.</p></article></div></section></main><footer class="site-footer wrap" id="contact"><span>Tamir Yirga</span><nav aria-label="Elsewhere"><a href="mailto:tamirkyirga@gmail.com">Email</a><a href="https://github.com/tamirkifle">GitHub</a><a href="https://linkedin.com/in/tamir-yirga">LinkedIn</a></nav></footer></body></html>

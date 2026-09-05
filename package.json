@@ -1,0 +1,23 @@
+{
+  "name": "tamir-info",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs && node scripts/build-check.mjs",
+    "test": "node scripts/browser-check.mjs",
+    "social": "node scripts/social-card.mjs",
+    "format": "prettier --write scripts/*.mjs css/style.css css/diagrams.css js/main.js js/theme.js js/post.js content/**/*.md content/site.json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "marked": "^18.0.11",
+    "prettier": "^3.9.6"
+  }
+}

@@ -1,0 +1,182 @@
+/* Original explanatory SVG illustrations. */
+.art-guides {
+  stroke: var(--line);
+  stroke-width: 1;
+  fill: none;
+}
+.stack-layer {
+  transition: transform 0.45s ease;
+}
+.slab-top {
+  fill: var(--paper);
+  stroke: #788171;
+  stroke-width: 1;
+}
+.slab-side {
+  fill: var(--soft);
+  stroke: #788171;
+  stroke-width: 1;
+}
+.slab-front {
+  fill: var(--memory);
+  stroke: #788171;
+  stroke-width: 1;
+}
+.slab-grid {
+  stroke: #9da58f;
+  stroke-width: 0.5;
+  opacity: 0.5;
+  fill: none;
+}
+.slab-chip {
+  fill: #b7bea5;
+  stroke: #738266;
+  stroke-width: 1;
+}
+.stack-layer.is-active .slab-top {
+  fill: var(--soft);
+}
+.stack-layer.is-active .slab-chip {
+  fill: var(--accent-bright);
+  stroke: var(--accent);
+}
+.stack-layer.is-active .slab-front {
+  fill: #bdc4ad;
+}
+.stack-layer.is-active {
+  transform: translateY(-7px);
+}
+[data-theme="dark"] .stack-layer.is-active .slab-front {
+  fill: #465340;
+}
+.art-callout {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.art-number {
+  fill: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.signal-line {
+  stroke: var(--accent);
+  stroke-width: 1;
+  fill: none;
+}
+.signal-dot {
+  fill: var(--accent-bright);
+}
+.diagram-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  fill: var(--muted);
+}
+.diagram-value {
+  font-family: var(--sans);
+  font-size: 43px;
+  letter-spacing: -0.06em;
+  fill: var(--ink);
+}
+.diagram-unit {
+  font-size: 17px;
+  letter-spacing: 0;
+}
+.diagram-foot {
+  font-family: var(--sans);
+  font-size: 11px;
+  fill: var(--muted);
+}
+.diagram-rule {
+  stroke: var(--muted);
+  stroke-width: 0.6;
+  opacity: 0.3;
+}
+.memory-cell {
+  fill: none;
+  stroke: #8b9281;
+  stroke-width: 0.8;
+}
+.memory-cell.compact {
+  fill: var(--accent-bright);
+  stroke: var(--accent);
+}
+.diagram-arrow {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+.network-lines {
+  stroke: #8b9a95;
+  stroke-width: 1;
+  fill: none;
+}
+.network-orbit {
+  stroke: #86968f;
+  stroke-width: 1;
+  fill: none;
+}
+.network-node {
+  fill: #748376;
+}
+.network-leader {
+  fill: var(--ink);
+}
+.leader-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  fill: var(--paper);
+}
+.pipeline-lines {
+  stroke: #9b9e89;
+  stroke-width: 1;
+  fill: none;
+}
+.pipeline-source {
+  fill: none;
+  stroke: #7d856d;
+  stroke-width: 1;
+}
+.pipeline-tick {
+  stroke: #7d856d;
+  fill: none;
+  stroke-width: 1;
+}
+.pipeline-gate {
+  fill: var(--ink);
+}
+.gate-mark {
+  stroke: var(--paper);
+  stroke-width: 1.5;
+  fill: none;
+}
+.pipeline-event {
+  fill: var(--accent-bright);
+}
+.pipeline-db {
+  fill: none;
+  stroke: #7d856d;
+  stroke-width: 1;
+}
+.chip-detail {
+  stroke: var(--paper);
+  stroke-width: 1.4;
+  fill: none;
+}
+.stack-layer:not(.is-active) .chip-detail {
+  stroke: var(--ink);
+  opacity: 0.45;
+}
+.art-number {
+  font-size: 11px;
+}
+.diagram-label {
+  font-size: 16px;
+  letter-spacing: 0;
+}
+.diagram-foot {
+  font-size: 16px;
+}
+.diagram-unit {
+  font-size: 21px;
+}

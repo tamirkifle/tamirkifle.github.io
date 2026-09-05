@@ -1,3 +1,7 @@
 # Graphik trial builds: licensed for evaluation only, never for the live site.
 # Replace with a purchased webfont kit before committing anything here.
 fonts/
+node_modules/
+.DS_Store
+test-results/
+playwright-report/

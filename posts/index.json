@@ -6,13 +6,14 @@
       "summary": "How I implemented Llama inference from scratch with INT8 quantization and SIMD kernels achieving a 21x decode speedup",
       "date": "2026-06-10",
       "readTime": 1,
-      "featured": true,
-      "public": true,
+      "featured": false,
+      "public": false,
       "tags": [
         "rust",
         "ml",
         "systems"
-      ]
+      ],
+      "project": "inferrs"
     },
     {
       "slug": "distributed-kv-consistency",
@@ -20,13 +21,14 @@
       "summary": "Designing a distributed key-value store with quorum replication and validating it against partition scenarios.",
       "date": "2026-05-20",
       "readTime": 1,
-      "featured": true,
-      "public": true,
+      "featured": false,
+      "public": false,
       "tags": [
         "distributed-systems",
         "java",
         "testing"
-      ]
+      ],
+      "project": "ledgerkv"
     },
     {
       "slug": "spark-time-types-rust",
@@ -34,8 +36,8 @@
       "summary": "A deep dive into bringing temporal data type support to a Rust-based Spark engine with 100% spec parity.",
       "date": "2026-04-15",
       "readTime": 1,
-      "featured": true,
-      "public": true,
+      "featured": false,
+      "public": false,
       "tags": [
         "rust",
         "spark",
