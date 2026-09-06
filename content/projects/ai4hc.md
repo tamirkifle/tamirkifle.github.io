@@ -12,7 +12,7 @@ The schema uses four tables, with JSONB for event shapes that vary. The shared s
 
 I reviewed 14 pull requests at the integration gate and blocked 11 with critical findings, including patient-data cascade deletion and corrupted JSONB. These are review counts, not a performance result.
 
-The extraction consumer, architecture diagrams, and model-selection decision record were teammates' work. No performance measurements were collected for this project.
+The extraction consumer, architecture diagrams, and model-selection decision record were teammates' work. No performance measurements were collected for the pipeline.
 
 ## Source availability
 

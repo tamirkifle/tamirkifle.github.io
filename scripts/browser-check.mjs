@@ -62,6 +62,7 @@ try {
       "/about.html",
       "/work/inferrs.html",
       "/work/inferrs/notes.html",
+      "/work/ledgerkv.html",
     ]) {
       await page.goto(`${base}${route}`);
       await page.evaluate(() => document.fonts.ready);
@@ -88,6 +89,7 @@ try {
       "/about.html",
       "/work/inferrs.html",
       "/work/inferrs/notes.html",
+      "/work/ledgerkv.html",
       "/writing.html",
     ]) {
       await page.goto(`${base}${route}`);
@@ -133,11 +135,118 @@ try {
     await button.click();
     assert.equal(await button.getAttribute("aria-pressed"), "true");
     assert.equal(await page.locator(".stack-layer.is-active").count(), 1);
-    assert.ok(await page.locator(".diagram-caption").innerText());
+    assert.ok(await page.locator(".hero-diagram .diagram-caption").innerText());
   }
   report.interactions.push(
     "All three diagram stages update visual layer, text, and button state",
   );
+  for (const route of ["/", "/work.html", "/work/ledgerkv.html"]) {
+    await page.goto(`${base}${route}`);
+    const network = page.locator(".replication-diagram");
+    const quorum = network.getByRole("button", { name: "Quorum", exact: true });
+    const raft = network.getByRole("button", { name: "Raft", exact: true });
+    await quorum.click();
+    assert.equal(await quorum.getAttribute("aria-pressed"), "true");
+    assert.equal(await raft.getAttribute("aria-pressed"), "false");
+    assert.match(
+      await network.locator("svg").getAttribute("aria-label"),
+      /no elected leader/,
+    );
+    assert.match(
+      await network.locator(".diagram-caption").innerText(),
+      /3 of 5/,
+    );
+    assert.equal(
+      await network.locator('[data-network-mode="raft"]').isVisible(),
+      false,
+    );
+    assert.equal(
+      await network.locator('[data-network-mode="quorum"]').isVisible(),
+      true,
+    );
+    assert.ok(
+      await network.evaluate(
+        (el) => el.getAnimations({ subtree: true }).length > 0,
+      ),
+    );
+    // Interrupt a write in flight, then replay the selected mode.
+    await raft.click();
+    assert.equal(
+      await network
+        .locator('[data-network-mode="quorum"]')
+        .evaluate((el) => el.getAnimations({ subtree: true }).length),
+      0,
+    );
+    await raft.click();
+    assert.match(
+      await network.locator(".diagram-caption").innerText(),
+      /elected leader/,
+    );
+    await page.waitForFunction(
+      () =>
+        document
+          .querySelector(".replication-diagram")
+          .getAnimations({ subtree: true }).length === 0,
+    );
+    assert.equal(
+      await network
+        .locator(".network-packet")
+        .evaluateAll((packets) =>
+          packets.every((packet) => getComputedStyle(packet).opacity === "0"),
+        ),
+      true,
+    );
+  }
+  report.interactions.push(
+    "LedgerKV modes change topology, explain the write, cancel interrupted animations, and settle after replay on all three pages",
+  );
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const network = page.locator(".replication-diagram");
+  await network.getByRole("button", { name: "Quorum", exact: true }).focus();
+  await page.keyboard.press("Enter");
+  assert.equal(
+    await network
+      .getByRole("button", { name: "Quorum", exact: true })
+      .getAttribute("aria-pressed"),
+    "true",
+  );
+  assert.equal(
+    await network.evaluate((el) => el.getAnimations({ subtree: true }).length),
+    0,
+  );
+  assert.match(
+    await network.locator(".diagram-caption").innerText(),
+    /Any node/,
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  report.interactions.push(
+    "Keyboard mode selection works with reduced motion and no animation",
+  );
+  for (const theme of ["light", "dark"]) {
+    await page.evaluate(
+      (value) => localStorage.setItem("tamir-theme", value),
+      theme,
+    );
+    await page.reload();
+    await network.getByRole("button", { name: "Quorum", exact: true }).click();
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .analyze();
+    report.accessibility.push({
+      route: "/work/ledgerkv.html",
+      theme: `${theme}-quorum`,
+      violations: result.violations,
+    });
+    await page.waitForFunction(
+      () =>
+        document
+          .querySelector(".replication-diagram")
+          .getAnimations({ subtree: true }).length === 0,
+    );
+    await network.screenshot({
+      path: `${output}/ledgerkv-quorum-${theme}.png`,
+    });
+  }
   await page.goto(base);
   await page.keyboard.press("Tab");
   assert.equal(
@@ -216,6 +325,18 @@ try {
   assert.equal(await basic.locator(".project-row").count(), 3);
   assert.equal(await basic.getByRole("link", { name: /^InferRS/ }).count(), 1);
   assert.equal(await basic.locator(".theme-toggle").isVisible(), false);
+  assert.equal(
+    await basic.locator(".replication-diagram .diagram-controls").isVisible(),
+    false,
+  );
+  assert.equal(
+    await basic.locator('[data-network-mode="raft"]').isVisible(),
+    true,
+  );
+  assert.equal(
+    await basic.locator('[data-network-mode="quorum"]').isVisible(),
+    false,
+  );
   await basic.getByRole("link", { name: /^InferRS/ }).click();
   assert.equal(await basic.locator("h1").innerText(), "InferRS");
   await basic

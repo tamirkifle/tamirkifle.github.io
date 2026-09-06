@@ -1,6 +1,6 @@
 ## What it measures
 
-Vision Profiler compares ResNet-50, ConvNeXt-Tiny, EfficientNet-B3, and MobileNetV3 through the same GPU benchmarking harness. It was a three-person course project.
+Vision Profiler compares ResNet-50, ConvNeXt-Tiny, EfficientNet-B3, and MobileNetV3 through the same GPU benchmarking harness. A three-person team built it for a course.
 
 ## Waiting for the GPU
 

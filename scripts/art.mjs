@@ -48,6 +48,75 @@ export function stackArt() {
   </svg>`;
 }
 
+export const replicationModes = {
+  raft: {
+    label: "Raft",
+    caption:
+      "The elected leader orders writes in one log. A majority replicates the entry before it commits.",
+    description:
+      "Example Raft write: the client sends to leader 01, which replicates to four followers. Nodes 01, 02, and 03 form the committing majority.",
+  },
+  quorum: {
+    label: "Quorum",
+    caption:
+      "Any node can coordinate. This write completes after 3 of 5 replicas acknowledge, without a shared log order.",
+    description:
+      "Example leaderless write with N = 5 and W = 3: node 02 coordinates replication. Nodes 02, 01, and 03 acknowledge. There is no elected leader.",
+  },
+};
+
+function replicationArt() {
+  const nodes = [
+    [280, 180],
+    [130, 125],
+    [430, 125],
+    [130, 250],
+    [430, 250],
+  ];
+  const paths = {
+    raft: [
+      "M280 84V147",
+      "M249 168L154 137",
+      "M311 168L406 137",
+      "M250 194L154 239",
+      "M310 194L406 239",
+    ],
+    quorum: [
+      "M250 84L154 111",
+      "M153 137L256 168",
+      "M156 125H404",
+      "M130 151V224",
+      "M148 147Q224 268 404 250",
+    ],
+  };
+  return `<svg class="replication-art" viewBox="0 0 560 350" role="img" aria-label="${replicationModes.raft.description}">
+    ${Object.entries(replicationModes)
+      .map(([mode, content]) => {
+        const source = mode === "raft" ? 0 : 1;
+        return `<g data-network-mode="${mode}" data-description="${content.description}" ${mode === "raft" ? "" : "hidden"}>
+      <text class="diagram-label" x="36" y="38">${mode === "raft" ? "RAFT" : "LEADERLESS"}</text><text class="diagram-label" x="524" y="38" text-anchor="end">ONE WRITE</text>
+      <rect class="network-client" x="243" y="58" width="74" height="26" rx="13"/><text class="network-client-text" x="280" y="76" text-anchor="middle">write</text>
+      ${paths[mode].map((path, i) => `<path class="replication-route ${i > 2 ? "route-pending" : "route-confirmed"}" data-path="${i}" d="${path}"/>`).join("")}
+      ${nodes
+        .map(
+          ([x, y], i) => `<g>
+        ${i < 3 ? `<circle class="network-confirmation" ${i === source ? "data-complete" : ""} cx="${x}" cy="${y}" r="${i === source && mode === "raft" ? 39 : 32}"/>` : ""}
+        <circle class="replication-node ${i === source ? (mode === "raft" ? "is-leader" : "is-coordinator") : ""}" cx="${x}" cy="${y}" r="${i === source && mode === "raft" ? 33 : 26}"/>
+        <text class="replication-node-text ${i === source && mode === "raft" ? "is-leader" : ""}" x="${x}" y="${y + 5}" text-anchor="middle">0${i + 1}</text>
+        ${i === source ? `<text class="diagram-label network-role" x="${x}" y="${mode === "raft" ? 240 : 80}" text-anchor="middle">${mode === "raft" ? "LEADER" : "COORDINATOR"}</text>` : ""}
+      </g>`,
+        )
+        .join("")}
+      ${paths[mode].map((_, i) => `<circle class="network-packet" r="4" data-route="${i}" data-phase="${i === 0 ? "request" : "replicate"}"/>`).join("")}
+      ${[1, 2].map((i) => `<circle class="network-packet packet-ack" r="4" data-route="${i}" data-phase="ack"/>`).join("")}
+      <circle class="network-packet packet-ack" r="4" data-route="0" data-phase="reply"/>
+      <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">${mode === "raft" ? "Majority commit · 3 of 5 nodes" : "Example write · N = 5, W = 3"}</text>
+      </g>`;
+      })
+      .join("")}
+  </svg>`;
+}
+
 export function projectArt(type) {
   if (type === "memory")
     return `<svg viewBox="0 0 560 350" role="img" aria-label="Weight storage comparison: f32, 24 gigabytes; INT8, 6.03 gigabytes. A schematic, not a benchmark plot.">
@@ -59,33 +128,16 @@ export function projectArt(type) {
     <text class="diagram-label" x="36" y="275">f32 WEIGHTS</text><text class="diagram-label" x="378" y="275">INT8 WEIGHTS</text>
     <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Same model. A smaller representation.</text>
   </svg>`;
-  if (type === "consensus")
-    return `<svg viewBox="0 0 560 350" role="img" aria-label="A conceptual five-node Raft cluster with a leader connected to four followers.">
-    <text class="diagram-label" x="36" y="38">REPLICATION</text><text class="diagram-label" x="524" y="38" text-anchor="end">FIVE NODES</text>
-    <g class="network-lines"><path d="M280 175 132 107M280 175 428 107M280 175 132 239M280 175 428 239"/></g>
-    ${[
-      [132, 107],
-      [428, 107],
-      [132, 239],
-      [428, 239],
-    ]
-      .map(
-        ([x, y], i) =>
-          `<circle class="network-orbit" cx="${x}" cy="${y}" r="29"/><circle class="network-node" cx="${x}" cy="${y}" r="5"/><text class="diagram-label" x="${x + (x < 280 ? -45 : 45)}" y="${y + 4}" text-anchor="${x < 280 ? "end" : "start"}">0${i + 2}</text>`,
-      )
-      .join("")}
-    <circle class="network-leader" cx="280" cy="175" r="42"/><text class="leader-text" x="280" y="180" text-anchor="middle">01</text>
-    <text class="diagram-label" x="280" y="245" text-anchor="middle">LEADER</text>
-    <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">The Raft path · conceptual topology</text>
-  </svg>`;
+  if (type === "consensus") return replicationArt();
   return `<svg viewBox="0 0 560 350" role="img" aria-label="Event flow from replicas, through admission control and a queue, to batched writes in DynamoDB.">
     <text class="diagram-label" x="36" y="38">EVENT FLOW</text><text class="diagram-label" x="524" y="38" text-anchor="end">SHARED LIMIT</text>
-    <g class="pipeline-lines"><path d="M78 102H148V174H198M78 174H198M78 246H148V174M250 174H350M410 174H475"/></g>
-    ${[102, 174, 246].map((y) => `<rect class="pipeline-source" x="44" y="${y - 17}" width="34" height="34"/><path class="pipeline-tick" d="M56 ${y}h10"/>`).join("")}
-    <rect class="pipeline-gate" x="198" y="135" width="52" height="78" rx="26"/><path class="gate-mark" d="M218 162h13l-13 24h13"/>
-    ${Array.from({ length: 5 }, (_, i) => `<rect class="pipeline-event" x="${287 + i * 17}" y="154" width="10" height="40"/>`).join("")}
-    <rect class="pipeline-db" x="461" y="143" width="52" height="62" rx="3"/><path class="pipeline-tick" d="M471 158h32m-32 14h32m-32 14h32"/>
-    <text class="diagram-label" x="61" y="283" text-anchor="middle">REPLICAS</text><text class="diagram-label" x="224" y="243" text-anchor="middle">ADMIT</text><text class="diagram-label" x="326" y="243" text-anchor="middle">QUEUE</text><text class="diagram-label" x="487" y="243" text-anchor="middle">BATCH</text>
-    <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Control the work before it reaches storage.</text>
+    <g class="pipeline-lines"><path d="M78 114H132V226H78M78 170H190M244 170H290M388 170H462"/><path d="m179 165 5 5-5 5m100-10 5 5-5 5m167-10 5 5-5 5"/></g>
+    ${[114, 170, 226].map((y) => `<rect class="pipeline-source" x="44" y="${y - 17}" width="34" height="34" rx="2"/><path class="pipeline-tick" d="M55 ${y}h12"/>`).join("")}
+    <rect class="pipeline-gate" x="190" y="136" width="54" height="68" rx="27"/><path class="gate-mark" d="M204 154H230L220 171V184L214 188V171Z"/>
+    <rect class="pipeline-queue" x="290" y="134" width="98" height="72" rx="3"/>
+    ${Array.from({ length: 6 }, (_, i) => `<rect class="pipeline-event" x="${302 + i * 13}" y="152" width="9" height="36" rx="1"/>`).join("")}
+    <path class="pipeline-db" d="M462 145V195C462 206 512 206 512 195V145"/><ellipse class="pipeline-db" cx="487" cy="145" rx="25" ry="9"/><path class="pipeline-tick" d="M462 169C462 180 512 180 512 169"/>
+    <text class="diagram-label" x="61" y="272" text-anchor="middle">REPLICAS</text><text class="diagram-label" x="217" y="272" text-anchor="middle">ADMISSION</text><text class="diagram-label" x="339" y="272" text-anchor="middle">QUEUE</text><text class="diagram-label" x="487" y="272" text-anchor="middle">DYNAMODB</text>
+    <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Fleet admission and batched DynamoDB writes.</text>
   </svg>`;
 }

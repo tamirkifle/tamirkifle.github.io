@@ -106,30 +106,67 @@
   stroke: var(--muted);
   stroke-width: 1;
 }
-.network-lines {
-  stroke: #8b9a95;
-  stroke-width: 1;
+.replication-route {
+  stroke: var(--muted);
+  stroke-width: 1.2;
   fill: none;
 }
-.network-orbit {
-  stroke: #86968f;
-  stroke-width: 1;
+.route-confirmed {
+  stroke: var(--accent);
+}
+.route-pending {
+  stroke-dasharray: 4 5;
+  opacity: 0.5;
+}
+.network-confirmation {
+  stroke: var(--accent);
+  stroke-width: 1.2;
   fill: none;
 }
-.network-node {
-  fill: #748376;
+.replication-node {
+  fill: var(--consensus);
+  stroke: var(--muted);
+  stroke-width: 1;
 }
-.network-leader {
+.replication-node.is-leader {
+  fill: var(--ink);
+  stroke: var(--ink);
+}
+.replication-node.is-coordinator {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.replication-node-text {
+  font-family: var(--mono);
+  font-size: 15px;
   fill: var(--ink);
 }
-.leader-text {
-  font-family: var(--mono);
-  font-size: 12px;
+.replication-node-text.is-leader {
   fill: var(--paper);
 }
-.pipeline-lines {
-  stroke: #9b9e89;
+.network-client {
+  fill: var(--consensus);
+  stroke: var(--muted);
   stroke-width: 1;
+}
+.network-client-text {
+  font-family: var(--mono);
+  font-size: 14px;
+  fill: var(--ink);
+}
+.network-packet {
+  fill: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+.packet-ack {
+  fill: var(--accent);
+}
+.pipeline-lines {
+  stroke: #7d856d;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   fill: none;
 }
 .pipeline-source {
@@ -156,7 +193,12 @@
 .pipeline-db {
   fill: none;
   stroke: #7d856d;
-  stroke-width: 1;
+  stroke-width: 1.25;
+}
+.pipeline-queue {
+  fill: var(--pipeline);
+  stroke: #7d856d;
+  stroke-width: 1.25;
 }
 .chip-detail {
   stroke: var(--paper);

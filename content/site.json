@@ -11,7 +11,7 @@
       "year": "2026",
       "title": "Building an inference engine",
       "description": "Building the pieces of Llama inference in Rust: model loading, tensor operations, attention, and quantized matrix kernels.",
-      "scope": "Independent project \u00b7 In development",
+      "scope": "Independent project · In development",
       "stack": "Rust / SIMD / GGUF",
       "repo": "https://github.com/tamirkifle/mini-rust-inference",
       "selected": true,
@@ -23,7 +23,7 @@
       "slug": "ledgerkv",
       "name": "LedgerKV",
       "category": "Distributed systems",
-      "year": "2025\u201326",
+      "year": "2025–26",
       "title": "Building a distributed key-value store",
       "description": "A key-value store with a shared storage engine and two replication paths: Raft and leaderless quorum.",
       "scope": "Independent project",
@@ -38,10 +38,10 @@
       "slug": "ski-tracker",
       "name": "Distributed Ski Tracker",
       "category": "Data infrastructure",
-      "year": "2025\u201326",
+      "year": "2025–26",
       "title": "An event pipeline, from request to storage",
       "description": "Ski lift events move through RabbitMQ into DynamoDB. Fleet-wide admission control keeps replicas within a shared rate limit.",
-      "scope": "Project \u00b7 Cloud and local experiments",
+      "scope": "Project · Cloud and local experiments",
       "stack": "Java / RabbitMQ / Redis / AWS",
       "repo": "https://github.com/tamirkifle/skier-tracking-system",
       "selected": true,
@@ -56,21 +56,21 @@
       "year": "2026",
       "title": "Turning clinical speech into structured records",
       "description": "Schema, migrations, and an event specification for a team building a speech-to-medical-records pipeline.",
-      "scope": "Data lead and integration reviewer \u00b7 Team of 10",
+      "scope": "Data lead and integration reviewer · Team of 10",
       "stack": "PostgreSQL / Python / Spring Boot / AWS",
       "repo": null,
       "selected": false,
       "noteTitle": "Schema and integration notes",
-      "noteSummary": "The event contract, database migrations, and integration review in a team project."
+      "noteSummary": "The event contract, database migrations, and integration review across a team."
     },
     {
       "slug": "vision-profiler",
       "name": "Vision Profiler",
       "category": "ML tooling",
-      "year": "2025\u201326",
+      "year": "2025–26",
       "title": "Measuring vision models on the GPU",
       "description": "A shared benchmarking harness for four PyTorch vision models, with explicit GPU synchronization and warmup passes.",
-      "scope": "Course project \u00b7 Team of three",
+      "scope": "Course project · Team of three",
       "stack": "Python / PyTorch / OpenCV",
       "repo": "https://github.com/tamirkifle/vision-model-profiler",
       "selected": false,
@@ -97,7 +97,7 @@
     {
       "company": "LakeSail",
       "role": "Software Engineer Intern",
-      "date": "Jan \u2014 May 2026",
+      "date": "Jan–May 2026",
       "url": "https://lakesail.com/",
       "description": "Worked on a Rust-native, Spark-compatible query engine: Spark TIME support across the query stack and Arrow-native execution for Python UDFs and UDTFs.",
       "detail": "Built a benchmark suite spanning five ML/AI workloads and four execution paths. The work focused on the boundary between Rust and Python, where serialization can dominate execution."
@@ -105,7 +105,7 @@
     {
       "company": "Canaria",
       "role": "Software Engineer Intern",
-      "date": "Jul \u2014 Sep 2025",
+      "date": "Jul–Sep 2025",
       "url": "https://decanaria.com/",
       "description": "Built a FastAPI text-to-SQL service over a dataset of more than 700 million records, with materialized views for spatial and time-series queries.",
       "detail": "Added dynamic schema context and Redis caching so repeated questions could reuse results without another model call."
@@ -113,7 +113,7 @@
     {
       "company": "Scandiweb",
       "role": "Full Stack Engineer",
-      "date": "May 2022 \u2014 Aug 2024",
+      "date": "May 2022–Aug 2024",
       "url": "https://scandiweb.com/",
       "description": "Worked across eight e-commerce platforms, refactoring legacy services and improving GraphQL endpoints with Redis caching.",
       "detail": "The work covered service migrations and API performance on client platforms."
@@ -121,7 +121,7 @@
     {
       "company": "Endubis Labs",
       "role": "Full Stack Engineer",
-      "date": "Apr 2021 \u2014 May 2022",
+      "date": "Apr 2021–May 2022",
       "url": "https://github.com/Endubis-Solutions/",
       "description": "Built a non-custodial wallet used by more than 7,000 people, with WASM cryptography and batched UTXO filtering for wallet synchronization.",
       "detail": "Worked on the web application and the data synchronization behind it."

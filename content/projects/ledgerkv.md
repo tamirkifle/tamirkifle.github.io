@@ -2,7 +2,7 @@
 
 LedgerKV is a distributed key-value store with two replication modes: Raft for strong consistency and leaderless quorum replication for a different availability tradeoff. Both use the same LSM storage engine, with a write-ahead log, Bloom filters, and compaction.
 
-Keeping storage shared makes the replication behavior the central comparison. The project also includes cluster monitoring and a bounded, Jepsen-style linearizability checker.
+Keeping storage shared makes the replication behavior the central comparison. LedgerKV also includes cluster monitoring and a bounded, Jepsen-style linearizability checker.
 
 ## The useful result was a counterexample
 

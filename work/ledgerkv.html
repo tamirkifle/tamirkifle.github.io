@@ -1,23 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" id="top"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LedgerKV — Building a distributed key-value store</title><meta name="description" content="A key-value store with a shared storage engine and two replication paths: Raft and leaderless quorum."><meta name="theme-color" content="#f5f3ed"><link rel="canonical" href="https://tamir.info/work/ledgerkv.html">
+<title>LedgerKV | Building a distributed key-value store</title><meta name="description" content="A key-value store with a shared storage engine and two replication paths: Raft and leaderless quorum."><meta name="theme-color" content="#f5f3ed"><link rel="canonical" href="https://tamir.info/work/ledgerkv.html">
 
-<meta property="og:type" content="website"><meta property="og:title" content="LedgerKV — Building a distributed key-value store"><meta property="og:description" content="A key-value store with a shared storage engine and two replication paths: Raft and leaderless quorum."><meta property="og:url" content="https://tamir.info/work/ledgerkv.html"><meta property="og:image" content="https://tamir.info/media/social-card.png"><meta property="og:image:alt" content="Tamir Yirga — Projects and engineering notes"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website"><meta property="og:title" content="LedgerKV | Building a distributed key-value store"><meta property="og:description" content="A key-value store with a shared storage engine and two replication paths: Raft and leaderless quorum."><meta property="og:url" content="https://tamir.info/work/ledgerkv.html"><meta property="og:image" content="https://tamir.info/media/social-card.png"><meta property="og:image:alt" content="Tamir Yirga | Engineering notes"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/media/favicon.svg" type="image/svg+xml"><link rel="preload" href="/media/type/instrument-sans-400-normal.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="/css/diagrams.css"><link rel="stylesheet" href="/css/style.css"><script src="/js/theme.js"></script><script src="/js/main.js" defer></script>
 </head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header wrap">
-    <a class="wordmark" href="/" aria-label="Tamir Yirga, home">tamir.info</a>
-    <nav class="main-nav" aria-label="Main navigation"><a href="/work.html" aria-current="page">Projects</a><a href="/writing.html" >Writing</a><a href="/about.html" >About</a></nav>
+    <a class="wordmark" href="/" aria-label="Tamir Yirga, home">ty<span aria-hidden="true">.</span></a>
+    <nav class="main-nav" aria-label="Main navigation"><a href="/writing.html" >Writing</a><a href="/about.html" >About</a></nav>
     <button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5a7.5 7.5 0 0 1 0 15Z" fill="currentColor" stroke="none"/></svg></button>
-  </header><main id="main" tabindex="-1"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Projects</a><span aria-hidden="true">/</span><span>LedgerKV</span></nav><header class="project-intro"><h1>LedgerKV</h1><p class="project-deck">Building a distributed key-value store</p><div class="project-links"><a href="https://github.com/tamirkifle/distributed-kv-database">Source on GitHub <span aria-hidden="true">↗</span></a><span>Java / gRPC / Kubernetes</span></div></header>
+  </header><main id="main" tabindex="-1"><div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Index</a><span aria-hidden="true">/</span><span>LedgerKV</span></nav><header class="project-intro"><h1>LedgerKV</h1><p class="project-deck">Building a distributed key-value store</p><div class="project-links"><a href="https://github.com/tamirkifle/distributed-kv-database">Source on GitHub <span aria-hidden="true">↗</span></a><span>Java / gRPC / Kubernetes</span></div></header>
     <div class="project-overview"><article class="prose"><p>LedgerKV is a distributed key-value store with two replication paths: Raft and leaderless quorum. They share an LSM storage engine, so the replication model can change without replacing the storage underneath it.</p>
-<p>The project includes write-ahead logging, Bloom filters, compaction, cluster monitoring, and a bounded linearizability checker. The checker makes it possible to look for concrete consistency violations in recorded histories.</p>
+<p>LedgerKV includes write-ahead logging, Bloom filters, compaction, cluster monitoring, and a bounded linearizability checker. The checker makes it possible to look for concrete consistency violations in recorded histories.</p>
 <p>The notes cover the implementation and what happened in the tested runs, including the difference between finding a violation and finding no counterexample.</p>
-</article><figure class="overview-visual visual-consensus"><svg viewBox="0 0 560 350" role="img" aria-label="A conceptual five-node Raft cluster with a leader connected to four followers.">
-    <text class="diagram-label" x="36" y="38">REPLICATION</text><text class="diagram-label" x="524" y="38" text-anchor="end">FIVE NODES</text>
-    <g class="network-lines"><path d="M280 175 132 107M280 175 428 107M280 175 132 239M280 175 428 239"/></g>
-    <circle class="network-orbit" cx="132" cy="107" r="29"/><circle class="network-node" cx="132" cy="107" r="5"/><text class="diagram-label" x="87" y="111" text-anchor="end">02</text><circle class="network-orbit" cx="428" cy="107" r="29"/><circle class="network-node" cx="428" cy="107" r="5"/><text class="diagram-label" x="473" y="111" text-anchor="start">03</text><circle class="network-orbit" cx="132" cy="239" r="29"/><circle class="network-node" cx="132" cy="239" r="5"/><text class="diagram-label" x="87" y="243" text-anchor="end">04</text><circle class="network-orbit" cx="428" cy="239" r="29"/><circle class="network-node" cx="428" cy="239" r="5"/><text class="diagram-label" x="473" y="243" text-anchor="start">05</text>
-    <circle class="network-leader" cx="280" cy="175" r="42"/><text class="leader-text" x="280" y="180" text-anchor="middle">01</text>
-    <text class="diagram-label" x="280" y="245" text-anchor="middle">LEADER</text>
-    <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">The Raft path · conceptual topology</text>
-  </svg></figure></div>
+</article><div class="replication-diagram visual-consensus overview-visual"><svg class="replication-art" viewBox="0 0 560 350" role="img" aria-label="Example Raft write: the client sends to leader 01, which replicates to four followers. Nodes 01, 02, and 03 form the committing majority.">
+    <g data-network-mode="raft" data-description="Example Raft write: the client sends to leader 01, which replicates to four followers. Nodes 01, 02, and 03 form the committing majority." >
+      <text class="diagram-label" x="36" y="38">RAFT</text><text class="diagram-label" x="524" y="38" text-anchor="end">ONE WRITE</text>
+      <rect class="network-client" x="243" y="58" width="74" height="26" rx="13"/><text class="network-client-text" x="280" y="76" text-anchor="middle">write</text>
+      <path class="replication-route route-confirmed" data-path="0" d="M280 84V147"/><path class="replication-route route-confirmed" data-path="1" d="M249 168L154 137"/><path class="replication-route route-confirmed" data-path="2" d="M311 168L406 137"/><path class="replication-route route-pending" data-path="3" d="M250 194L154 239"/><path class="replication-route route-pending" data-path="4" d="M310 194L406 239"/>
+      <g>
+        <circle class="network-confirmation" data-complete cx="280" cy="180" r="39"/>
+        <circle class="replication-node is-leader" cx="280" cy="180" r="33"/>
+        <text class="replication-node-text is-leader" x="280" y="185" text-anchor="middle">01</text>
+        <text class="diagram-label network-role" x="280" y="240" text-anchor="middle">LEADER</text>
+      </g><g>
+        <circle class="network-confirmation"  cx="130" cy="125" r="32"/>
+        <circle class="replication-node " cx="130" cy="125" r="26"/>
+        <text class="replication-node-text " x="130" y="130" text-anchor="middle">02</text>
+
+      </g><g>
+        <circle class="network-confirmation"  cx="430" cy="125" r="32"/>
+        <circle class="replication-node " cx="430" cy="125" r="26"/>
+        <text class="replication-node-text " x="430" y="130" text-anchor="middle">03</text>
+
+      </g><g>
+
+        <circle class="replication-node " cx="130" cy="250" r="26"/>
+        <text class="replication-node-text " x="130" y="255" text-anchor="middle">04</text>
+
+      </g><g>
+
+        <circle class="replication-node " cx="430" cy="250" r="26"/>
+        <text class="replication-node-text " x="430" y="255" text-anchor="middle">05</text>
+
+      </g>
+      <circle class="network-packet" r="4" data-route="0" data-phase="request"/><circle class="network-packet" r="4" data-route="1" data-phase="replicate"/><circle class="network-packet" r="4" data-route="2" data-phase="replicate"/><circle class="network-packet" r="4" data-route="3" data-phase="replicate"/><circle class="network-packet" r="4" data-route="4" data-phase="replicate"/>
+      <circle class="network-packet packet-ack" r="4" data-route="1" data-phase="ack"/><circle class="network-packet packet-ack" r="4" data-route="2" data-phase="ack"/>
+      <circle class="network-packet packet-ack" r="4" data-route="0" data-phase="reply"/>
+      <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Majority commit · 3 of 5 nodes</text>
+      </g><g data-network-mode="quorum" data-description="Example leaderless write with N = 5 and W = 3: node 02 coordinates replication. Nodes 02, 01, and 03 acknowledge. There is no elected leader." hidden>
+      <text class="diagram-label" x="36" y="38">LEADERLESS</text><text class="diagram-label" x="524" y="38" text-anchor="end">ONE WRITE</text>
+      <rect class="network-client" x="243" y="58" width="74" height="26" rx="13"/><text class="network-client-text" x="280" y="76" text-anchor="middle">write</text>
+      <path class="replication-route route-confirmed" data-path="0" d="M250 84L154 111"/><path class="replication-route route-confirmed" data-path="1" d="M153 137L256 168"/><path class="replication-route route-confirmed" data-path="2" d="M156 125H404"/><path class="replication-route route-pending" data-path="3" d="M130 151V224"/><path class="replication-route route-pending" data-path="4" d="M148 147Q224 268 404 250"/>
+      <g>
+        <circle class="network-confirmation"  cx="280" cy="180" r="32"/>
+        <circle class="replication-node " cx="280" cy="180" r="26"/>
+        <text class="replication-node-text " x="280" y="185" text-anchor="middle">01</text>
+
+      </g><g>
+        <circle class="network-confirmation" data-complete cx="130" cy="125" r="32"/>
+        <circle class="replication-node is-coordinator" cx="130" cy="125" r="26"/>
+        <text class="replication-node-text " x="130" y="130" text-anchor="middle">02</text>
+        <text class="diagram-label network-role" x="130" y="80" text-anchor="middle">COORDINATOR</text>
+      </g><g>
+        <circle class="network-confirmation"  cx="430" cy="125" r="32"/>
+        <circle class="replication-node " cx="430" cy="125" r="26"/>
+        <text class="replication-node-text " x="430" y="130" text-anchor="middle">03</text>
+
+      </g><g>
+
+        <circle class="replication-node " cx="130" cy="250" r="26"/>
+        <text class="replication-node-text " x="130" y="255" text-anchor="middle">04</text>
+
+      </g><g>
+
+        <circle class="replication-node " cx="430" cy="250" r="26"/>
+        <text class="replication-node-text " x="430" y="255" text-anchor="middle">05</text>
+
+      </g>
+      <circle class="network-packet" r="4" data-route="0" data-phase="request"/><circle class="network-packet" r="4" data-route="1" data-phase="replicate"/><circle class="network-packet" r="4" data-route="2" data-phase="replicate"/><circle class="network-packet" r="4" data-route="3" data-phase="replicate"/><circle class="network-packet" r="4" data-route="4" data-phase="replicate"/>
+      <circle class="network-packet packet-ack" r="4" data-route="1" data-phase="ack"/><circle class="network-packet packet-ack" r="4" data-route="2" data-phase="ack"/>
+      <circle class="network-packet packet-ack" r="4" data-route="0" data-phase="reply"/>
+      <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Example write · N = 5, W = 3</text>
+      </g>
+  </svg><div class="replication-details"><div class="diagram-controls" role="group" aria-label="Compare LedgerKV replication modes" hidden><button type="button" data-mode="raft" data-caption="The elected leader orders writes in one log. A majority replicates the entry before it commits." aria-pressed="true">Raft</button><button type="button" data-mode="quorum" data-caption="Any node can coordinate. This write completes after 3 of 5 replicas acknowledge, without a shared log order." aria-pressed="false">Quorum</button></div><p class="diagram-caption" aria-live="polite">The elected leader orders writes in one log. A majority replicates the entry before it commits.</p></div></div></div>
     <section class="project-notes" id="notes"><h2>Notes & articles</h2><div class="notes-list"><article class="note-row"><h3><a href="/work/ledgerkv/notes.html">Two replication paths and a consistency check</a></h3><p>Raft and quorum replication on the same storage engine, and what a bounded checker can tell us.</p></article></div></section></div></main><footer class="site-footer wrap" id="contact"><span>Tamir Yirga</span><nav aria-label="Elsewhere"><a href="mailto:tamirkyirga@gmail.com">Email</a><a href="https://github.com/tamirkifle">GitHub</a><a href="https://linkedin.com/in/tamir-yirga">LinkedIn</a></nav></footer></body></html>

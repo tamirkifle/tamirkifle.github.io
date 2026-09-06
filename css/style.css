@@ -152,8 +152,14 @@ main:focus {
   border-bottom: 1px solid var(--line);
 }
 .wordmark {
-  font-size: 16px;
-  letter-spacing: -0.03em;
+  font-family: var(--serif);
+  font-size: 45px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  padding-bottom: 6px;
+}
+.wordmark > span {
+  color: var(--accent-bright);
 }
 .main-nav {
   display: flex;
@@ -215,7 +221,7 @@ main:focus {
   border-top: 1px solid var(--line);
   align-items: center;
 }
-.project-copy h3 {
+.project-copy h2 {
   font-size: 33px;
   letter-spacing: -0.04em;
   line-height: 1.15;
@@ -321,6 +327,21 @@ main:focus {
   max-width: 370px;
   line-height: 1.7;
 }
+.replication-diagram {
+  padding-block: 12px 18px;
+}
+.replication-art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.replication-details {
+  margin-inline: 24px;
+}
+.replication-diagram .diagram-caption {
+  max-width: none;
+  min-height: 5.1em;
+}
 .other-projects {
   padding-top: 52px;
   padding-bottom: 30px;
@@ -335,7 +356,7 @@ main:focus {
   border-top: 1px solid var(--line);
   align-items: center;
 }
-.archive-row h3 {
+.archive-row h2 {
   font-size: 19px;
   letter-spacing: -0.025em;
 }
@@ -686,7 +707,7 @@ main:focus {
   .project-row {
     gap: 7%;
   }
-  .project-copy h3 {
+  .project-copy h2 {
     font-size: 30px;
   }
   .project-subtitle {
@@ -716,7 +737,7 @@ main:focus {
     font-size: 12px;
   }
   .wordmark {
-    font-size: 15px;
+    font-size: 39px;
   }
   .introduction {
     padding-block: 49px 51px;
@@ -731,7 +752,7 @@ main:focus {
     gap: 32px;
     padding-block: 34px;
   }
-  .project-copy h3 {
+  .project-copy h2 {
     font-size: 27px;
   }
   .project-subtitle {
@@ -836,7 +857,7 @@ main:focus {
     padding: 3px;
   }
   .wordmark {
-    font-size: 14px;
+    font-size: 37px;
   }
   .introduction {
     padding-block: 43px 43px;
@@ -862,7 +883,7 @@ main:focus {
     gap: 30px;
     padding-block: 31px 36px;
   }
-  .project-copy h3 {
+  .project-copy h2 {
     font-size: 30px;
   }
   .project-subtitle {
@@ -908,7 +929,7 @@ main:focus {
   .archive-row {
     padding-block: 22px;
   }
-  .archive-row h3 {
+  .archive-row h2 {
     font-size: 20px;
   }
   .archive-row p {
