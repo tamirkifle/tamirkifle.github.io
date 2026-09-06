@@ -20,6 +20,8 @@ The diagrams are explanatory schematics, not screenshots, live telemetry, benchm
 
 LedgerKV's interactive replication diagram was checked against its [README](https://github.com/tamirkifle/distributed-kv-database/blob/main/README.md) and [architecture documentation](https://github.com/tamirkifle/distributed-kv-database/blob/main/docs/architecture.md). It contrasts an elected Raft leader and ordered log with per-request coordination and configurable leaderless write quorums. The displayed N = 5, W = 3 configuration is labeled as an example, not a measured run or a claim about defaults. Animation timing is illustrative.
 
+The quorum animation also uses [`LeaderlessKVCluster.write`](https://github.com/tamirkifle/distributed-kv-database/blob/main/src/main/java/com/ledgerkv/cluster/LeaderlessKVCluster.java) as a source: writes fan out concurrently to the key's replicas, and W successful acknowledgements establish success. The current loop can still await the remaining completions or deadline after reaching W, despite the class documentation describing an early return. The illustration ends at quorum attainment and does not animate an immediate client response. Replays vary which three replicas acknowledge first; the coordinator's local replica is eligible but is not automatically counted. Randomness represents illustrative response ordering, not random selection of replication targets or measured latency.
+
 The independent reviewer received an unchanged snapshot and no design direction before the initial critique. Its perspective is simulated, subjective, and limited to presentation; the report makes those limits explicit.
 
 ## Engineering-blog revision

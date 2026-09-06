@@ -59,9 +59,9 @@ export const replicationModes = {
   quorum: {
     label: "Quorum",
     caption:
-      "Any node can coordinate. This write completes after 3 of 5 replicas acknowledge, without a shared log order.",
+      "Any node can coordinate. Write to all 5 replicas; any 3 successful acknowledgements satisfy the write quorum.",
     description:
-      "Example leaderless write with N = 5 and W = 3: node 02 coordinates replication. Nodes 02, 01, and 03 acknowledge. There is no elected leader.",
+      "Example leaderless write with N = 5 and W = 3: node 02 coordinates writes to all five replicas. Nodes 01, 02, and 03 acknowledge, satisfying the write quorum. There is no elected leader.",
   },
 };
 
@@ -93,23 +93,24 @@ function replicationArt() {
     ${Object.entries(replicationModes)
       .map(([mode, content]) => {
         const source = mode === "raft" ? 0 : 1;
-        return `<g data-network-mode="${mode}" data-description="${content.description}" ${mode === "raft" ? "" : "hidden"}>
+        const targets = mode === "raft" ? [0, 2, 3, 4, 5] : [0, 1, 3, 4, 5];
+        return `<g data-network-mode="${mode}" data-acknowledgements="1,2,3" data-description="${content.description}" ${mode === "raft" ? "" : "hidden"}>
       <text class="diagram-label" x="36" y="38">${mode === "raft" ? "RAFT" : "LEADERLESS"}</text><text class="diagram-label" x="524" y="38" text-anchor="end">ONE WRITE</text>
       <rect class="network-client" x="243" y="58" width="74" height="26" rx="13"/><text class="network-client-text" x="280" y="76" text-anchor="middle">write</text>
-      ${paths[mode].map((path, i) => `<path class="replication-route ${i > 2 ? "route-pending" : "route-confirmed"}" data-path="${i}" d="${path}"/>`).join("")}
+      ${paths[mode].map((path, i) => `<path class="replication-route ${i > 2 ? "route-pending" : "route-confirmed"}" data-path="${i}" data-replica="${targets[i]}" d="${path}"/>`).join("")}
       ${nodes
         .map(
           ([x, y], i) => `<g>
-        ${i < 3 ? `<circle class="network-confirmation" ${i === source ? "data-complete" : ""} cx="${x}" cy="${y}" r="${i === source && mode === "raft" ? 39 : 32}"/>` : ""}
-        <circle class="replication-node ${i === source ? (mode === "raft" ? "is-leader" : "is-coordinator") : ""}" cx="${x}" cy="${y}" r="${i === source && mode === "raft" ? 33 : 26}"/>
+        <circle class="network-confirmation" data-node="${i + 1}" ${i < 3 ? "" : "hidden"} cx="${x}" cy="${y}" r="${i === source && mode === "raft" ? 39 : 32}"/>
+        <circle class="replication-node ${i === source ? (mode === "raft" ? "is-leader" : "is-coordinator") : ""}" ${i === source ? "data-complete" : ""} cx="${x}" cy="${y}" r="${i === source && mode === "raft" ? 33 : 26}"/>
         <text class="replication-node-text ${i === source && mode === "raft" ? "is-leader" : ""}" x="${x}" y="${y + 5}" text-anchor="middle">0${i + 1}</text>
         ${i === source ? `<text class="diagram-label network-role" x="${x}" y="${mode === "raft" ? 240 : 80}" text-anchor="middle">${mode === "raft" ? "LEADER" : "COORDINATOR"}</text>` : ""}
       </g>`,
         )
         .join("")}
       ${paths[mode].map((_, i) => `<circle class="network-packet" r="4" data-route="${i}" data-phase="${i === 0 ? "request" : "replicate"}"/>`).join("")}
-      ${[1, 2].map((i) => `<circle class="network-packet packet-ack" r="4" data-route="${i}" data-phase="ack"/>`).join("")}
-      <circle class="network-packet packet-ack" r="4" data-route="0" data-phase="reply"/>
+      ${(mode === "raft" ? [1, 2] : [1, 2, 3, 4]).map((i) => `<circle class="network-packet packet-ack" r="4" data-route="${i}" data-phase="ack"/>`).join("")}
+      ${mode === "raft" ? '<circle class="network-packet packet-ack" r="4" data-route="0" data-phase="reply"/>' : ""}
       <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">${mode === "raft" ? "Majority commit · 3 of 5 nodes" : "Example write · N = 5, W = 3"}</text>
       </g>`;
       })

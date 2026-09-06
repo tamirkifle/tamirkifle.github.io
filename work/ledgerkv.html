@@ -13,33 +13,33 @@
 <p>LedgerKV includes write-ahead logging, Bloom filters, compaction, cluster monitoring, and a bounded linearizability checker. The checker makes it possible to look for concrete consistency violations in recorded histories.</p>
 <p>The notes cover the implementation and what happened in the tested runs, including the difference between finding a violation and finding no counterexample.</p>
 </article><div class="replication-diagram visual-consensus overview-visual"><svg class="replication-art" viewBox="0 0 560 350" role="img" aria-label="Example Raft write: the client sends to leader 01, which replicates to four followers. Nodes 01, 02, and 03 form the committing majority.">
-    <g data-network-mode="raft" data-description="Example Raft write: the client sends to leader 01, which replicates to four followers. Nodes 01, 02, and 03 form the committing majority." >
+    <g data-network-mode="raft" data-acknowledgements="1,2,3" data-description="Example Raft write: the client sends to leader 01, which replicates to four followers. Nodes 01, 02, and 03 form the committing majority." >
       <text class="diagram-label" x="36" y="38">RAFT</text><text class="diagram-label" x="524" y="38" text-anchor="end">ONE WRITE</text>
       <rect class="network-client" x="243" y="58" width="74" height="26" rx="13"/><text class="network-client-text" x="280" y="76" text-anchor="middle">write</text>
-      <path class="replication-route route-confirmed" data-path="0" d="M280 84V147"/><path class="replication-route route-confirmed" data-path="1" d="M249 168L154 137"/><path class="replication-route route-confirmed" data-path="2" d="M311 168L406 137"/><path class="replication-route route-pending" data-path="3" d="M250 194L154 239"/><path class="replication-route route-pending" data-path="4" d="M310 194L406 239"/>
+      <path class="replication-route route-confirmed" data-path="0" data-replica="0" d="M280 84V147"/><path class="replication-route route-confirmed" data-path="1" data-replica="2" d="M249 168L154 137"/><path class="replication-route route-confirmed" data-path="2" data-replica="3" d="M311 168L406 137"/><path class="replication-route route-pending" data-path="3" data-replica="4" d="M250 194L154 239"/><path class="replication-route route-pending" data-path="4" data-replica="5" d="M310 194L406 239"/>
       <g>
-        <circle class="network-confirmation" data-complete cx="280" cy="180" r="39"/>
-        <circle class="replication-node is-leader" cx="280" cy="180" r="33"/>
+        <circle class="network-confirmation" data-node="1"  cx="280" cy="180" r="39"/>
+        <circle class="replication-node is-leader" data-complete cx="280" cy="180" r="33"/>
         <text class="replication-node-text is-leader" x="280" y="185" text-anchor="middle">01</text>
         <text class="diagram-label network-role" x="280" y="240" text-anchor="middle">LEADER</text>
       </g><g>
-        <circle class="network-confirmation"  cx="130" cy="125" r="32"/>
-        <circle class="replication-node " cx="130" cy="125" r="26"/>
+        <circle class="network-confirmation" data-node="2"  cx="130" cy="125" r="32"/>
+        <circle class="replication-node "  cx="130" cy="125" r="26"/>
         <text class="replication-node-text " x="130" y="130" text-anchor="middle">02</text>
 
       </g><g>
-        <circle class="network-confirmation"  cx="430" cy="125" r="32"/>
-        <circle class="replication-node " cx="430" cy="125" r="26"/>
+        <circle class="network-confirmation" data-node="3"  cx="430" cy="125" r="32"/>
+        <circle class="replication-node "  cx="430" cy="125" r="26"/>
         <text class="replication-node-text " x="430" y="130" text-anchor="middle">03</text>
 
       </g><g>
-
-        <circle class="replication-node " cx="130" cy="250" r="26"/>
+        <circle class="network-confirmation" data-node="4" hidden cx="130" cy="250" r="32"/>
+        <circle class="replication-node "  cx="130" cy="250" r="26"/>
         <text class="replication-node-text " x="130" y="255" text-anchor="middle">04</text>
 
       </g><g>
-
-        <circle class="replication-node " cx="430" cy="250" r="26"/>
+        <circle class="network-confirmation" data-node="5" hidden cx="430" cy="250" r="32"/>
+        <circle class="replication-node "  cx="430" cy="250" r="26"/>
         <text class="replication-node-text " x="430" y="255" text-anchor="middle">05</text>
 
       </g>
@@ -47,40 +47,40 @@
       <circle class="network-packet packet-ack" r="4" data-route="1" data-phase="ack"/><circle class="network-packet packet-ack" r="4" data-route="2" data-phase="ack"/>
       <circle class="network-packet packet-ack" r="4" data-route="0" data-phase="reply"/>
       <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Majority commit · 3 of 5 nodes</text>
-      </g><g data-network-mode="quorum" data-description="Example leaderless write with N = 5 and W = 3: node 02 coordinates replication. Nodes 02, 01, and 03 acknowledge. There is no elected leader." hidden>
+      </g><g data-network-mode="quorum" data-acknowledgements="1,2,3" data-description="Example leaderless write with N = 5 and W = 3: node 02 coordinates writes to all five replicas. Nodes 01, 02, and 03 acknowledge, satisfying the write quorum. There is no elected leader." hidden>
       <text class="diagram-label" x="36" y="38">LEADERLESS</text><text class="diagram-label" x="524" y="38" text-anchor="end">ONE WRITE</text>
       <rect class="network-client" x="243" y="58" width="74" height="26" rx="13"/><text class="network-client-text" x="280" y="76" text-anchor="middle">write</text>
-      <path class="replication-route route-confirmed" data-path="0" d="M250 84L154 111"/><path class="replication-route route-confirmed" data-path="1" d="M153 137L256 168"/><path class="replication-route route-confirmed" data-path="2" d="M156 125H404"/><path class="replication-route route-pending" data-path="3" d="M130 151V224"/><path class="replication-route route-pending" data-path="4" d="M148 147Q224 268 404 250"/>
+      <path class="replication-route route-confirmed" data-path="0" data-replica="0" d="M250 84L154 111"/><path class="replication-route route-confirmed" data-path="1" data-replica="1" d="M153 137L256 168"/><path class="replication-route route-confirmed" data-path="2" data-replica="3" d="M156 125H404"/><path class="replication-route route-pending" data-path="3" data-replica="4" d="M130 151V224"/><path class="replication-route route-pending" data-path="4" data-replica="5" d="M148 147Q224 268 404 250"/>
       <g>
-        <circle class="network-confirmation"  cx="280" cy="180" r="32"/>
-        <circle class="replication-node " cx="280" cy="180" r="26"/>
+        <circle class="network-confirmation" data-node="1"  cx="280" cy="180" r="32"/>
+        <circle class="replication-node "  cx="280" cy="180" r="26"/>
         <text class="replication-node-text " x="280" y="185" text-anchor="middle">01</text>
 
       </g><g>
-        <circle class="network-confirmation" data-complete cx="130" cy="125" r="32"/>
-        <circle class="replication-node is-coordinator" cx="130" cy="125" r="26"/>
+        <circle class="network-confirmation" data-node="2"  cx="130" cy="125" r="32"/>
+        <circle class="replication-node is-coordinator" data-complete cx="130" cy="125" r="26"/>
         <text class="replication-node-text " x="130" y="130" text-anchor="middle">02</text>
         <text class="diagram-label network-role" x="130" y="80" text-anchor="middle">COORDINATOR</text>
       </g><g>
-        <circle class="network-confirmation"  cx="430" cy="125" r="32"/>
-        <circle class="replication-node " cx="430" cy="125" r="26"/>
+        <circle class="network-confirmation" data-node="3"  cx="430" cy="125" r="32"/>
+        <circle class="replication-node "  cx="430" cy="125" r="26"/>
         <text class="replication-node-text " x="430" y="130" text-anchor="middle">03</text>
 
       </g><g>
-
-        <circle class="replication-node " cx="130" cy="250" r="26"/>
+        <circle class="network-confirmation" data-node="4" hidden cx="130" cy="250" r="32"/>
+        <circle class="replication-node "  cx="130" cy="250" r="26"/>
         <text class="replication-node-text " x="130" y="255" text-anchor="middle">04</text>
 
       </g><g>
-
-        <circle class="replication-node " cx="430" cy="250" r="26"/>
+        <circle class="network-confirmation" data-node="5" hidden cx="430" cy="250" r="32"/>
+        <circle class="replication-node "  cx="430" cy="250" r="26"/>
         <text class="replication-node-text " x="430" y="255" text-anchor="middle">05</text>
 
       </g>
       <circle class="network-packet" r="4" data-route="0" data-phase="request"/><circle class="network-packet" r="4" data-route="1" data-phase="replicate"/><circle class="network-packet" r="4" data-route="2" data-phase="replicate"/><circle class="network-packet" r="4" data-route="3" data-phase="replicate"/><circle class="network-packet" r="4" data-route="4" data-phase="replicate"/>
-      <circle class="network-packet packet-ack" r="4" data-route="1" data-phase="ack"/><circle class="network-packet packet-ack" r="4" data-route="2" data-phase="ack"/>
-      <circle class="network-packet packet-ack" r="4" data-route="0" data-phase="reply"/>
+      <circle class="network-packet packet-ack" r="4" data-route="1" data-phase="ack"/><circle class="network-packet packet-ack" r="4" data-route="2" data-phase="ack"/><circle class="network-packet packet-ack" r="4" data-route="3" data-phase="ack"/><circle class="network-packet packet-ack" r="4" data-route="4" data-phase="ack"/>
+
       <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Example write · N = 5, W = 3</text>
       </g>
-  </svg><div class="replication-details"><div class="diagram-controls" role="group" aria-label="Compare LedgerKV replication modes" hidden><button type="button" data-mode="raft" data-caption="The elected leader orders writes in one log. A majority replicates the entry before it commits." aria-pressed="true">Raft</button><button type="button" data-mode="quorum" data-caption="Any node can coordinate. This write completes after 3 of 5 replicas acknowledge, without a shared log order." aria-pressed="false">Quorum</button></div><p class="diagram-caption" aria-live="polite">The elected leader orders writes in one log. A majority replicates the entry before it commits.</p></div></div></div>
+  </svg><div class="replication-details"><div class="diagram-controls" role="group" aria-label="Compare LedgerKV replication modes" hidden><button type="button" data-mode="raft" data-caption="The elected leader orders writes in one log. A majority replicates the entry before it commits." aria-pressed="true">Raft</button><button type="button" data-mode="quorum" data-caption="Any node can coordinate. Write to all 5 replicas; any 3 successful acknowledgements satisfy the write quorum." aria-pressed="false">Quorum</button></div><p class="diagram-caption" aria-live="polite">The elected leader orders writes in one log. A majority replicates the entry before it commits.</p></div></div></div>
     <section class="project-notes" id="notes"><h2>Notes & articles</h2><div class="notes-list"><article class="note-row"><h3><a href="/work/ledgerkv/notes.html">Two replication paths and a consistency check</a></h3><p>Raft and quorum replication on the same storage engine, and what a bounded checker can tell us.</p></article></div></section></div></main><footer class="site-footer wrap" id="contact"><span>Tamir Yirga</span><nav aria-label="Elsewhere"><a href="mailto:tamirkyirga@gmail.com">Email</a><a href="https://github.com/tamirkifle">GitHub</a><a href="https://linkedin.com/in/tamir-yirga">LinkedIn</a></nav></footer></body></html>

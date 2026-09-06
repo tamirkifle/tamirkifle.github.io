@@ -70,7 +70,40 @@ document.querySelectorAll(".replication-diagram").forEach((network) => {
     animations.forEach((animation) => animation.cancel());
     animations = [];
   }
-  function playWrite(group) {
+  function chooseQuorum(group) {
+    // Randomize illustrative response order, not which replicas receive the write.
+    const order = [1, 2, 3, 4, 5];
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    const previous = group.dataset.acknowledgements;
+    if (order.slice(0, 3).sort().join(",") === previous) {
+      // Keep consecutive replays visibly different, even if the shuffle repeats.
+      [order[2], order[3]] = [order[3], order[2]];
+    }
+    const responders = order.slice(0, 3);
+    group.dataset.acknowledgements = [...responders].sort().join(",");
+    group.querySelectorAll(".network-confirmation").forEach((ring) => {
+      ring.toggleAttribute(
+        "hidden",
+        !responders.includes(Number(ring.dataset.node)),
+      );
+    });
+    group.querySelectorAll(".replication-route").forEach((path) => {
+      const confirmed =
+        path.dataset.path === "0" ||
+        responders.includes(Number(path.dataset.replica));
+      path.classList.toggle("route-confirmed", confirmed);
+      path.classList.toggle("route-pending", !confirmed);
+    });
+    const labels = responders
+      .map((id) => String(id).padStart(2, "0"))
+      .join(", ");
+    group.dataset.description = `Example leaderless write with N = 5 and W = 3: node 02 coordinates writes to all five replicas. Nodes ${labels} acknowledge first, satisfying the write quorum. There is no elected leader.`;
+    return responders;
+  }
+  function playWrite(group, responders = null) {
     if (reducedMotion.matches) return;
     const phases = {
       request: { delay: 0, duration: 380, reverse: false },
@@ -80,7 +113,13 @@ document.querySelectorAll(".replication-diagram").forEach((network) => {
     };
     group.querySelectorAll(".network-packet").forEach((packet) => {
       const path = group.querySelector(`[data-path="${packet.dataset.route}"]`);
-      const { delay, duration, reverse } = phases[packet.dataset.phase];
+      let { delay, duration, reverse } = phases[packet.dataset.phase];
+      if (responders && packet.dataset.phase === "ack") {
+        const rank = responders.indexOf(Number(path.dataset.replica));
+        if (rank === -1) return;
+        delay = 1020 + rank * 160;
+        duration = 330;
+      }
       const length = path.getTotalLength();
       const frames = Array.from({ length: 33 }, (_, index) => {
         const fraction = index / 32;
@@ -94,12 +133,26 @@ document.querySelectorAll(".replication-diagram").forEach((network) => {
       });
       animations.push(packet.animate(frames, { delay, duration }));
     });
+    if (responders) {
+      responders.forEach((node, rank) => {
+        const ring = group.querySelector(
+          `.network-confirmation[data-node="${node}"]`,
+        );
+        animations.push(
+          ring.animate([{ opacity: 0 }, { opacity: 1 }], {
+            delay: 1350 + rank * 160,
+            duration: 100,
+            fill: "backwards",
+          }),
+        );
+      });
+    }
     animations.push(
       group
         .querySelector("[data-complete]")
         .animate(
           [{ strokeWidth: 1.2 }, { strokeWidth: 4 }, { strokeWidth: 1.2 }],
-          { delay: 1500, duration: 450 },
+          { delay: responders ? 1670 : 1500, duration: 450 },
         ),
     );
   }
@@ -117,10 +170,12 @@ document.querySelectorAll(".replication-diagram").forEach((network) => {
       const active = group.dataset.networkMode === button.dataset.mode;
       group.toggleAttribute("hidden", !active);
       if (active) {
+        const responders =
+          button.dataset.mode === "quorum" ? chooseQuorum(group) : null;
         network
           .querySelector("svg")
           .setAttribute("aria-label", group.dataset.description);
-        playWrite(group);
+        playWrite(group, responders);
       }
     });
     network.querySelector(".diagram-caption").textContent =

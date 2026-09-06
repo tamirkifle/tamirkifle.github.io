@@ -154,7 +154,7 @@ try {
     );
     assert.match(
       await network.locator(".diagram-caption").innerText(),
-      /3 of 5/,
+      /any 3 successful acknowledgements/,
     );
     assert.equal(
       await network.locator('[data-network-mode="raft"]').isVisible(),
@@ -217,6 +217,58 @@ try {
   assert.match(
     await network.locator(".diagram-caption").innerText(),
     /Any node/,
+  );
+  const quorumReplays = await network.evaluate((el) => {
+    const originalRandom = Math.random;
+    let seed = 9347;
+    Math.random = () => {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      return seed / 4294967296;
+    };
+    try {
+      return Array.from({ length: 100 }, () => {
+        el.querySelector('button[data-mode="quorum"]').click();
+        const group = el.querySelector('[data-network-mode="quorum"]');
+        return {
+          acknowledged: [
+            ...group.querySelectorAll(".network-confirmation:not([hidden])"),
+          ].map((ring) => Number(ring.dataset.node)),
+          confirmedPaths: [...group.querySelectorAll(".route-confirmed")]
+            .map((path) => Number(path.dataset.replica))
+            .filter(Boolean)
+            .sort(),
+          writes: group.querySelectorAll('[data-phase="replicate"]').length,
+          description: el.querySelector("svg").getAttribute("aria-label"),
+          animations: el.getAnimations({ subtree: true }).length,
+        };
+      });
+    } finally {
+      Math.random = originalRandom;
+    }
+  });
+  for (const [index, replay] of quorumReplays.entries()) {
+    assert.equal(new Set(replay.acknowledged).size, 3);
+    assert.equal(replay.writes, 4); // Four remote writes plus the coordinator's local replica.
+    assert.equal(replay.animations, 0);
+    assert.deepEqual(
+      replay.confirmedPaths,
+      replay.acknowledged.filter((node) => node !== 2),
+    );
+    for (const node of replay.acknowledged) {
+      assert.ok(replay.description.includes(String(node).padStart(2, "0")));
+    }
+    if (index > 0)
+      assert.notDeepEqual(
+        replay.acknowledged,
+        quorumReplays[index - 1].acknowledged,
+      );
+  }
+  assert.equal(
+    new Set(quorumReplays.map((replay) => replay.acknowledged.join(","))).size,
+    10,
+  );
+  report.interactions.push(
+    "Quorum replays cover every three-of-five combination, including sets without the coordinator, while writes still reach every replica",
   );
   await page.emulateMedia({ reducedMotion: "no-preference" });
   report.interactions.push(
