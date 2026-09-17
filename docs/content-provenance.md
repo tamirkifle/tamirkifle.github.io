@@ -218,7 +218,7 @@ commit. That is still true of the repository, and it was the wrong test. The pap
 MobileNetV3-Large measured 8.51 ms, "achieving 117 images/second throughput". A project can
 produce evidence outside its repository, and a paper is the obvious place to look next.
 
-### The served PDF was recompiled
+### The served PDF was recompiled, and its authors reordered
 
 The supplied PDF printed `[?]` in its introduction, at "fine-tuned for specific tasks". The source
 cites `\cite{transfer_learning}` on line 54 of `conference_101719.tex`, and no `\bibitem` of that
@@ -257,3 +257,12 @@ with canonical orientation".
 A closing paragraph was added, carrying the limit this project has always needed on the site:
 there is no timing code anywhere in the pipeline, so no frame-rate claim is possible. The draft
 made none, and the close now says why none appears.
+
+**Author order.** The served copy lists Tamir Yirga first, then Nihal Sandadi and Lana Sleek. The
+source listed them alphabetically by surname, which is a neutral convention rather than a ranking,
+and the change was made at his request on the grounds that he wrote the paper and most of the
+code. The repository supports the code half: he has 16 of 23 commits in `vision-model-profiler`
+and the largest line delta. This is an unpublished classroom project with no venue record, no
+bibliographic entry and no citation graph, so the reordered copy diverges from nothing except the
+file his coursemates hold. Recorded here because the served PDF is no longer byte-identical to the
+submitted one, and because a reader comparing the two should find the reason rather than guess it.
