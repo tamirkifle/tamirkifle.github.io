@@ -9,10 +9,10 @@
       "name": "Dreaming Up Authors",
       "category": "NLP research",
       "year": "2026",
-      "title": "Factual prevalence and LLM hallucinations",
+      "title": "Factual Prevalence and LLM Hallucinations in Academic Authorship Attribution (EMNLP 2026, Main Conference)",
       "description": "This paper explores why LLMs hallucinate, tracing the robust inverse relationship between hallucination and a fact's prevalence in the model's training data.",
       "scope": "EMNLP 2026 main conference · Second of five authors",
-      "stack": "EMNLP 2026 · Main Conference",
+      "stack": "LLM evaluation / Hidden-state probing",
       "paper": "/media/dreaming-up-authors-emnlp-2026.pdf",
       "selected": true,
       "art": "prevalence"
