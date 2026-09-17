@@ -117,3 +117,41 @@ The InferRS `memory` diagram was relabelled in the same pass. It had asserted "L
 "24 GB f32 → 6.03 GB INT8" — figures from a README the repository no longer has — while the prose
 beside it said larger models are not implemented. It now reads 929 MB f32 against 273 MB Q8_0 on
 Llama-160M, which is the comparison the current README makes.
+
+## 2026-09-17 — InferRS overview replaced, three claims corrected
+
+The author supplied new prose. Its shape, emphasis and most of its wording are kept. Three claims
+did not survive a check against the working tree.
+
+**"Custom hand-written SIMD kernels" is not true, and this is the second place it has appeared.**
+The whole crate has one SIMD-family token in it, and it is a comment recording an absence:
+
+```
+$ grep -rniE 'simd|neon|avx|target_feature|core::arch|std::arch' src benches tests
+benches/kernels.rs:163: // No AVX2 or INT8-intrinsic rung: this machine is aarch64, so an x86 rung
+```
+
+`Cargo.toml` declares `memmap2` and `rayon` and nothing else, and the README states it outright:
+"Splitting the dot product 8 ways drops the decode matmul from 41.56 ms to 1.77 ms. Reading Q8_0
+blocks in place takes it to 0.68 ms. **Neither uses hand-written SIMD.**" The speedup is real and
+large; the mechanism is multi-accumulator scalar code, which is what the overview now names. The
+same claim is in the résumé's InferRS bullet ("parallel ARM NEON/AVX2 SIMD kernels with size-aware
+runtime dispatch") and has been flagged there.
+
+**"Zero-copy memory mapping ... drastically cuts down initialization times" is the exact reading
+`docs/LIMITATIONS.md` warns against.** It says: "The load column measures nothing. `load 0.01s` is
+not a fast load, it is an absent one. The weights are mmapped and untouched at startup, so the page
+faults land in the first forward pass instead." The mapping is real; the saving is not. The
+overview now says the cost moves rather than disappears.
+
+**"A fast, transparent, and highly capable solution for local model inference" overstates the
+range.** Per `docs/LIMITATIONS.md`: no GPU, no server, no batching above 1 outside prefill; F32,
+F16 and Q8_0 only, so most `*-Q4_K_M.gguf` files will not load; the tokenizer needs
+`tokenizer.ggml.scores`, which rules out SmolLM, Qwen, Phi and Llama-3; contexts past 831 tokens
+are untested. The closing sentence now carries those limits, which is also how the other five
+overviews end.
+
+Two register edits came with them: "high-performance" was dropped, and "latency bottlenecks common
+in standard AI deployments" became "dependency weight common in standard AI stacks", because the
+engine does not serve, batch, or run concurrent sessions and should not invite comparison against
+systems that do.
