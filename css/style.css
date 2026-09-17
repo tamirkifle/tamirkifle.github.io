@@ -266,12 +266,6 @@ main:focus {
 .visual-memory {
   background: var(--memory);
 }
-.visual-consensus {
-  background: var(--consensus);
-}
-.visual-pipeline {
-  background: var(--pipeline);
-}
 .hero-diagram {
   padding: 0 5px;
 }
@@ -368,16 +362,6 @@ main:focus {
 .archive-row > span {
   color: var(--muted);
 }
-.latest-writing {
-  padding-bottom: 45px;
-}
-.latest-writing h2 {
-  font-size: 20px;
-}
-.latest-writing .note-row {
-  padding-block: 24px;
-}
-/* Project overviews are short. Their notes have their own reading pages. */
 .page-intro {
   padding-block: 68px 53px;
 }
@@ -495,6 +479,12 @@ main:focus {
   color: var(--muted);
   margin-top: 13px;
 }
+.notes-empty {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-top: 18px;
+}
 .writing-index {
   padding-bottom: 30px;
 }
@@ -527,6 +517,9 @@ main:focus {
   font-size: 12px;
   color: var(--muted);
   margin-bottom: 18px;
+}
+.article-project {
+  margin-bottom: 6px;
 }
 .prose {
   font-size: 17px;

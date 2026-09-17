@@ -1,3 +1,12 @@
+---
+title: Memory, quantization, and the unfinished parts
+summary: What is implemented in InferRS, what the component measurements mean, and what remains open.
+date: 2026-09-05
+projects: [inferrs]
+tags: [rust, inference, quantization]
+published: true
+---
+
 ## What it does
 
 InferRS is an inference engine in development, written in Rust. Its components cover memory-mapped GGUF loading, tensor operations, grouped-query attention, KV caching, sampling, and custom matrix multiplication kernels.

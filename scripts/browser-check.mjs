@@ -18,7 +18,7 @@ const pages = [
   "/work.html",
   "/about.html",
   "/work/inferrs.html",
-  "/work/inferrs/notes.html",
+  "/writing/inferrs-memory-and-quantization.html",
   "/work/ledgerkv.html",
   "/work/ski-tracker.html",
   "/work/ai4hc.html",
@@ -61,7 +61,7 @@ try {
       "/work.html",
       "/about.html",
       "/work/inferrs.html",
-      "/work/inferrs/notes.html",
+      "/writing/inferrs-memory-and-quantization.html",
       "/work/ledgerkv.html",
     ]) {
       await page.goto(`${base}${route}`);
@@ -88,7 +88,7 @@ try {
       "/",
       "/about.html",
       "/work/inferrs.html",
-      "/work/inferrs/notes.html",
+      "/writing/inferrs-memory-and-quantization.html",
       "/work/ledgerkv.html",
       "/writing.html",
     ]) {
@@ -313,6 +313,10 @@ try {
   report.interactions.push(
     "Invalid and unpublished legacy article URLs have a useful fallback",
   );
+  await page.goto(`${base}/post.html?slug=inferrs-memory-and-quantization`);
+  await page.waitForURL(`${base}/writing/inferrs-memory-and-quantization.html`);
+  assert.match(await page.locator("h1").innerText(), /Memory, quantization/);
+  report.interactions.push("Legacy URLs redirect to published writing");
   await page.emulateMedia({ reducedMotion: "reduce" });
   assert.equal(
     await page.evaluate(
@@ -359,7 +363,7 @@ try {
     path: `${output}/about-desktop.png`,
     fullPage: true,
   });
-  await page.goto(`${base}/work/inferrs/notes.html`);
+  await page.goto(`${base}/writing/inferrs-memory-and-quantization.html`);
   await page.screenshot({ path: `${output}/note-desktop.png`, fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: `${output}/note-mobile.png`, fullPage: true });

@@ -1,3 +1,12 @@
+---
+title: Schema and integration notes
+summary: The event contract, database migrations, and integration review across a team.
+date: 2026-09-05
+projects: [ai4hc]
+tags: [postgresql, data-modeling, integration]
+published: true
+---
+
 ## The pipeline
 
 AI4HC takes clinician audio through AWS Transcribe and LLM extraction into structured records in PostgreSQL. It was built by a team of ten.

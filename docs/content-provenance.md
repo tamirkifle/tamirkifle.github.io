@@ -13,7 +13,7 @@ Primary content sources were the original `index.html` at commit `9bcd696` and t
 | Vision Profiler    | Describe the harness and GPU synchronization method without inventing absent benchmark results.                                                                                                      |
 | Object Recognition | Describe the implemented feature-space method; link the existing demonstration without a frame-rate or accuracy claim.                                                                               |
 | Employment         | Use résumé dates and concise descriptions of the work. Avoid unsourced public performance claims where the previous page gave insufficient measurement context.                                      |
-| Writing            | Original bodies were all “Coming soon...”. They remain drafts. New project notes are explicitly project notes, not backdated standalone articles.                                                    |
+| Writing            | Original bodies were all “Coming soon...”. They remain drafts. The six project notes carry their real authoring date, 2026-09-05, and no date was backdated to suggest earlier work.                 |
 | Education          | Keep December 2026 as expected graduation, not a completed degree.                                                                                                                                   |
 
 The diagrams are explanatory schematics, not screenshots, live telemetry, benchmark plots, or an assertion that incomplete components constitute a finished system. Project counts and current homepage selection come from `content/site.json`.
@@ -28,4 +28,6 @@ The independent reviewer received an unchanged snapshot and no design direction 
 
 The user clarified that the site should be an engineering blog, not a presentation selling them as an employee. The final homepage therefore leads with projects and writing. Employment, education, and the résumé remain on About. The role/location eyebrow, colored status dot, hero calls to action, recent-employment strip, and contact sales band were removed.
 
-Each project now has a short overview in `content/overviews/` and a separate technical note sourced from the previously prepared project text. Those notes have no invented publication dates. Future posts can specify a `project` slug; multiple published articles are gathered automatically into that project’s collection. Existing placeholder articles remain unpublished.
+Each project has a short overview in `content/overviews/`. All writing lives in `content/writing/`, one Markdown file per piece, and declares the projects it belongs to in its frontmatter. A project's collection is assembled from that association, so a project can carry several pieces and a piece can span several projects.
+
+The six technical notes were originally served at `work/<project>/notes.html` with no publication date, on the reasoning that a date would have been invented. They are now dated `2026-09-05`, the day they were actually written (commit `d039a51`). That is a recorded fact rather than an invention; the earlier concern was backdating notes to imply older work, which this does not do. The old `work/<project>/notes.html` URLs were dropped rather than redirected. Existing placeholder articles remain unpublished.

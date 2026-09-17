@@ -1,3 +1,12 @@
+---
+title: From pixels to feature matching
+summary: Thresholding, region features, and matching in a smaller representation.
+date: 2026-09-05
+projects: [object-recognition]
+tags: [computer-vision, python]
+published: true
+---
+
 ## From pixels to regions
 
 This C++ pipeline recognizes objects using hand-written vision primitives. It thresholds each frame using ISODATA over a 6.25% pixel sample, segments regions, and estimates orientation using the least central moment.

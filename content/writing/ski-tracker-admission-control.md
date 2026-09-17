@@ -1,3 +1,12 @@
+---
+title: Admission control and write batching
+summary: Coordinating a fleet-wide limit, reducing writes, and keeping local and cloud experiments separate.
+date: 2026-09-05
+projects: [ski-tracker]
+tags: [java, aws, rate-limiting]
+published: true
+---
+
 ## What it does
 
 The system ingests ski lift-ride events through RabbitMQ, stores them in DynamoDB, and serves cached reads through Redis. An admission controller coordinates a rate limit across replicas and sheds load when the queue falls behind.

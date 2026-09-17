@@ -2,10 +2,14 @@ import { readFile, writeFile, mkdir, readdir, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import { stackArt, projectArt, replicationModes } from "./art.mjs";
+import { loadWriting } from "./content.mjs";
 
 process.chdir(fileURLToPath(new URL("..", import.meta.url)));
 const site = JSON.parse(await readFile("content/site.json", "utf8"));
-const postIndex = JSON.parse(await readFile("posts/index.json", "utf8"));
+const { writings, byProject } = await loadWriting(site);
+const projectBySlug = new Map(
+  site.projects.map((project) => [project.slug, project]),
+);
 const escape = (value) =>
   String(value).replace(
     /[&<>"']/g,
@@ -15,27 +19,8 @@ const escape = (value) =>
       ],
   );
 const projectURL = (project) => `/work/${project.slug}.html`;
-const noteURL = (project) => `/work/${project.slug}/notes.html`;
 const selected = site.projects.filter((project) => project.selected);
 const pages = [];
-const published = [];
-for (const post of postIndex.posts.filter((post) => post.public)) {
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(post.slug))
-    throw new Error(`Invalid post slug: ${post.slug}`);
-  if (
-    post.project &&
-    !site.projects.some((project) => project.slug === post.project)
-  )
-    throw new Error(`Unknown project for article: ${post.slug}`);
-  const markdown = await readFile(`posts/${post.slug}.md`, "utf8");
-  if (
-    /^\s*(coming soon[.!…]*|tbd|todo)\s*$/i.test(markdown) ||
-    markdown.trim().length < 100
-  )
-    throw new Error(`Refusing to publish unfinished writing: ${post.slug}`);
-  published.push({ ...post, markdown });
-}
-published.sort((a, b) => b.date.localeCompare(a.date));
 
 function header(active) {
   return `<a class="skip-link" href="#main">Skip to content</a><header class="site-header wrap">
@@ -88,57 +73,43 @@ function replicationDiagram(overview = false) {
       "",
     )}</div><p class="diagram-caption" aria-live="polite">${replicationModes.raft.caption}</p></div></div>`;
 }
-function projectRow(project) {
-  const notes = notesFor(project);
-  return `<article class="project-row"><div class="project-copy"><h2><a href="${projectURL(project)}">${escape(project.name)}<span class="project-subtitle">${escape(project.title)}</span></a></h2><p class="project-description">${escape(project.description)}</p><div class="project-reading"><a class="reading-label" href="${projectURL(project)}#notes">Notes (${notes.length})</a><ul>${notes
-    .slice(0, 3)
+function projectLinks(writing) {
+  return writing.projects
+    .map((slug) => projectBySlug.get(slug))
     .map(
-      (note) =>
-        `<li><a href="${note.url}">${escape(note.title)} <span aria-hidden="true">→</span></a></li>`,
+      (project) =>
+        `<a href="${projectURL(project)}">${escape(project.name)}</a>`,
     )
-    .join(
-      "",
-    )}</ul>${notes.length > 3 ? `<a class="all-notes" href="${projectURL(project)}#notes">All notes</a>` : ""}</div></div>${project.slug === "inferrs" ? inferenceDiagram() : project.art === "consensus" ? replicationDiagram() : `<a class="project-visual visual-${project.art}" href="${projectURL(project)}" aria-label="Read about ${escape(project.name)}">${projectArt(project.art)}</a>`}</article>`;
+    .join(", ");
+}
+function projectRow(project) {
+  const writing = byProject.get(project.slug);
+  return `<article class="project-row"><div class="project-copy"><h2><a href="${projectURL(project)}">${escape(project.name)}<span class="project-subtitle">${escape(project.title)}</span></a></h2><p class="project-description">${escape(project.description)}</p>${
+    writing.length
+      ? `<div class="project-reading"><a class="reading-label" href="${projectURL(project)}#writing">Writing (${writing.length})</a><ul>${writing
+          .slice(0, 3)
+          .map(
+            (item) =>
+              `<li><a href="${item.url}">${escape(item.title)} <span aria-hidden="true">→</span></a></li>`,
+          )
+          .join(
+            "",
+          )}</ul>${writing.length > 3 ? `<a class="all-notes" href="${projectURL(project)}#writing">All writing</a>` : ""}</div>`
+      : ""
+  }</div>${project.slug === "inferrs" ? inferenceDiagram() : project.art === "consensus" ? replicationDiagram() : `<a class="project-visual visual-${project.art}" href="${projectURL(project)}" aria-label="Read about ${escape(project.name)}">${projectArt(project.art)}</a>`}</article>`;
 }
 function archiveRows(projects) {
   return `<div class="archive-list">${projects.map((project) => `<a class="archive-row" href="${projectURL(project)}"><div><h2>${escape(project.name)}</h2><p>${escape(project.title)}</p></div><span aria-hidden="true">→</span></a>`).join("")}</div>`;
 }
-function articleRows(articles) {
-  return `<div class="notes-list">${articles.map((article) => `<article class="note-row">${article.projectName ? `<p class="note-project">${escape(article.projectName)}</p>` : ""}<h3><a href="${article.url}">${escape(article.title)}</a></h3><p>${escape(article.summary)}</p>${article.date ? `<time datetime="${escape(article.date)}">${escape(article.date)}</time>` : ""}</article>`).join("")}</div>`;
+function articleRows(articles, showProjects = true) {
+  return `<div class="notes-list">${articles.map((article) => `<article class="note-row">${showProjects && article.projects.length ? `<p class="note-project">${projectLinks(article)}</p>` : ""}<h3><a href="${article.url}">${escape(article.title)}</a></h3><p>${escape(article.summary)}</p><time datetime="${escape(article.date)}">${escape(article.date)}</time></article>`).join("")}</div>`;
 }
-function notesFor(project) {
-  return [
-    ...published
-      .filter((post) => post.project === project.slug)
-      .map((post) => ({ ...post, url: `/writing/${post.slug}.html` })),
-    {
-      title: project.noteTitle,
-      summary: project.noteSummary,
-      url: noteURL(project),
-    },
-  ];
-}
-const allWriting = [
-  ...published.map((post) => ({
-    ...post,
-    url: `/writing/${post.slug}.html`,
-    projectName: site.projects.find((project) => project.slug === post.project)
-      ?.name,
-  })),
-  ...site.projects.map((project) => ({
-    title: project.noteTitle,
-    summary: project.noteSummary,
-    url: noteURL(project),
-    projectName: project.name,
-  })),
-];
 
 await emit("index.html", {
   title: "Tamir Yirga | Engineering Notes",
   description:
     "Engineering notes on inference engines, distributed systems, and the code behind them.",
   body: `<section class="introduction wrap"><h1>Tamir Yirga</h1><p>Notes on the software I’m building.<br> Mostly inference engines, data systems, and the pieces underneath.</p></section>
-  ${published.length ? `<section class="wrap latest-writing"><h2>Writing</h2>${articleRows(published.slice(0, 3).map((post) => ({ ...post, url: `/writing/${post.slug}.html` })))}</section>` : ""}
   <section class="wrap projects-section" id="projects">${selected.map(projectRow).join("")}<div class="other-projects">${archiveRows(site.projects.filter((project) => !project.selected))}</div></section>`,
 });
 await emit("work.html", {
@@ -154,23 +125,23 @@ for (const project of site.projects) {
     `content/overviews/${project.slug}.md`,
     "utf8",
   );
-  const note = await readFile(`content/projects/${project.slug}.md`, "utf8");
+  const writing = byProject.get(project.slug);
   await emit(`work/${project.slug}.html`, {
     title: `${project.name} | ${project.title}`,
     description: project.description,
     active: "projects",
     body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Index</a><span aria-hidden="true">/</span><span>${escape(project.name)}</span></nav><header class="project-intro"><h1>${escape(project.name)}</h1><p class="project-deck">${escape(project.title)}</p><div class="project-links">${project.repo ? `<a href="${project.repo}">Source on GitHub <span aria-hidden="true">↗</span></a>` : "<span>Private repository</span>"}${project.demo ? `<a href="${project.demo}">Demo video <span aria-hidden="true">↗</span></a>` : ""}<span>${escape(project.stack)}</span></div></header>
     <div class="project-overview"><article class="prose">${marked.parse(overview)}</article>${project.art === "consensus" ? replicationDiagram(true) : project.art ? `<figure class="overview-visual visual-${project.art}">${projectArt(project.art)}</figure>` : ""}</div>
-    <section class="project-notes" id="notes"><h2>Notes & articles</h2>${articleRows(notesFor(project))}</section></div>`,
-  });
-  await mkdir(`work/${project.slug}`, { recursive: true });
-  await emit(`work/${project.slug}/notes.html`, {
-    title: `${project.noteTitle} | ${project.name}`,
-    description: project.noteSummary,
-    active: "writing",
-    body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Index</a><span aria-hidden="true">/</span><a href="${projectURL(project)}">${escape(project.name)}</a><span aria-hidden="true">/</span><span>Notes</span></nav><header class="article-intro"><a class="article-project" href="${projectURL(project)}">${escape(project.name)}</a><h1>${escape(project.noteTitle)}</h1><p>${escape(project.noteSummary)}</p></header><article class="prose article-body">${marked.parse(note)}</article><div class="article-return"><a href="${projectURL(project)}">More from ${escape(project.name)} <span aria-hidden="true">→</span></a></div></div>`,
+    <section class="project-notes" id="writing"><h2>Writing</h2>${writing.length ? articleRows(writing, false) : `<p class="notes-empty">Nothing written about ${escape(project.name)} yet.</p>`}</section></div>`,
   });
 }
+// Remove project pages and directories left behind by earlier builds.
+for (const entry of await readdir("work", { withFileTypes: true }))
+  if (
+    !entry.isFile() ||
+    !site.projects.some((project) => `${project.slug}.html` === entry.name)
+  )
+    await rm(`work/${entry.name}`, { recursive: true, force: true });
 function experienceRows() {
   return `<div class="experience-list">${site.experience.map((experience) => `<article class="experience-row"><p class="experience-date">${escape(experience.date)}</p><div><h3><a href="${experience.url}">${escape(experience.company)}</a></h3><p class="experience-role">${escape(experience.role)}</p><p>${escape(experience.description)}</p></div></article>`).join("")}</div>`;
 }
@@ -187,18 +158,25 @@ await mkdir("writing", { recursive: true });
 for (const file of await readdir("writing"))
   if (
     file.endsWith(".html") &&
-    !published.some((post) => `${post.slug}.html` === file)
+    !writings.some((writing) => `${writing.slug}.html` === file)
   )
     await rm(`writing/${file}`);
-for (const post of published) {
-  const project = site.projects.find(
-    (project) => project.slug === post.project,
-  );
-  await emit(`writing/${post.slug}.html`, {
-    title: `${post.title} | Tamir Yirga`,
-    description: post.summary,
+for (const writing of writings) {
+  await emit(`writing/${writing.slug}.html`, {
+    title: `${writing.title} | Tamir Yirga`,
+    description: writing.summary,
     active: "writing",
-    body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/writing.html">Writing</a>${project ? `<span aria-hidden="true">/</span><a href="${projectURL(project)}">${escape(project.name)}</a>` : ""}</nav><header class="article-intro"><time datetime="${escape(post.date)}">${escape(post.date)}</time><h1>${escape(post.title)}</h1><p>${escape(post.summary)}</p></header><article class="prose article-body">${marked.parse(post.markdown)}</article><div class="article-return"><a href="${project ? projectURL(project) : "/writing.html"}">${project ? `More from ${escape(project.name)}` : "All writing"} <span aria-hidden="true">→</span></a></div></div>`,
+    body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/writing.html">Writing</a></nav><header class="article-intro">${writing.projects.length ? `<p class="article-project">${projectLinks(writing)}</p>` : ""}<time datetime="${escape(writing.date)}">${escape(writing.date)}</time><h1>${escape(writing.title)}</h1><p>${escape(writing.summary)}</p></header><article class="prose article-body">${marked.parse(writing.markdown)}</article><div class="article-return">${
+      writing.projects.length
+        ? writing.projects
+            .map((slug) => projectBySlug.get(slug))
+            .map(
+              (project) =>
+                `<a href="${projectURL(project)}">More from ${escape(project.name)} <span aria-hidden="true">→</span></a>`,
+            )
+            .join("")
+        : `<a href="/writing.html">All writing <span aria-hidden="true">→</span></a>`
+    }</div></div>`,
   });
 }
 await emit("writing.html", {
@@ -206,13 +184,13 @@ await emit("writing.html", {
   description:
     "Engineering notes on inference, distributed storage, data pipelines, and computer vision.",
   active: "writing",
-  body: `<header class="page-intro wrap"><h1>Writing</h1><p>Notes on implementation, experiments, and things still in progress.</p></header><section class="wrap writing-index" aria-label="Notes and articles">${articleRows(allWriting)}</section>`,
+  body: `<header class="page-intro wrap"><h1>Writing</h1><p>Notes on implementation, experiments, and things still in progress.</p></header><section class="wrap writing-index" aria-label="Notes and articles">${articleRows(writings)}</section>`,
 });
 await emit("post.html", {
   title: "Article unavailable | Tamir Yirga",
   description: "This article is not published. Browse the engineering notes.",
   noindex: true,
-  body: `<section class="page-intro wrap"><h1>This article isn’t published.</h1><p>The old link pointed to an unfinished draft. <a href="/writing.html">Browse the published notes.</a></p></section><script src="/js/post.js" defer></script>`,
+  body: `<section class="page-intro wrap"><h1>This article isn’t published.</h1><p>The old link pointed to an unfinished draft. <a href="/writing.html">Browse the published notes.</a></p></section><script type="application/json" id="published-writing">${JSON.stringify(writings.map((writing) => writing.slug))}</script><script src="/js/post.js" defer></script>`,
 });
 await emit("404.html", {
   title: "Page not found | Tamir Yirga",
@@ -229,5 +207,5 @@ await writeFile(
   "User-agent: *\nAllow: /\nDisallow: /admin.html\nSitemap: https://tamir.info/sitemap.xml\n",
 );
 console.log(
-  `Built ${pages.length} indexed pages, including ${site.projects.length} project notes and ${published.length} standalone articles.`,
+  `Built ${pages.length} indexed pages: ${site.projects.length} projects and ${writings.length} published writings.`,
 );

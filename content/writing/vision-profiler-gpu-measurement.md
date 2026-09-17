@@ -1,3 +1,12 @@
+---
+title: Measuring asynchronous GPU work
+summary: Warmup, synchronization, and the difference between queuing work and finishing it.
+date: 2026-09-05
+projects: [vision-profiler]
+tags: [python, pytorch, benchmarking]
+published: true
+---
+
 ## What it measures
 
 Vision Profiler compares ResNet-50, ConvNeXt-Tiny, EfficientNet-B3, and MobileNetV3 through the same GPU benchmarking harness. A three-person team built it for a course.

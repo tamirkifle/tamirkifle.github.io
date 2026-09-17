@@ -1,3 +1,12 @@
+---
+title: Two replication paths and a consistency check
+summary: Raft and quorum replication on the same storage engine, and what a bounded checker can tell us.
+date: 2026-09-05
+projects: [ledgerkv]
+tags: [distributed-systems, java, replication]
+published: true
+---
+
 ## What it does
 
 LedgerKV is a distributed key-value store with two replication modes: Raft for strong consistency and leaderless quorum replication for a different availability tradeoff. Both use the same LSM storage engine, with a write-ahead log, Bloom filters, and compaction.

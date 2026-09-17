@@ -1,6 +1,6 @@
 import { readFile, stat, readdir } from "node:fs/promises";
-import path from "node:path";
 import assert from "node:assert/strict";
+import { loadWriting } from "./content.mjs";
 
 const files = [
   "index.html",
@@ -51,17 +51,18 @@ for (const file of files) {
     `${file}: placeholder leaked into public page`,
   );
 }
-const index = JSON.parse(await readFile("posts/index.json", "utf8"));
-for (const post of index.posts.filter((p) => !p.public)) {
-  assert.ok(
-    !(await readFile("writing.html", "utf8")).includes(post.title),
-    `Draft appears in writing list: ${post.slug}`,
-  );
-  assert.ok(
-    !(await readFile("index.html", "utf8")).includes(post.title),
-    `Draft appears on home: ${post.slug}`,
-  );
-}
+const site = JSON.parse(await readFile("content/site.json", "utf8"));
+const { drafts } = await loadWriting(site);
+for (const draft of drafts)
+  for (const page of [
+    "writing.html",
+    "index.html",
+    ...site.projects.map((project) => `work/${project.slug}.html`),
+  ])
+    assert.ok(
+      !(await readFile(page, "utf8")).includes(draft.title),
+      `Draft appears on ${page}: ${draft.slug}`,
+    );
 assert.equal((await readFile("CNAME", "utf8")).trim(), "tamir.info");
 console.log(
   `Checked ${files.length} pages and ${checkedLinks} local links/assets/anchors. Draft visibility and domain preserved.`,
