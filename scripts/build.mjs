@@ -97,6 +97,20 @@ function projectArtefacts(project) {
     .filter(Boolean)
     .join("");
 }
+// youtu.be/<id> and youtube.com/watch?v=<id> are the two forms in site.json.
+// Anything else returns null and simply renders no embed.
+function youTubeId(url) {
+  if (!url) return null;
+  const link = new URL(url);
+  if (link.hostname.endsWith("youtu.be")) return link.pathname.slice(1) || null;
+  if (link.hostname.endsWith("youtube.com")) return link.searchParams.get("v");
+  return null;
+}
+function demoEmbed(project) {
+  const id = youTubeId(project.demo);
+  if (!id) return "";
+  return `<section class="project-demo"><h2>Demo</h2><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${escape(id)}" title="${escape(project.name)}: recorded demonstration" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></section>`;
+}
 function projectRow(project) {
   const writing = byProject.get(project.slug);
   return `<article class="project-row"><div class="project-copy"><h2><a href="${projectURL(project)}">${escape(project.name)}<span class="project-subtitle">${escape(project.title)}</span></a></h2><p class="project-description">${escape(project.description)}</p>${
@@ -147,7 +161,7 @@ for (const project of site.projects) {
     active: "projects",
     body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Work</a><span aria-hidden="true">/</span><span>${escape(project.name)}</span></nav><header class="project-intro"><h1>${escape(project.name)}</h1><p class="project-deck">${escape(project.title)}</p><div class="project-links">${projectArtefacts(project)}<span>${escape(project.stack)}</span></div></header>
     <div class="project-overview"><article class="prose">${marked.parse(overview)}</article>${project.art === "consensus" ? replicationDiagram(true) : project.art ? `<figure class="overview-visual visual-${project.art}">${projectArt(project.art)}</figure>` : ""}</div>
-    ${writing.length ? `<section class="project-notes" id="writing"><h2>Writing</h2>${articleRows(writing, false)}</section>` : ""}</div>`,
+    ${writing.length ? `<section class="project-notes" id="writing"><h2>Writing</h2>${articleRows(writing, false)}</section>` : ""}${demoEmbed(project)}</div>`,
   });
 }
 // Remove project pages and directories left behind by earlier builds.

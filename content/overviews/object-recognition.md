@@ -2,4 +2,4 @@ This C++ and OpenCV project is a real-time object recognition system featuring a
 
 The pipeline evaluates objects through two independent methods. The baseline classifier extracts seven rotation and scale invariant geometric features, such as Hu moments and compactness, to identify items by shape. Simultaneously, an appearance-based PCA eigenspace classifier processes isolated object regions, enabling dynamic, one-shot learning from a single example image without model retraining.
 
-Built for rigorous evaluation, the framework includes a custom unified GUI for interactive video processing and database management. It also features an automated batch mode that applies four-way rotation augmentation and background removal to improve classification accuracy across both methods.
+The framework includes a custom unified GUI for interactive video processing and database management. It also features an automated batch mode that applies four-way rotation augmentation and background removal to improve classification accuracy across both methods.
