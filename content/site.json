@@ -25,7 +25,7 @@
       "title": "Building an inference engine",
       "description": "The pieces of Llama inference in Rust: model loading, tensor operations, attention, and quantized matrix kernels. It runs small Q8_0 models on the CPU.",
       "scope": "Independent project · Small models, CPU only",
-      "stack": "Rust / GGUF / Q8_0",
+      "stack": "Rust / Low-level systems / Quantization",
       "repo": "https://github.com/tamirkifle/mini-rust-inference",
       "selected": true,
       "art": "memory"
