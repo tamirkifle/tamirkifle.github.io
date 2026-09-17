@@ -103,11 +103,14 @@ Sourced entirely from the accepted camera-ready, served at
   others it is a schematic, and its `aria-label` says so; only its two end figures are claims. Its
   axis is labelled by training-data prevalence, which is the quantity the paper is about, and its
   footer names citation count as the proxy, so the diagram does not imply prevalence was measured.
-- The prose was drafted by Claude Opus 4.6 through `agy`, given the five existing overviews as the
-  house voice and a fixed fact list. Every figure in the result was then re-checked against the
-  camera-ready. Two edits followed: the multiple-choice result is 79% _chance-corrected_ accuracy,
-  a qualifier the draft dropped, and the proxy caveat appeared twice, so the opening mention was
-  cut and the closing one kept.
+- The prose is the author's own, checked against the camera-ready and corrected in two places.
+  "Models failed over 98% of the time" named the wrong kind of quantity: HR2 is a continuous
+  Jaccard error rate over author names, not a count of failed attempts, so it now reads
+  "hallucination rates exceeded 98%". And the multiple-choice recognition experiment in Section 6
+  used GPT-4o alone on the 9,108 papers, not the three behavioural models, so the plural "Models
+  successfully recognized" is now singular and named. "Landmark publications" became "the
+  most-cited publications", since the bins are citation counts and landmark status is not a
+  category the dataset has.
 
 The InferRS `memory` diagram was relabelled in the same pass. It had asserted "LLAMA–7B" and
 "24 GB f32 → 6.03 GB INT8" — figures from a README the repository no longer has — while the prose
