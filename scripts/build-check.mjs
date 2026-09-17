@@ -198,10 +198,10 @@ try {
   );
   assert.ok(!sibling.includes("Second note"));
   assert.ok(
-    (await readFile(join(fixture, "work/ai4hc.html"), "utf8")).includes(
-      "Nothing written about",
+    !(await readFile(join(fixture, "work/ai4hc.html"), "utf8")).includes(
+      'id="writing"',
     ),
-    "a project with no writing says so",
+    "a project with no writing drops the section rather than showing an empty one",
   );
 
   // Old note directories from earlier builds are cleaned up, not left to rot.

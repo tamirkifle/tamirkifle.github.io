@@ -147,7 +147,7 @@ for (const project of site.projects) {
     active: "projects",
     body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Work</a><span aria-hidden="true">/</span><span>${escape(project.name)}</span></nav><header class="project-intro"><h1>${escape(project.name)}</h1><p class="project-deck">${escape(project.title)}</p><div class="project-links">${projectArtefacts(project)}<span>${escape(project.stack)}</span></div></header>
     <div class="project-overview"><article class="prose">${marked.parse(overview)}</article>${project.art === "consensus" ? replicationDiagram(true) : project.art ? `<figure class="overview-visual visual-${project.art}">${projectArt(project.art)}</figure>` : ""}</div>
-    <section class="project-notes" id="writing"><h2>Writing</h2>${writing.length ? articleRows(writing, false) : `<p class="notes-empty">Nothing written about ${escape(project.name)} yet.</p>`}</section></div>`,
+    ${writing.length ? `<section class="project-notes" id="writing"><h2>Writing</h2>${articleRows(writing, false)}</section>` : ""}</div>`,
   });
 }
 // Remove project pages and directories left behind by earlier builds.

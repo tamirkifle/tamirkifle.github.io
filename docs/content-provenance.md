@@ -14,7 +14,7 @@ Primary content sources were the original `index.html` at commit `9bcd696` and t
 | Vision Profiler     | Describe the harness and GPU synchronization method without inventing absent benchmark results.                                                                                             |
 | Object Recognition  | Describe the implemented feature-space method; link the existing demonstration without a frame-rate or accuracy claim.                                                                      |
 | Employment          | Use résumé dates and concise descriptions of the work. Avoid unsourced public performance claims where the previous page gave insufficient measurement context.                             |
-| Writing             | Nothing is published. Every file in `content/writing/` carries `published: false`, so the writing index and each project's collection render an empty state.                                |
+| Writing             | Nothing is published. Every file in `content/writing/` carries `published: false`, so project pages drop their Writing section entirely and the writing index says so.                      |
 | Education           | Keep December 2026 as expected graduation, not a completed degree.                                                                                                                          |
 
 The diagrams are explanatory schematics, not screenshots, live telemetry, benchmark plots, or an assertion that incomplete components constitute a finished system. Project counts and current homepage selection come from `content/site.json`.

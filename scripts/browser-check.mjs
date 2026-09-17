@@ -431,10 +431,8 @@ try {
       inferrsWriting[0].title,
     );
   } else {
-    assert.match(
-      await basic.locator(".notes-empty").innerText(),
-      /Nothing written about InferRS/,
-    );
+    // With nothing published the section is dropped, not left empty.
+    assert.equal(await basic.locator("#writing").count(), 0);
   }
   report.interactions.push(
     "Content and navigation work with JavaScript disabled",
