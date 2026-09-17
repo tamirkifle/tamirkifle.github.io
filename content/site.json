@@ -86,7 +86,7 @@
       "name": "C++ Vision Pipeline",
       "category": "Computer vision",
       "year": "2025",
-      "title": "Classical object recognition through shape and geometry",
+      "title": "Real-time object recognition and PCA eigenspace learning",
       "description": "A C++ vision pipeline with hand-written thresholding, segmentation, region features, and principal component matching.",
       "scope": "Computer vision project",
       "stack": "C++ / OpenCV",
