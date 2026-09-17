@@ -120,16 +120,31 @@ function replicationArt() {
 
 export function projectArt(type) {
   if (type === "memory")
-    return `<svg viewBox="0 0 560 350" role="img" aria-label="Weight storage comparison: f32, 24 gigabytes; INT8, 6.03 gigabytes. A schematic, not a benchmark plot.">
-    <text class="diagram-label" x="36" y="38">WEIGHT STORAGE</text><text class="diagram-label" x="524" y="38" text-anchor="end">LLAMA–7B</text>
+    return `<svg viewBox="0 0 560 350" role="img" aria-label="Weight storage comparison: f32, 929 megabytes; Q8_0, 273 megabytes. A schematic, not a benchmark plot.">
+    <text class="diagram-label" x="36" y="38">WEIGHT STORAGE</text><text class="diagram-label" x="524" y="38" text-anchor="end">LLAMA–160M</text>
     ${Array.from({ length: 4 }, (_, row) => Array.from({ length: 8 }, (_, col) => `<rect class="memory-cell" x="${36 + col * 28}" y="${77 + row * 28}" width="22" height="22"/>`).join("")).join("")}
     ${Array.from({ length: 4 }, (_, row) => Array.from({ length: 2 }, (_, col) => `<rect class="memory-cell compact" x="${378 + col * 28}" y="${77 + row * 28}" width="22" height="22"/>`).join("")).join("")}
     <path class="diagram-arrow" d="M293 128h42m-8-8 8 8-8 8"/>
-    <text class="diagram-value" x="36" y="246">24 <tspan class="diagram-unit">GB</tspan></text><text class="diagram-value" x="370" y="246">6.03 <tspan class="diagram-unit">GB</tspan></text>
-    <text class="diagram-label" x="36" y="275">f32 WEIGHTS</text><text class="diagram-label" x="378" y="275">INT8 WEIGHTS</text>
+    <text class="diagram-value" x="36" y="246">929 <tspan class="diagram-unit">MB</tspan></text><text class="diagram-value" x="370" y="246">273 <tspan class="diagram-unit">MB</tspan></text>
+    <text class="diagram-label" x="36" y="275">f32 WEIGHTS</text><text class="diagram-label" x="378" y="275">Q8_0 WEIGHTS</text>
     <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Same model. A smaller representation.</text>
   </svg>`;
   if (type === "consensus") return replicationArt();
+  if (type === "prevalence") {
+    // Thirteen citation bins, tracing the shape of the measured curve rather
+    // than any one model's numbers. The two figures are the paper's own.
+    const rates = [
+      0.98, 0.98, 0.97, 0.96, 0.95, 0.93, 0.9, 0.86, 0.8, 0.71, 0.6, 0.48, 0.37,
+    ];
+    return `<svg viewBox="0 0 560 350" role="img" aria-label="Hallucination rate falling across thirteen citation bins, from above 98 percent for rarely cited papers to below 37 percent for highly cited ones. A schematic, not a benchmark plot.">
+    <text class="diagram-label" x="36" y="38">HALLUCINATION RATE</text><text class="diagram-label" x="524" y="38" text-anchor="end">BY CITATION COUNT</text>
+    ${rates.map((rate, i) => `<rect class="prevalence-bar${i === rates.length - 1 ? " is-low" : ""}" x="${(36 + i * 38.33).toFixed(1)}" y="${(200 - rate * 130).toFixed(1)}" width="28" height="${(rate * 130).toFixed(1)}" rx="1"/>`).join("")}
+    <path class="diagram-rule" d="M36 200H524"/>
+    <text class="diagram-value" x="36" y="246">98<tspan class="diagram-unit">%</tspan></text><text class="diagram-value" x="524" y="246" text-anchor="end">37<tspan class="diagram-unit">%</tspan></text>
+    <text class="diagram-label" x="36" y="275">0\u20132 CITATIONS</text><text class="diagram-label" x="524" y="275" text-anchor="end">4097+ CITATIONS</text>
+    <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">More citations, fewer invented authors.</text>
+  </svg>`;
+  }
   return `<svg viewBox="0 0 560 350" role="img" aria-label="Event flow from replicas, through admission control and a queue, to batched writes in DynamoDB.">
     <text class="diagram-label" x="36" y="38">EVENT FLOW</text><text class="diagram-label" x="524" y="38" text-anchor="end">SHARED LIMIT</text>
     <g class="pipeline-lines"><path d="M78 114H132V226H78M78 170H190M244 170H290M388 170H462"/><path d="m179 165 5 5-5 5m100-10 5 5-5 5m167-10 5 5-5 5"/></g>

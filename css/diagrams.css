@@ -222,3 +222,12 @@
 .diagram-unit {
   font-size: 21px;
 }
+.prevalence-bar {
+  fill: var(--pipeline);
+  stroke: #7d856d;
+  stroke-width: 0.8;
+}
+.prevalence-bar.is-low {
+  fill: var(--accent-bright);
+  stroke: var(--accent);
+}

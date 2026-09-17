@@ -5,6 +5,19 @@
   "linkedin": "https://linkedin.com/in/tamir-yirga",
   "projects": [
     {
+      "slug": "authorship-hallucinations",
+      "name": "Dreaming Up Authors",
+      "category": "NLP research",
+      "year": "2026",
+      "title": "Factual prevalence and LLM hallucinations",
+      "description": "Why language models invent author names for papers they were rarely trained on. Citation count stands in for how often a fact appears in training data.",
+      "scope": "EMNLP 2026 main conference · Second of five authors",
+      "stack": "EMNLP 2026 · Main Conference",
+      "paper": "/media/dreaming-up-authors-emnlp-2026.pdf",
+      "selected": true,
+      "art": "prevalence"
+    },
+    {
       "slug": "inferrs",
       "name": "InferRS",
       "category": "Inference systems",
@@ -13,7 +26,7 @@
       "description": "The pieces of Llama inference in Rust: model loading, tensor operations, attention, and quantized matrix kernels. It runs small Q8_0 models on the CPU.",
       "scope": "Independent project · Small models, CPU only",
       "stack": "Rust / GGUF / Q8_0",
-      "repo": "https://github.com/tamirkifle/inferrs",
+      "repo": "https://github.com/tamirkifle/mini-rust-inference",
       "selected": true,
       "art": "memory"
     },
@@ -39,7 +52,7 @@
       "description": "Ski lift events move through RabbitMQ into DynamoDB. Fleet-wide admission control keeps replicas within a shared rate limit.",
       "scope": "Independent project · Synthetic workload, local stack",
       "stack": "Java / Spring Boot / RabbitMQ / DynamoDB",
-      "repo": "https://github.com/tamirkifle/liftline",
+      "repo": "https://github.com/tamirkifle/skier-tracking-system",
       "selected": true,
       "art": "pipeline"
     },

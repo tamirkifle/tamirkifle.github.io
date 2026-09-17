@@ -82,6 +82,21 @@ function projectLinks(writing) {
     )
     .join(", ");
 }
+// A project links to whichever artefacts it has. `repo: null` is an explicit
+// "private"; an absent key means the project simply has no repository.
+function projectArtefacts(project) {
+  return [
+    project.paper &&
+      `<a href="${project.paper}">Paper <span class="file-type">PDF</span></a>`,
+    project.repo
+      ? `<a href="${project.repo}">Source on GitHub <span aria-hidden="true">↗</span></a>`
+      : project.repo === null && "<span>Private repository</span>",
+    project.demo &&
+      `<a href="${project.demo}">Demo video <span aria-hidden="true">↗</span></a>`,
+  ]
+    .filter(Boolean)
+    .join("");
+}
 function projectRow(project) {
   const writing = byProject.get(project.slug);
   return `<article class="project-row"><div class="project-copy"><h2><a href="${projectURL(project)}">${escape(project.name)}<span class="project-subtitle">${escape(project.title)}</span></a></h2><p class="project-description">${escape(project.description)}</p>${
@@ -130,7 +145,7 @@ for (const project of site.projects) {
     title: `${project.name} | ${project.title}`,
     description: project.description,
     active: "projects",
-    body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Work</a><span aria-hidden="true">/</span><span>${escape(project.name)}</span></nav><header class="project-intro"><h1>${escape(project.name)}</h1><p class="project-deck">${escape(project.title)}</p><div class="project-links">${project.repo ? `<a href="${project.repo}">Source on GitHub <span aria-hidden="true">↗</span></a>` : "<span>Private repository</span>"}${project.demo ? `<a href="${project.demo}">Demo video <span aria-hidden="true">↗</span></a>` : ""}<span>${escape(project.stack)}</span></div></header>
+    body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Work</a><span aria-hidden="true">/</span><span>${escape(project.name)}</span></nav><header class="project-intro"><h1>${escape(project.name)}</h1><p class="project-deck">${escape(project.title)}</p><div class="project-links">${projectArtefacts(project)}<span>${escape(project.stack)}</span></div></header>
     <div class="project-overview"><article class="prose">${marked.parse(overview)}</article>${project.art === "consensus" ? replicationDiagram(true) : project.art ? `<figure class="overview-visual visual-${project.art}">${projectArt(project.art)}</figure>` : ""}</div>
     <section class="project-notes" id="writing"><h2>Writing</h2>${writing.length ? articleRows(writing, false) : `<p class="notes-empty">Nothing written about ${escape(project.name)} yet.</p>`}</section></div>`,
   });

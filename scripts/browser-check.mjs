@@ -404,7 +404,7 @@ try {
   });
   const basic = await noJS.newPage();
   await basic.goto(base);
-  assert.equal(await basic.locator(".project-row").count(), 3);
+  assert.equal(await basic.locator(".project-row").count(), 4);
   assert.equal(await basic.getByRole("link", { name: /^InferRS/ }).count(), 1);
   assert.equal(await basic.locator(".theme-toggle").isVisible(), false);
   assert.equal(
