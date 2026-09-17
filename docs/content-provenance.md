@@ -186,3 +186,33 @@ Three did not, and were corrected:
   `docs/`. The README calls it "a collaborative research and development project". The repository
   may well be private for other reasons, but the site should not assert a provenance the project's
   own documents do not record, so the sentence is now just "The repository is private."
+
+## 2026-09-17 — Vision Profiler overview replaced, and its paper linked
+
+The author supplied new prose and the team paper, "A Deep Analysis of Modeling, Architecture, and
+Dataset Within Waste Classification" (Nihal Sandadi, Lana Sleek, Tamir Yirga), now served at
+`/media/waste-classification-analysis.pdf`. The paper verifies the claims the repository could not:
+
+- **The harness served the waste-classification work.** The paper's Evaluation Metrics section
+  defines inference latency as "mean inference time (ms) over 100 runs with GPU synchronization,
+  measured on Apple M1 Pro", and its Experimental Procedure says "inference benchmarking included
+  10 warmup iterations to account for GPU compilation overhead before timing 100 inference passes".
+  That is the harness, described from the consuming side.
+- **Four architectures, and a three-person team**, both confirmed by the paper's author list and
+  its Architecture Specifications table: ResNet-50, ConvNeXt-Tiny, EfficientNet-B3, MobileNetV3.
+
+Two claims were softened. "The framework guarantees accurate performance metrics" and "ensures our
+empirical latency results were fundamentally sound" both overreach: warmup and synchronisation
+remove one specific error, the asynchronous-return error, and cannot guarantee a number is right.
+The overview now names that error and says the framework removes it. A run-on had also joined the
+two paragraphs without a break; they are separated.
+
+A closing paragraph was added, because the previous overview's honest limit had been dropped: the
+latencies are means over 100 passes after 10 warmup iterations on a single M1 Pro laptop, and the
+harness was a three-person course project.
+
+**A correction to an earlier finding.** This site's notes had recorded "117 img/sec on
+MobileNetV3" as unsupported, on the grounding that it appears nowhere in the repository at any
+commit. That is still true of the repository, and it was the wrong test. The paper states it:
+MobileNetV3-Large measured 8.51 ms, "achieving 117 images/second throughput". A project can
+produce evidence outside its repository, and a paper is the obvious place to look next.
