@@ -10,7 +10,7 @@
       "category": "NLP research",
       "year": "2026",
       "title": "Factual prevalence and LLM hallucinations",
-      "description": "Why language models invent author names for papers they were rarely trained on. Citation count stands in for how often a fact appears in training data.",
+      "description": "Why language models invent author names, studied through training-data prevalence. Citation count is the proxy, because commercial training corpora are private.",
       "scope": "EMNLP 2026 main conference · Second of five authors",
       "stack": "EMNLP 2026 · Main Conference",
       "paper": "/media/dreaming-up-authors-emnlp-2026.pdf",
