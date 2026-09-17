@@ -191,7 +191,8 @@ Three did not, and were corrected:
 
 The author supplied new prose and the team paper, "A Deep Analysis of Modeling, Architecture, and
 Dataset Within Waste Classification" (Nihal Sandadi, Lana Sleek, Tamir Yirga), now served at
-`/media/waste-classification-analysis.pdf`. The paper verifies the claims the repository could not:
+`/media/waste-classification-analysis.pdf`, recompiled from source to fix one broken citation.
+The paper verifies the claims the repository could not:
 
 - **The harness served the waste-classification work.** The paper's Evaluation Metrics section
   defines inference latency as "mean inference time (ms) over 100 runs with GPU synchronization,
@@ -216,3 +217,16 @@ MobileNetV3" as unsupported, on the grounding that it appears nowhere in the rep
 commit. That is still true of the repository, and it was the wrong test. The paper states it:
 MobileNetV3-Large measured 8.51 ms, "achieving 117 images/second throughput". A project can
 produce evidence outside its repository, and a paper is the obvious place to look next.
+
+### The served PDF was recompiled
+
+The supplied PDF printed `[?]` in its introduction, at "fine-tuned for specific tasks". The source
+cites `\cite{transfer_learning}` on line 54 of `conference_101719.tex`, and no `\bibitem` of that
+name exists; the nine that do are resolved everywhere else. The intended target is
+`pan2010transfer`, "S. J. Pan and Q. Yang, A Survey on Transfer Learning", which is what the
+sentence is about and what the same sentence cited in an earlier draft. Changed and recompiled
+with `pdflatex` twice. The served copy now reads `[5]` there and has no unresolved citations.
+
+A second PDF in the same folder had no `[?]`, and was the wrong fix: it is an earlier draft, 4,410
+words against 4,885, with five references instead of nine and no Related Work literature review.
+The served copy is the complete paper with the citation repaired.
