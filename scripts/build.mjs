@@ -138,7 +138,7 @@ await emit("index.html", {
   title: "Tamir Yirga | Engineering Notes",
   description:
     "Engineering notes on inference engines, distributed systems, and the code behind them.",
-  body: `<section class="introduction wrap"><h1>Tamir Yirga</h1><p>Notes on the software I’m building.<br> Mostly inference engines, data systems, and the pieces underneath.</p></section>
+  body: `<section class="introduction wrap"><h1>Tamir Yirga</h1><p>Notes on the software I’m building.<br> Mostly distributed data systems, AI infra, and other low-level backend systems.</p></section>
   <section class="wrap projects-section" id="projects">${selected.map(projectRow).join("")}<div class="other-projects">${archiveRows(site.projects.filter((project) => !project.selected))}</div></section>`,
 });
 await emit("work.html", {
