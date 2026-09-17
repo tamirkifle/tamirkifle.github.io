@@ -58,12 +58,12 @@
     },
     {
       "slug": "ai4hc",
-      "name": "AI4HC Pipeline",
+      "name": "AI4HC Platform",
       "category": "Data modeling",
       "year": "2026",
       "title": "Turning clinical speech into structured records",
       "description": "Schema, migrations, and an event specification for a team building a speech-to-medical-records pipeline.",
-      "scope": "Data lead and integration reviewer · Team of 10",
+      "scope": "Data lead and integration reviewer · Team of 11",
       "stack": "PostgreSQL / Python / Spring Boot / AWS",
       "repo": null,
       "selected": false

@@ -156,3 +156,33 @@ Two register edits came with them: "high-performance" was dropped, and "latency 
 in standard AI deployments" became "dependency weight common in standard AI stacks", because the
 engine does not serve, batch, or run concurrent sessions and should not invite comparison against
 systems that do.
+
+## 2026-09-17 — AI4HC overview replaced, checked against `~/Documents/MyCode/NEU/CS6510/primary`
+
+The author supplied new prose and renamed the project AI4HC Platform. Most of it verified exactly
+against the repository. What held:
+
+| Claim                                              | Evidence                                                                                                                           |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| AWS Transcribe and Claude on Amazon Bedrock        | `BEDROCK_MODEL_ID=us.anthropic.claude-haiku-4-5-20251001-v1:0` in `llm/config.py`                                                  |
+| 11-person team                                     | 11 distinct humans in `git shortlog -sne --all`, after merging duplicate addresses                                                 |
+| 4-table schema                                     | exactly four `CREATE TABLE`s: patients, sessions, transcripts, clinical_events                                                     |
+| JSONB with GIN indexing                            | `CREATE INDEX idx_clinical_events_data_gin ON clinical_events USING GIN(data jsonb_path_ops)` in V4, which he wrote                |
+| PHI kept off the broker                            | both publishers send only a session UUID: `convertAndSend(STT_QUEUE, sessionId)` and `convertAndSend(EXTRACTION_QUEUE, sessionId)` |
+| canonical clinical event schema spec               | `docs/architecture/clinical-event-schemas-v2.md`, added by him                                                                     |
+| ARM64 base image blockers                          | `backend/Dockerfile`: "arm64 (Apple Silicon). The -alpine variant has no ARM64 image on Docker Hub."                               |
+| 30 pull requests reviewed                          | `gh search prs --reviewed-by tamirkifle` returns 32, so 30 understates rather than overstates                                      |
+| double-encoded JSONB, Float/Double, cascade delete | his review bodies on PR #87, PR #145 and PR #71                                                                                    |
+
+Three did not, and were corrected:
+
+- **"Wrote the Flyway migrations" claimed all eight.** He added V1–V5 and V8; V6 is lsleek's and V7
+  is Tzu-Ching Lin's, by `git log --diff-filter=A` per file. It now reads six of the eight. All
+  four `CREATE TABLE`s are still his, which is the stronger half of the claim anyway.
+- **"Five-service architecture" is six.** `compose.yml` declares postgres, rabbitmq, redis,
+  backend, llm-consumer and llm-api.
+- **"Because this was a project built for a client, the repository is not open sourced" is not
+  supported.** The words client, sponsor, stakeholder and partner appear nowhere in `README.md` or
+  `docs/`. The README calls it "a collaborative research and development project". The repository
+  may well be private for other reasons, but the site should not assert a provenance the project's
+  own documents do not record, so the sentence is now just "The repository is private."

@@ -1,5 +1,5 @@
-AI4HC turns clinician audio into structured medical records. Audio passes through transcription and model extraction before the resulting events reach PostgreSQL.
+AI4HC is a clinical AI system that transforms clinician audio into structured medical events using AWS Transcribe and Claude on Amazon Bedrock. The repository is private.
 
-My part was the data model and integration boundary: schema, migrations, a shared event specification, and the Compose stack. A common contract mattered because three teams were producing and consuming the same clinical events.
+As the Data Lead for an 11-person team, I drove the core architecture and owned the PostgreSQL DDL layer. I designed a 4-table schema and wrote six of the eight Flyway migrations, utilizing JSONB with GIN indexing to handle variable event shapes while keeping PHI out of our RabbitMQ message broker. Because the frontend, LLM extraction, and backend subteams all interacted with the same data, I authored the canonical clinical event schema specification to establish a strict, unified integration contract.
 
-The repository is private. My contribution was the schema and the integration contract, distinct from the extraction and architecture work done by teammates.
+Beyond the data model, my contributions spanned all layers of the stack. I consolidated our six-service architecture into a single Docker Compose setup, resolving ARM64 base image blockers for Apple Silicon. Serving as the integration reviewer, I evaluated 30 pull requests across the frontend, API, consumer, and backend services. Through this process, I caught and blocked critical defects, including double-encoded JSONB corruption, Float/Double mismatches, and latent cascade delete bugs.
