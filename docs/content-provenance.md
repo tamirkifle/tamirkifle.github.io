@@ -148,8 +148,9 @@ overview now says the cost moves rather than disappears.
 range.** Per `docs/LIMITATIONS.md`: no GPU, no server, no batching above 1 outside prefill; F32,
 F16 and Q8_0 only, so most `*-Q4_K_M.gguf` files will not load; the tokenizer needs
 `tokenizer.ggml.scores`, which rules out SmolLM, Qwen, Phi and Llama-3; contexts past 831 tokens
-are untested. The closing sentence now carries those limits, which is also how the other five
-overviews end.
+are untested. The closing sentence carries the limits a reader would hit first, CPU only and
+three weight formats, which is also how the other five overviews end. The context limit was cut
+from it at the author's request; it remains recorded in `docs/LIMITATIONS.md` upstream.
 
 Two register edits came with them: "high-performance" was dropped, and "latency bottlenecks common
 in standard AI deployments" became "dependency weight common in standard AI stacks", because the
