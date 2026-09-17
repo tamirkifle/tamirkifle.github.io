@@ -83,10 +83,10 @@
     },
     {
       "slug": "object-recognition",
-      "name": "Object Recognition",
+      "name": "C++ Vision Pipeline",
       "category": "Computer vision",
       "year": "2025",
-      "title": "Recognizing objects from their shape",
+      "title": "Classical object recognition through shape and geometry",
       "description": "A C++ vision pipeline with hand-written thresholding, segmentation, region features, and principal component matching.",
       "scope": "Computer vision project",
       "stack": "C++ / OpenCV",

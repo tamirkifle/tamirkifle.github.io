@@ -12,7 +12,7 @@ Primary content sources were the original `index.html` at commit `9bcd696` and t
 | Liftline            | Use the repository's own name. Keep the write-count and fleet-admission observations, and say that every recorded run measures LocalStack rather than real DynamoDB.                        |
 | AI4HC               | State data-lead and integration-review ownership, team size, and teammates' contributions. Retain a private-repository notice rather than a disabled source button.                         |
 | Vision Profiler     | Describe the harness and GPU synchronization method without inventing absent benchmark results.                                                                                             |
-| Object Recognition  | Describe the implemented feature-space method; link the existing demonstration without a frame-rate or accuracy claim.                                                                      |
+| C++ Vision Pipeline | Keep the two classifiers distinct: the geometric features and the PCA eigenspace are alternatives, not stages. Link the demonstration without a frame-rate or accuracy claim.               |
 | Employment          | Use résumé dates and concise descriptions of the work. Avoid unsourced public performance claims where the previous page gave insufficient measurement context.                             |
 | Writing             | Nothing is published. Every file in `content/writing/` carries `published: false`, so project pages drop their Writing section entirely and the writing index says so.                      |
 | Education           | Keep December 2026 as expected graduation, not a completed degree.                                                                                                                          |
@@ -230,3 +230,30 @@ with `pdflatex` twice. The served copy now reads `[5]` there and has no unresolv
 A second PDF in the same folder had no `[?]`, and was the wrong fix: it is an earlier draft, 4,410
 words against 4,885, with five references instead of nine and no Related Work literature review.
 The served copy is the complete paper with the citation repaired.
+
+## 2026-09-17 — Object Recognition renamed C++ Vision Pipeline, one claim corrected
+
+The author supplied new prose. Checked against a fresh clone of
+`github.com/tamirkifle/realtime-2d-object-recognition`.
+
+**"These regions are described using invariant features and projected into a smaller principal
+component space" is wrong in two ways.** The repository has two independent classifiers, not one
+chain, and comparing them is the point of the project:
+
+- `features.cpp` computes seven rotation- and scale-invariant geometric features, which
+  `recognition.cpp` matches by nearest neighbour with scaled distance.
+- `eigenspace.cpp` ignores those features. It resizes each region to 64x64, flattens it to a
+  1x4096 vector (`src/eigenspace.cpp:140-144`) and projects that to 20 components
+  (`NUM_EIGENVALUES 20` in `include/eigenspace.h`).
+
+So the PCA input is the pixel image, not the invariant features, and the two paths are toggled
+separately (`c` and `E`) and compared against each other by a built-in confusion matrix
+(`confusion_matrix_gui.cpp`, and `x` in the key bindings). The overview now names both and says
+they are alternatives. The 4,096 to 20 figures verify exactly.
+
+"One-shot" registration holds: the README describes `eigenspace.cpp` as "PCA one-shot learning
+with canonical orientation".
+
+A closing paragraph was added, carrying the limit this project has always needed on the site:
+there is no timing code anywhere in the pipeline, so no frame-rate claim is possible. The draft
+made none, and the close now says why none appears.
