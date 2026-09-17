@@ -106,9 +106,10 @@ Sourced entirely from the accepted camera-ready, served at
 - The prose is the author's own, checked against the camera-ready and corrected in two places.
   "Models failed over 98% of the time" named the wrong kind of quantity: HR2 is a continuous
   Jaccard error rate over author names, not a count of failed attempts, so it now reads
-  "hallucination rates exceeded 98%". And the multiple-choice recognition experiment in Section 6
-  used GPT-4o alone on the 9,108 papers, not the three behavioural models, so the plural "Models
-  successfully recognized" is now singular and named. "Landmark publications" became "the
+  "hallucination rates exceeded 98%". The multiple-choice recognition sentence keeps its
+  plural: Section 6 ran that experiment on GPT-4o alone, but the paper's own Conclusion states the
+  finding in the same general terms, so the plural reports the claim rather than the run. It says
+  "author options", not author teams, because the task is forced choice. "Landmark publications" became "the
   most-cited publications", since the bins are citation counts and landmark status is not a
   category the dataset has.
 
