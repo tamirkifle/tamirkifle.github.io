@@ -113,11 +113,11 @@ await emit("index.html", {
   <section class="wrap projects-section" id="projects">${selected.map(projectRow).join("")}<div class="other-projects">${archiveRows(site.projects.filter((project) => !project.selected))}</div></section>`,
 });
 await emit("work.html", {
-  title: "Index | Tamir Yirga",
+  title: "Work | Tamir Yirga",
   description:
     "Inference, distributed storage, data pipelines, and computer vision. Overviews and related writing.",
   active: "projects",
-  body: `<header class="page-intro wrap"><h1>Index</h1><p>What I’m building, how it works, and notes along the way.</p></header><section class="wrap projects-section" aria-label="Index">${selected.map(projectRow).join("")}<div class="other-projects">${archiveRows(site.projects.filter((project) => !project.selected))}</div></section>`,
+  body: `<header class="page-intro wrap"><h1>Work</h1><p>What I’m building, how it works, and notes along the way.</p></header><section class="wrap projects-section" aria-label="Work">${selected.map(projectRow).join("")}<div class="other-projects">${archiveRows(site.projects.filter((project) => !project.selected))}</div></section>`,
 });
 await mkdir("work", { recursive: true });
 for (const project of site.projects) {
@@ -130,7 +130,7 @@ for (const project of site.projects) {
     title: `${project.name} | ${project.title}`,
     description: project.description,
     active: "projects",
-    body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Index</a><span aria-hidden="true">/</span><span>${escape(project.name)}</span></nav><header class="project-intro"><h1>${escape(project.name)}</h1><p class="project-deck">${escape(project.title)}</p><div class="project-links">${project.repo ? `<a href="${project.repo}">Source on GitHub <span aria-hidden="true">↗</span></a>` : "<span>Private repository</span>"}${project.demo ? `<a href="${project.demo}">Demo video <span aria-hidden="true">↗</span></a>` : ""}<span>${escape(project.stack)}</span></div></header>
+    body: `<div class="wrap"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/work.html">Work</a><span aria-hidden="true">/</span><span>${escape(project.name)}</span></nav><header class="project-intro"><h1>${escape(project.name)}</h1><p class="project-deck">${escape(project.title)}</p><div class="project-links">${project.repo ? `<a href="${project.repo}">Source on GitHub <span aria-hidden="true">↗</span></a>` : "<span>Private repository</span>"}${project.demo ? `<a href="${project.demo}">Demo video <span aria-hidden="true">↗</span></a>` : ""}<span>${escape(project.stack)}</span></div></header>
     <div class="project-overview"><article class="prose">${marked.parse(overview)}</article>${project.art === "consensus" ? replicationDiagram(true) : project.art ? `<figure class="overview-visual visual-${project.art}">${projectArt(project.art)}</figure>` : ""}</div>
     <section class="project-notes" id="writing"><h2>Writing</h2>${writing.length ? articleRows(writing, false) : `<p class="notes-empty">Nothing written about ${escape(project.name)} yet.</p>`}</section></div>`,
   });
@@ -184,7 +184,7 @@ await emit("writing.html", {
   description:
     "Engineering notes on inference, distributed storage, data pipelines, and computer vision.",
   active: "writing",
-  body: `<header class="page-intro wrap"><h1>Writing</h1><p>Notes on implementation, experiments, and things still in progress.</p></header><section class="wrap writing-index" aria-label="Notes and articles">${articleRows(writings)}</section>`,
+  body: `<header class="page-intro wrap"><h1>Writing</h1><p>Notes on implementation, experiments, and things still in progress.</p></header><section class="wrap writing-index" aria-label="Notes and articles">${writings.length ? articleRows(writings) : `<p class="notes-empty">Nothing published yet.</p>`}</section>`,
 });
 await emit("post.html", {
   title: "Article unavailable | Tamir Yirga",

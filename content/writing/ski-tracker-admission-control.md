@@ -4,7 +4,7 @@ summary: Coordinating a fleet-wide limit, reducing writes, and keeping local and
 date: 2026-09-05
 projects: [ski-tracker]
 tags: [java, aws, rate-limiting]
-published: true
+published: false
 ---
 
 ## What it does

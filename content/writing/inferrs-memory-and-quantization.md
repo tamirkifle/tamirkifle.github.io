@@ -4,7 +4,7 @@ summary: What is implemented in InferRS, what the component measurements mean, a
 date: 2026-09-05
 projects: [inferrs]
 tags: [rust, inference, quantization]
-published: true
+published: false
 ---
 
 ## What it does

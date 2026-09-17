@@ -4,7 +4,7 @@ summary: The event contract, database migrations, and integration review across 
 date: 2026-09-05
 projects: [ai4hc]
 tags: [postgresql, data-modeling, integration]
-published: true
+published: false
 ---
 
 ## The pipeline

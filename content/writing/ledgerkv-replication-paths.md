@@ -4,7 +4,7 @@ summary: Raft and quorum replication on the same storage engine, and what a boun
 date: 2026-09-05
 projects: [ledgerkv]
 tags: [distributed-systems, java, replication]
-published: true
+published: false
 ---
 
 ## What it does

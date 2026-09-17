@@ -1,8 +1,16 @@
 import { chromium } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { existsSync } from "node:fs";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";
+import { loadWriting } from "./content.mjs";
+
+// Nothing here names a slug. The published collection can be empty, and the
+// checks that need a real article are skipped rather than pinned to one.
+const site = JSON.parse(await readFile("content/site.json", "utf8"));
+const { writings, drafts } = await loadWriting(site);
+const sample = writings[0];
+const sampleRoutes = sample ? [sample.url] : [];
 
 const base = process.env.PREVIEW_URL || "http://127.0.0.1:4173";
 const systemChrome =
@@ -18,14 +26,14 @@ const pages = [
   "/work.html",
   "/about.html",
   "/work/inferrs.html",
-  "/writing/inferrs-memory-and-quantization.html",
+  ...sampleRoutes,
   "/work/ledgerkv.html",
   "/work/ski-tracker.html",
   "/work/ai4hc.html",
   "/work/vision-profiler.html",
   "/work/object-recognition.html",
   "/writing.html",
-  "/post.html?slug=building-llm-inference-rust",
+  `/post.html?slug=${drafts[0].slug}`,
 ];
 const report = {
   routes: [],
@@ -61,7 +69,7 @@ try {
       "/work.html",
       "/about.html",
       "/work/inferrs.html",
-      "/writing/inferrs-memory-and-quantization.html",
+      ...sampleRoutes,
       "/work/ledgerkv.html",
     ]) {
       await page.goto(`${base}${route}`);
@@ -88,7 +96,7 @@ try {
       "/",
       "/about.html",
       "/work/inferrs.html",
-      "/writing/inferrs-memory-and-quantization.html",
+      ...sampleRoutes,
       "/work/ledgerkv.html",
       "/writing.html",
     ]) {
@@ -313,10 +321,19 @@ try {
   report.interactions.push(
     "Invalid and unpublished legacy article URLs have a useful fallback",
   );
-  await page.goto(`${base}/post.html?slug=inferrs-memory-and-quantization`);
-  await page.waitForURL(`${base}/writing/inferrs-memory-and-quantization.html`);
-  assert.match(await page.locator("h1").innerText(), /Memory, quantization/);
-  report.interactions.push("Legacy URLs redirect to published writing");
+  if (sample) {
+    await page.goto(`${base}/post.html?slug=${sample.slug}`);
+    await page.waitForURL(`${base}${sample.url}`);
+    assert.equal(await page.locator("h1").innerText(), sample.title);
+    report.interactions.push("Legacy URLs redirect to published writing");
+  } else {
+    await page.goto(`${base}/writing.html`);
+    assert.match(
+      await page.locator(".notes-empty").innerText(),
+      /Nothing published/,
+    );
+    report.interactions.push("Empty writing index states that plainly");
+  }
   await page.emulateMedia({ reducedMotion: "reduce" });
   assert.equal(
     await page.evaluate(
@@ -363,10 +380,19 @@ try {
     path: `${output}/about-desktop.png`,
     fullPage: true,
   });
-  await page.goto(`${base}/writing/inferrs-memory-and-quantization.html`);
-  await page.screenshot({ path: `${output}/note-desktop.png`, fullPage: true });
+  if (sample) {
+    await page.goto(`${base}${sample.url}`);
+    await page.screenshot({
+      path: `${output}/note-desktop.png`,
+      fullPage: true,
+    });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({
+      path: `${output}/note-mobile.png`,
+      fullPage: true,
+    });
+  }
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.screenshot({ path: `${output}/note-mobile.png`, fullPage: true });
   await page.goto(`${base}/work/inferrs.html`);
   await page.screenshot({
     path: `${output}/project-mobile.png`,
@@ -395,12 +421,21 @@ try {
   );
   await basic.getByRole("link", { name: /^InferRS/ }).click();
   assert.equal(await basic.locator("h1").innerText(), "InferRS");
-  await basic
-    .getByRole("link", {
-      name: "Memory, quantization, and the unfinished parts",
-    })
-    .click();
-  assert.match(await basic.locator("h1").innerText(), /Memory, quantization/);
+  const inferrsWriting = writings.filter((writing) =>
+    writing.projects.includes("inferrs"),
+  );
+  if (inferrsWriting.length) {
+    await basic.getByRole("link", { name: inferrsWriting[0].title }).click();
+    assert.equal(
+      await basic.locator("h1").innerText(),
+      inferrsWriting[0].title,
+    );
+  } else {
+    assert.match(
+      await basic.locator(".notes-empty").innerText(),
+      /Nothing written about InferRS/,
+    );
+  }
   report.interactions.push(
     "Content and navigation work with JavaScript disabled",
   );

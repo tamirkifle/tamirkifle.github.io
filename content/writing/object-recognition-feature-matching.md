@@ -4,7 +4,7 @@ summary: Thresholding, region features, and matching in a smaller representation
 date: 2026-09-05
 projects: [object-recognition]
 tags: [computer-vision, python]
-published: true
+published: false
 ---
 
 ## From pixels to regions

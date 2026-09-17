@@ -4,7 +4,7 @@ summary: Warmup, synchronization, and the difference between queuing work and fi
 date: 2026-09-05
 projects: [vision-profiler]
 tags: [python, pytorch, benchmarking]
-published: true
+published: false
 ---
 
 ## What it measures
