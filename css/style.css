@@ -395,6 +395,7 @@ main:focus {
   letter-spacing: -0.02em;
   line-height: 1.5;
   margin-top: 13px;
+  max-width: 760px;
 }
 .project-links {
   display: flex;
