@@ -132,17 +132,19 @@ export function projectArt(type) {
   if (type === "consensus") return replicationArt();
   if (type === "prevalence") {
     // Thirteen citation bins, tracing the shape of the measured curve rather
-    // than any one model's numbers. The two figures are the paper's own.
+    // than any one model's numbers. The axis is labelled by prevalence, which is
+    // what the bins stand for, and the foot says how it was measured. Both
+    // figures are the paper's own.
     const rates = [
       0.98, 0.98, 0.97, 0.96, 0.95, 0.93, 0.9, 0.86, 0.8, 0.71, 0.6, 0.48, 0.37,
     ];
-    return `<svg viewBox="0 0 560 350" role="img" aria-label="Hallucination rate falling across thirteen citation bins, from above 98 percent for rarely cited papers to below 37 percent for highly cited ones. A schematic, not a benchmark plot.">
-    <text class="diagram-label" x="36" y="38">HALLUCINATION RATE</text><text class="diagram-label" x="524" y="38" text-anchor="end">BY CITATION COUNT</text>
+    return `<svg viewBox="0 0 560 350" role="img" aria-label="Hallucination rate falling as training-data prevalence rises, across thirteen bins, from above 98 percent at the lowest prevalence to below 37 percent at the highest. Prevalence is proxied by citation count. A schematic, not a benchmark plot.">
+    <text class="diagram-label" x="36" y="38">HALLUCINATION RATE</text><text class="diagram-label" x="524" y="38" text-anchor="end">BY TRAINING-DATA PREVALENCE</text>
     ${rates.map((rate, i) => `<rect class="prevalence-bar${i === rates.length - 1 ? " is-low" : ""}" x="${(36 + i * 38.33).toFixed(1)}" y="${(200 - rate * 130).toFixed(1)}" width="28" height="${(rate * 130).toFixed(1)}" rx="1"/>`).join("")}
     <path class="diagram-rule" d="M36 200H524"/>
     <text class="diagram-value" x="36" y="246">98<tspan class="diagram-unit">%</tspan></text><text class="diagram-value" x="524" y="246" text-anchor="end">37<tspan class="diagram-unit">%</tspan></text>
-    <text class="diagram-label" x="36" y="275">0\u20132 CITATIONS</text><text class="diagram-label" x="524" y="275" text-anchor="end">4097+ CITATIONS</text>
-    <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">More citations, fewer invented authors.</text>
+    <text class="diagram-label" x="36" y="275">LOW PREVALENCE</text><text class="diagram-label" x="524" y="275" text-anchor="end">HIGH PREVALENCE</text>
+    <path class="diagram-rule" d="M36 300H524"/><text class="diagram-foot" x="36" y="324">Training-data prevalence, proxied by citation count.</text>
   </svg>`;
   }
   return `<svg viewBox="0 0 560 350" role="img" aria-label="Event flow from replicas, through admission control and a queue, to batched writes in DynamoDB.">

@@ -100,7 +100,14 @@ Sourced entirely from the accepted camera-ready, served at
   scored behaviourally; Qwen3-32B and Mistral-Small-3.2-24B were probed at their hidden states. The
   overview keeps those two groups apart.
 - The `prevalence` diagram traces the shape of the measured curve across thirteen bins. Like the
-  others it is a schematic, and its `aria-label` says so; only its two end figures are claims.
+  others it is a schematic, and its `aria-label` says so; only its two end figures are claims. Its
+  axis is labelled by training-data prevalence, which is the quantity the paper is about, and its
+  footer names citation count as the proxy, so the diagram does not imply prevalence was measured.
+- The prose was drafted by Claude Opus 4.6 through `agy`, given the five existing overviews as the
+  house voice and a fixed fact list. Every figure in the result was then re-checked against the
+  camera-ready. Two edits followed: the multiple-choice result is 79% _chance-corrected_ accuracy,
+  a qualifier the draft dropped, and the proxy caveat appeared twice, so the opening mention was
+  cut and the closing one kept.
 
 The InferRS `memory` diagram was relabelled in the same pass. It had asserted "LLAMA–7B" and
 "24 GB f32 → 6.03 GB INT8" — figures from a README the repository no longer has — while the prose
